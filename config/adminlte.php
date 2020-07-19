@@ -231,21 +231,11 @@ return [
     */
 
     'menu' => [
-        [
-            'text' => 'Pesquisar',
-            'search' => true,
-            'topnav' => true,
-        ],
         ['header' => 'account_settings'],
         [
-            'text' => 'profile',
-            'url'  => 'admin/settings',
+            'text' => 'Reservistas',
+            'url'  => '/admin/reservista',
             'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'change_password',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
         ],
     ],
 
@@ -282,26 +272,49 @@ return [
     | https://github.com/jeroennoten/Laravel-AdminLTE/#613-plugins
     |
     */
-
+    
+    /*<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- DataTables -->
+    <script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="../../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <!-- AdminLTE App -->*/
+    
     'plugins' => [
         [
             'name' => 'Datatables',
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
-                    'asset' => false,
-                    'location' => '//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js',
+                    'asset' => true,
+                    'location' => '/vendor/datatables/js/jquery.dataTables.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => '/vendor/datatables/js/dataTables.bootstrap4.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => '/vendor/datatables-responsive/js/dataTables.responsive.min.js',
                 ],
                 [
                     'type' => 'js',
                     'asset' => false,
-                    'location' => '//cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js',
+                    'location' => '/vendor/datatables-responsive/js/responsive.bootstrap4.min.js',
                 ],
                 [
                     'type' => 'css',
-                    'asset' => false,
-                    'location' => '//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css',
+                    'asset' => true,
+                    'location' => '/vendor/datatables/css/dataTables.bootstrap4.min.css',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => '/vendor/datatables-responsive/css/responsive.bootstrap4.min.css',
                 ],
             ],
         ],
@@ -359,5 +372,28 @@ return [
                 ],
             ],
         ],
+        
+        [
+            'name' => 'Ionicons',
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css',
+                ],
+            ],
+        ],
+        [
+            'name' => 'FontsGoogle',
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700',
+                ],
+            ],
+        ],        
     ],
 ];
