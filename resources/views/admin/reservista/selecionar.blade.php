@@ -251,11 +251,13 @@ $(function () {
     $(".dataTableInit").DataTable({
       "paging": true,
       "lengthChange": true,
+      "pageLength": 6,
       "searching": true,
       "ordering": true,
       "info": true,
       "autoWidth": true,
       "responsive": true,
+      "language": {"url": "http://cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"}
     });
     
      $('[data-toggle="tooltip"]').tooltip()
