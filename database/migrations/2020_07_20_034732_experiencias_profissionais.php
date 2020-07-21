@@ -16,29 +16,29 @@ class ExperienciasProfissionais extends Migration
         Schema::create('experiencias_profissionais', function (Blueprint $table) {
             $table->bigIncrements('exp_prof_id');
             $table->bigInteger('usuario_id')->unsigned();
-            $table->string('cargo');
+            $table->string('cargo', 100);
             $table->decimal('salario',4,2);
             $table->bigInteger('nivel_h_id')->unsigned();
             $table->bigInteger('area_at_id')->unsigned();
             $table->bigInteger('especializacao_id')->unsigned();
-            $table->string('nome_ultimo_gestor');
-            $table->string('cel_gestor');
-            $table->string('resumo');
-            $table->string('atividades_relevantes');
+            $table->string('nome_ultimo_gestor', 10);
+            $table->string('cel_gestor', 20);
+            $table->string('resumo', 512);
+            $table->string('atividades_relevantes', 512);
             $table->bigInteger('pais_id')->unsigned();
             $table->bigInteger('estado_id')->unsigned();
             $table->bigInteger('cidade_id')->unsigned();
             $table->date('dt_inicio');
             $table->date('dt_fim');
-            $table->string('ind_atual');
+            $table->char('ind_atual', 1);
             
             //Informações Segurança
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
-            $table->string('usuario_id_created')->nullable();
-            $table->string('usuario_id_updated')->nullable();
-            $table->string('usuario_id_deleted')->nullable();
-            $table->string('ind_status');
+            $table->bigInteger('usuario_id_created')->nullable();
+            $table->bigInteger('usuario_id_updated')->nullable();
+            $table->bigInteger('usuario_id_deleted')->nullable();
+            $table->char('ind_status', 1);
             
             //Chaves Estrangeiras
             $table->foreign('usuario_id')->references('usuario_id')->on('users');

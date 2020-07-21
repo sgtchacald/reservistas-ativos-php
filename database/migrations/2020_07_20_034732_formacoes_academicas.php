@@ -16,7 +16,7 @@ class FormacoesAcademicas extends Migration
         Schema::create('formacoes_academicas', function (Blueprint $table) {
             $table->bigIncrements('form_acad_id');
             $table->bigInteger('usuario_id')->unsigned();
-            $table->string('nome_instituicao');
+            $table->string('nome_instituicao', 100);
             $table->bigInteger('pais_id')->unsigned();
             $table->bigInteger('estado_id')->unsigned();
             $table->bigInteger('cidade_id')->unsigned();
@@ -24,14 +24,14 @@ class FormacoesAcademicas extends Migration
             $table->bigInteger('curso_acad_id')->unsigned();
             $table->date('dt_inicio');
             $table->date('dt_fim');
-            $table->string('situacao');
+            $table->string('situacao', 1);
             //Informações Segurança
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
-            $table->string('usuario_id_created')->nullable();
-            $table->string('usuario_id_updated')->nullable();
-            $table->string('usuario_id_deleted')->nullable();
-            $table->string('ind_status');
+            $table->bigInteger('usuario_id_created')->nullable();
+            $table->bigInteger('usuario_id_updated')->nullable();
+            $table->bigInteger('usuario_id_deleted')->nullable();
+            $table->char('ind_status', 1);
             
             //Chaves Estrangeiras
             $table->foreign('usuario_id')->references('usuario_id')->on('users');

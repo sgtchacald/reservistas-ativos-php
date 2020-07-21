@@ -16,18 +16,18 @@ class CursosUsuario extends Migration
         Schema::create('cursos_usuario', function (Blueprint $table) {
             $table->bigIncrements('cursos_u_id');
             $table->bigInteger('usuario_id')->unsigned();
-            $table->string('nome');
-            $table->string('instituicao_ensino');
+            $table->string('nome', 100);
+            $table->string('instituicao_ensino', 100);
             $table->date('dt_inicio');
             $table->date('dt_fim');
-            $table->string('url_certificado');
+            $table->string('url_certificado', 512);
             //Informações Segurança
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
-            $table->string('usuario_id_created')->nullable();
-            $table->string('usuario_id_updated')->nullable();
-            $table->string('usuario_id_deleted')->nullable();
-            $table->string('ind_status');
+            $table->bigInteger('usuario_id_created')->nullable();
+            $table->bigInteger('usuario_id_updated')->nullable();
+            $table->bigInteger('usuario_id_deleted')->nullable();
+            $table->char('ind_status', 1);
             $table->foreign('usuario_id')->references('usuario_id')->on('users');
         });
     }
