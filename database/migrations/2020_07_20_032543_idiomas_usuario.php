@@ -16,14 +16,14 @@ class IdiomasUsuario extends Migration
         Schema::create('idiomas_usuario', function (Blueprint $table) {
             $table->bigIncrements('idiomas_u_id');
             $table->bigInteger('usuario_id')->unsigned();
-            $table->string('nivel');
+            $table->char('nivel', 1);
             //Informações Segurança
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
-            $table->string('usuario_id_created')->nullable();
-            $table->string('usuario_id_updated')->nullable();
-            $table->string('usuario_id_deleted')->nullable();
-            $table->string('ind_status');
+            $table->bigInteger('usuario_id_created')->nullable();
+            $table->bigInteger('usuario_id_updated')->nullable();
+            $table->bigInteger('usuario_id_deleted')->nullable();
+            $table->char('ind_status', 1);
             $table->foreign('usuario_id')->references('usuario_id')->on('users');
         });
     }

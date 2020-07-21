@@ -18,18 +18,18 @@ class Empresas extends Migration
     {
         Schema::create('empresas', function (Blueprint $table) {
             $table->bigIncrements('empresa_id');
-            $table->string('cnpj')->unique();
-            $table->string('nome');
-            $table->string('email_institucional')->unique();
-            $table->string('url_site');
-            $table->string('url_logotipo');
+            $table->string('cnpj', 14)->unique()->sise;
+            $table->string('nome', 255);
+            $table->string('email_institucional', 255)->unique();
+            $table->string('url_site', 512);
+            $table->string('url_logotipo', 512);
             //Informações Segurança 
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
-            $table->string('usuario_id_created')->nullable();
-            $table->string('usuario_id_updated')->nullable();
-            $table->string('usuario_id_deleted')->nullable();
-            $table->string('ind_status');
+            $table->bigInteger('usuario_id_created')->nullable();
+            $table->bigInteger('usuario_id_updated')->nullable();
+            $table->bigInteger('usuario_id_deleted')->nullable();
+            $table->char('ind_status', 1);
         });
     }
 
