@@ -28,7 +28,7 @@ class CursosUsuario extends Migration
             $table->bigInteger('usuario_id_updated')->nullable();
             $table->bigInteger('usuario_id_deleted')->nullable();
             $table->char('ind_status', 1);
-            $table->foreign('usuario_id')->references('usuario_id')->on('users');
+            $table->foreign('usuario_id')->references('usuario_id')->on('usuarios');
         });
     }
 

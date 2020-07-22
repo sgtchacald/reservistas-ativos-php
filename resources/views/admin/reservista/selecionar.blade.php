@@ -26,7 +26,7 @@
 	</div>
 	
 	<div class="card-footer">
-		<button type="submit" class="btn btn-primary"><i class="far fa-file"></i>&nbsp;&nbsp; Cadastrar Novo Registro</button>
+		<a href="{{route('reservista.cadastrar')}}" class="btn btn-primary"><i class="far fa-file"></i>&nbsp;&nbsp; Cadastrar Novo Registro</a>
 	</div>
 
 	<div class="card-body">
