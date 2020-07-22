@@ -65,11 +65,11 @@ return [
     */
 
     'usermenu_enabled' => true,
-    'usermenu_header' => false,
+    'usermenu_header' => true,
     'usermenu_header_class' => 'bg-primary',
-    'usermenu_image' => false,
-    'usermenu_desc' => false,
-    'usermenu_profile_url' => false,
+    'usermenu_image' => true,
+    'usermenu_desc' => true,
+    'usermenu_profile_url' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -85,9 +85,9 @@ return [
 
     'layout_topnav' => null,
     'layout_boxed' => null,
-    'layout_fixed_sidebar' => null,
-    'layout_fixed_navbar' => null,
-    'layout_fixed_footer' => null,
+    'layout_fixed_sidebar' => true,
+    'layout_fixed_navbar' => true,
+    'layout_fixed_footer' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -273,14 +273,6 @@ return [
     |
     */
     
-    /*<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- DataTables -->
-    <script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
-    <script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-    <script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="../../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-    <!-- AdminLTE App -->*/
-    
     'plugins' => [
         [
             'name' => 'Datatables',
@@ -303,7 +295,7 @@ return [
                 ],
                 [
                     'type' => 'js',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => '/vendor/datatables-responsive/js/responsive.bootstrap4.min.js',
                 ],
                 [

@@ -41,7 +41,7 @@ class ExperienciasProfissionais extends Migration
             $table->char('ind_status', 1);
             
             //Chaves Estrangeiras
-            $table->foreign('usuario_id')->references('usuario_id')->on('users');
+            $table->foreign('usuario_id')->references('usuario_id')->on('usuarios');
             $table->foreign('nivel_h_id')->references('nivel_h_id')->on('niveis_hierarquicos');
             $table->foreign('area_at_id')->references('area_at_id')->on('areas_atuacao');
             $table->foreign('especializacao_id')->references('especializacao_id')->on('especializacoes');

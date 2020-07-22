@@ -12,11 +12,13 @@ class CreateUsersTable extends Migration
      * @return void
      */
     
+    public $incrementing = false;
+    
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('usuarios', function (Blueprint $table) {
             $table->bigIncrements('usuario_id');
-            $table->bigInteger('empresa_id')->unsigned();
+            $table->bigInteger('empresa_id')->unsigned()->nullable();
             $table->char('permissao_usuario', 1);
             //Informacoes militares
             $table->char('ind_oficial', 1);

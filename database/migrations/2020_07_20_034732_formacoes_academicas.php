@@ -34,7 +34,7 @@ class FormacoesAcademicas extends Migration
             $table->char('ind_status', 1);
             
             //Chaves Estrangeiras
-            $table->foreign('usuario_id')->references('usuario_id')->on('users');
+            $table->foreign('usuario_id')->references('usuario_id')->on('usuarios');
             $table->foreign('pais_id')->references('pais_id')->on('paises');
             $table->foreign('estado_id')->references('estado_id')->on('estados');
             $table->foreign('cidade_id')->references('cidade_id')->on('cidades');
