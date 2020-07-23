@@ -19,7 +19,7 @@
 @section('content')
 <div class="card">
 	<div class="card-header">
-		<h3 class="card-title">Cadastrar Reservista</h3>
+		<h3 class="card-title">Seu texto aqui</h3>
 
 		<div class="card-tools">
 			<button type="button" class="btn btn-tool"data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -31,33 +31,16 @@
 		</div>
 	</div>
 	<div class="card-body">
-			<!-- Campo select -->
-			<div class="col-sm-12  mb-3">
-        		<div class="col-sm-2">
-        			<label>Tipo Usuario</label> <select class="form-control">
-        				<option value="">Selecione</option> 
-        					@foreach ((\App\Dominios\PermissoesUsuario::getDominio()) as $key => $value)
-        						<option value="{{$key}}">{{$value}}</option> 
-        					@endforeach
-        			</select>
-        		</div>
-			</div>
-
-			<div class="col-sm-12  mb-3">
-        		<div class="col-sm-2">
-        			<label>Força de Origem</label> 
-        		</div>
-			</div>
-
+		Corpo da pagina aqui
 	</div>
-	<div class="card-footer">Esta funcionalidade permite que você cadastre um reservista no sistema.</div>
+	<div class="card-footer">Descrição da funcionalidade aqui.</div>
 </div>
 @stop 
 
 @section('js')
 <script> 
     $(function(){
-    	    
+    	//jquery ou javascript aqui 
     }); 
 </script>
 @stop

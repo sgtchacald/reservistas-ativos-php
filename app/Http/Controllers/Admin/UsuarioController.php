@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Dominios\PermissoesEnum;
-use App\Dominios\SimNaoEnum;
 
 class UsuarioController extends Controller
 {  
@@ -17,9 +15,10 @@ class UsuarioController extends Controller
     }
     
     public function create(){
-        $permissoesUsuario = PermissoesEnum::permissoesUsuario;
-        $simNao = SimNaoEnum::simNao;
-        return view('admin.reservista.cadastrar')->with(compact('permissoesUsuario','simNao'));
+       /*$permissoesUsuario = DMPermissoes::permissoesUsuario;
+       $simNao = DMSimNao::simNao;
+       return view('admin.reservista.cadastrar')->with(compact('permissoesUsuario','simNao'));*/
+       return view('admin.reservista.cadastrar');
     }
     
     public function store(){

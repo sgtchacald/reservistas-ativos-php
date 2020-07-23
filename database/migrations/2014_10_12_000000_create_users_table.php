@@ -25,7 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('certificado_reservista', 40);
             $table->char('tipo_forca', 1);
             $table->string('posto_graduacao', 4);
-            $table->string('arma', 40);
+            //$table->string('arma', 40);
             $table->string('nome_de_guerra', 100);
             $table->string('nome_ultimo_batalhao', 100);
             //Informacoes Civis
