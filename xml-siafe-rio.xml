@@ -1,0 +1,43 @@
+<cadastraConvenioIn
+	xmlns="http://interfaces.ws.viewcontroller.siplag.logus/">
+	<numeroConverj xmlns=""> 351</numeroConverj>
+	<numeroOriginal xmlns="">007241</numeroOriginal>
+	<codigoUnidadeGestora xmlns="">200100</codigoUnidadeGestora>
+	<papelUnidadeGestora xmlns="">0</papelUnidadeGestora>
+	<cnpjCelebranteConvenio xmlns="">78279981000145</cnpjCelebranteConvenio>
+	<valorConcessao xmlns="">1500.00</valorConcessao>
+	<valorContrapartida xmlns="">300.00</valorContrapartida>
+	<dataCelebracao xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"></dataCelebracao>
+	<dataPublicacao xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"></dataPublicacao>
+	<dataInicioVigencia xmlns="">2015-03-01T00:00:00</dataInicioVigencia>
+	<dataFimVigencia xmlns="">2015-04-30T00:00:00</dataFimVigencia>
+	<dataRescisao xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"></dataRescisao>
+	<dataPublicacaoRescisao
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true">
+	</dataPublicacaoRescisao>
+	<dataConclusao
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true">
+	</dataConclusao>
+	<tipoTransferencia xmlns="">1</tipoTransferencia>
+	<objeto xmlns="">TESTE</objeto>
+	<descricaoObjeto xmlns="" />
+	<domiciliosBancarios>
+		<codigoBanco xmlns="">237</codigoBanco>
+		<codigoAgencia xmlns="">199 6</codigoAgencia>
+		<contaCorrente xmlns="">600005005</contaCorrente>
+	</domiciliosBancarios>
+	<cronogramaDesembolso>
+		<nome xmlns="" />
+		<ano xmlns="">2015</ano>
+		<mes xmlns="">3</mes>
+		<valorConcessao xmlns="">750.00</valorConcessao>
+		<valorContrapartida xmlns="">150.00</valorContrapartida>
+	</cronogramaDesembolso>
+	<cronogramaDesembolso>
+		<nome xmlns="" />
+		<ano xmlns="">2015</ano>
+		<mes xmlns="">4</mes>
+		<valorConcessao xmlns="">750.00</valorConcessao>
+		<valorContrapartida xmlns="">150.00</valorContrapartida>
+	</cronogramaDesembolso>
+</cadastraConvenioIn>

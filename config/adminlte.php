@@ -376,6 +376,7 @@ return [
                 ],
             ],
         ],
+        
         [
             'name' => 'FontsGoogle',
             'active' => false,
@@ -386,6 +387,30 @@ return [
                     'location' => 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700',
                 ],
             ],
-        ],        
+        ],
+        
+        [
+            'name' => 'InputMasks',
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => '/vendor/inputmask/min/jquery.inputmask.bundle.min.js',
+                ],
+            ],
+        ],
+        
+        [
+            'name' => 'DateRangePicker',
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => '/vendor/daterangepicker/daterangepicker.js',
+                ],
+            ],
+        ],
     ],
 ];

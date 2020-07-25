@@ -9,8 +9,8 @@ class Sexo extends Model
     public static function getDominio()
     {
         return array(
-            "M" => "Masculino",
             "F" => "Feminino",
+            "M" => "Masculino",
             "O" => "Outro"
         );
     }

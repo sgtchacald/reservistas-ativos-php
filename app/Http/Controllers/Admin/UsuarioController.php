@@ -15,13 +15,11 @@ class UsuarioController extends Controller
     }
     
     public function create(){
-       /*$permissoesUsuario = DMPermissoes::permissoesUsuario;
-       $simNao = DMSimNao::simNao;
-       return view('admin.reservista.cadastrar')->with(compact('permissoesUsuario','simNao'));*/
        return view('admin.reservista.cadastrar');
     }
     
     public function store(){
+       echo "Teste";
     }
     
     public function edit(){
