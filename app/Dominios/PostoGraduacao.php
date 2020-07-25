@@ -11,7 +11,6 @@ class PostoGraduacao extends Model
         return array(
             "1TEN" => "1º Tenente",
             "2TEN" => "2º Tenente",
-            "ASP" => "Aspirante Oficial",
             "3SGT" => "3º Sargento",
             "CB" => "Cabo",
             "SD" => "Soldado"
