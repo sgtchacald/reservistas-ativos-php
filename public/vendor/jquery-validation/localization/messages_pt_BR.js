@@ -16,7 +16,7 @@
 $.extend( $.validator.messages, {
 
 	// Core
-	required: "Este campo &eacute; requerido.",
+	required: "Este campo &eacute; obrigatório.",
 	remote: "Por favor, corrija este campo.",
 	email: "Por favor, forne&ccedil;a um endere&ccedil;o de email v&aacute;lido.",
 	url: "Por favor, forne&ccedil;a uma URL v&aacute;lida.",
@@ -46,6 +46,7 @@ $.extend( $.validator.messages, {
 	cifES: "Por favor, forne&ccedil;a um c&oacute;digo CIF v&aacute;lido.",
 	creditcardtypes: "Por favor, forne&ccedil;a um n&uacute;mero de cart&atilde;o de cr&eacute;dito v&aacute;lido.",
 	currency: "Por favor, forne&ccedil;a uma moeda v&aacute;lida.",
+	dataBR: "Por favor, forne&ccedil;a uma data correta.",
 	dateFA: "Por favor, forne&ccedil;a uma data correta.",
 	dateITA: "Por favor, forne&ccedil;a uma data correta.",
 	dateNL: "Por favor, forne&ccedil;a uma data correta.",
