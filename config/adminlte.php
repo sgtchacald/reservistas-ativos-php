@@ -408,7 +408,49 @@ return [
                 [
                     'type' => 'js',
                     'asset' => true,
+                    'location' => '/vendor/jquery-ui/jquery-ui.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => '/vendor/jquery-ui/jquery-ui.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => '/vendor/moment/moment.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
                     'location' => '/vendor/daterangepicker/daterangepicker.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => '/vendor/daterangepicker/daterangepicker.css',
+                ],
+            ],
+        ],
+        
+        [
+            'name' => 'JqueryValidation',
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => '/vendor/jquery-validation/jquery.validate.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => '/vendor/jquery-validation/additional-methods.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => '/vendor/jquery-validation/localization/messages_pt_BR.js',
                 ],
             ],
         ],

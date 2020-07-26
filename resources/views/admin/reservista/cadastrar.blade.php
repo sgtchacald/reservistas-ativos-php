@@ -1,7 +1,6 @@
 @extends('adminlte::page') 
 @section('title', 'Cadastrar Reservista')
 
-
 @section('content_header')
 <div class="container-fluid">
 	<div class="row mb-2">
@@ -17,22 +16,13 @@
 @stop 
 
 @section('content')
-    <div class="card card-primary">
-    	<div class="card-header">
-    		<h3 class="card-title">Cadastrar Reservista</h3>
-    
-    		<div class="card-tools">
-    			<button type="button" class="btn btn-tool"data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-    				<i class="fas fa-minus"></i>
-    			</button>
-    			<button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
-    				<i class="fas fa-times"></i>
-    			</button>
-    		</div>
-    	</div>
-    	
+<div class="card card-primary">
+	<div class="card-header">
+		<h3 class="card-title">Cadastrar Reservista</h3>
+	</div>
+	
+	<form name="cadastrarUsuarioReservista" id="cadastrarUsuarioReservista" method="post" action="{{route('reservista.insert')}}">
     	<div class="card-body">
-    		<form name="cadastrarUsuarioReservista" id="cadastrarUsuarioReservista" method="post" action="{{route('reservista.insert')}}">
     			@csrf
                 <div class="row">
                 	<div class="col-5 col-sm-3">
@@ -43,20 +33,19 @@
                 			<a class="nav-link" 		id="vert-tabs-logs-tab"   data-toggle="pill" href="#vert-tabs-logs"   role="tab" aria-controls="vert-tabs-logs"   aria-selected="false">Logs</a>
                 		</div>
                 	</div>
-
+    
             		<div class="col-7 col-sm-9">
             			<div class="tab-content" id="vert-tabs-tabContent"> 
             				<div class="tab-pane fade active show" id="tabs-d-pessoais" role="tabpanel" aria-labelledby="tabs-d-pessoais-tab">
             					<div class="row">
-            						<div class="col-sm-3">
+            						<div class="col-sm-3 form-group">
                         				<label>Perfil de Usuário:</label>
-                        				<select class="form-control">
+                        				<select name="permissaoUsuario" id="permissaoUsuario" class="form-control">
                         					<option value="">Selecione</option> 
                         					@foreach((\App\Dominios\PermissoesUsuario::getDominio()) as $key => $value)
                         					<option value="{{$key}}">{{$value}}</option> 
                         					@endforeach
                         				</select>
-                        				<p></p>
                         			</div>
                         			
                     				<div class="col-sm-9">
@@ -75,12 +64,12 @@
                     					</div>
                     				</div>
                     				
-                    				<div class="col-sm-2">
+                    				<div class="col-sm-3">
                     					<div class="form-group">
                         					<label>Dt Nascimento:</label>
                                             <div class="input-group date reservationdate" id="reservationdate" data-target-input="nearest">
-                                                <input type="text" name="dtNascimento" id="dtNascimento" class="form-control datetimepicker-input" data-target="#reservationdate" data-inputmask="'mask': ['99/99/9999']" data-mask="">
-                                                    <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                                <input type="text" name="dtNascimento" id="dtNascimento" class="form-control initData" data-inputmask-alias="datetime"  data-inputmask="'mask': ['99/99/9999']" data-mask="" im-insert="false">
+                                                    <div class="input-group-append">
                                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                            		</div>
                                             </div>
@@ -111,9 +100,9 @@
                     					</div>
                     				</div>
                     				
-                    				<div class="col-sm-3">
+                    				<div class="col-sm-2">
                     					<div class="form-group">
-                    						<label>Portador de Deficiência?</label> 
+                    						<label>Port. Deficiência?</label> 
                                 			<select name="indPortadorDeficiencia" id="indPortadorDeficiencia" class="form-control">
                             					<option value="">Selecione</option> 
                             					@foreach ((\App\Dominios\SimNao::getDominio()) as $key => $value)
@@ -149,7 +138,7 @@
                     				<div class="col-sm-3">
                     					<div class="form-group">
                     						<label>Disponível para viajar?</label>
-                    						<div class="form-check" style="padding-top: 6px;">
+                    						<div class="form-check">
                     							@foreach ((\App\Dominios\SimNao::getDominio()) as $key => $value)
                         							<input type="radio" name="indDisponivelViagem" id="indDisponivelViagem" class="form-check-input" style="" value="{{$key}}">
                         							{{$value}}&nbsp;&nbsp; &nbsp;&nbsp;                         							
@@ -161,7 +150,7 @@
                     				<div class="col-sm-4">
                     					<div class="form-group">
                     						<label>Disponível para mudar de cidade?</label>
-                    						<div class="form-check" style="padding-top: 6px;">
+                    						<div class="form-check">
                     							@foreach ((\App\Dominios\SimNao::getDominio()) as $key => $value)
                         							<input type="radio" name="indDisponivelMudarCidade" id="indDisponivelMudarCidade" class="form-check-input" style="" value="{{$key}}">
                         							{{$value}}&nbsp;&nbsp; &nbsp;&nbsp;                         							
@@ -175,37 +164,35 @@
                     				<div class="col-sm-4">
                         				<div class="form-group clearfix">
     										<div class="icheck-danger d-inline">
-    											<input type="checkbox" name="indCelularWhatsapp" id="checkboxDanger3" style="margin-top: 15px;"> 
+    											<input type="checkbox" name="indCelularWhatsapp" id="checkboxDanger3"> 
     											<label for="checkboxDanger3">Este celular é meu whatsapp.</label><br>
     											<input type="checkbox" name="indMsgWhatsapp" id="checkboxDanger3"> 
     											<label for="checkboxDanger3" style="color:#FF0000;">Desejo receber msgs neste cel.</label>
     										</div>
     									</div>
-									</div>
-
-
-								<div class="col-sm-12">
-									<div class="form-group">
-										<label for="exampleInputFile">Inserir Foto</label>
-										<div class="input-group">
-											<div class="custom-file">
-												<input type="file" class="custom-file-input" id="exampleInputFile"> 
-													<label class="custom-file-label" for="exampleInputFile">Procurar</label>
-											</div>
-											
-											<div class="input-group-append">
-												<span class="input-group-text" id="">Upload</span>
-											</div>
-										</div>
-									</div>
-								</div>
-
-							</div>
+    								</div>
+    
+        							<div class="col-sm-12">
+        								<div class="form-group">
+        									<label for="exampleInputFile">Inserir Foto</label>
+        									<div class="input-group">
+        										<div class="custom-file">
+        											<input type="file" name="foto" id="foto" class="custom-file-input" id="exampleInputFile"> 
+        												<label class="custom-file-label" for="exampleInputFile">Procurar</label>
+        										</div>
+        										
+        										<div class="input-group-append">
+        											<span class="input-group-text" id="">Upload</span>
+        										</div>
+        									</div>
+        								</div>
+        							</div>
+    						</div>
             				</div>
             				
             				<div class="tab-pane fade" id="tabs-d-militares" role="tabpanel" aria-labelledby="tabs-d-militares-tab">
             					<div class="row mb-3">
-                        			<div class="col-sm-3">
+                        			<div class="col-sm-3 form-group">
                         				<label>Força de Origem:</label> 
                             			<select name="tipoForca" id="tipoForca" class="form-control">
                         					<option value="">Selecione</option> 
@@ -364,15 +351,83 @@
             				</div>
             			</div>
             		</div>
-        	</form>
-    	</div>	
-    </div>	
+        	</div>
+        	
+        	<div class="card-footer">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+	</form>		
 @stop 
 
 @section('js')
     <script> 
         $(document).ready(function(){
-           $('[data-mask]').inputmask()
+ 
+            $('[data-mask]').inputmask();
+            
+            $('.initData').daterangepicker({
+            	singleDatePicker: true,
+              	autoUpdateInput: false,
+              	locale: {
+                  format: 'DD/MM/YYYY'
+                }
+            }, function(chosen_date) {
+              $('.initData').val(chosen_date.format('DD/MM/YYYY'));
+            });
+            
+            // validate signup form on keyup and submit
+    		$("#cadastrarUsuarioReservista").validate({
+    			rules: {
+    				permissaoUsuario: "required",
+    				nomeCompleto: "required",
+    				permissaoUsuario: "required",
+                    nomeCompleto: "required",
+                    cpf: {
+                    	required: true,
+                    	cpfBR: true
+                    },
+                    dataNascimento: {
+                        required: true,
+                        dateITA: true
+	                },
+                    estadoCivil: "required",
+                    sexo: "required",
+                    indPortadorDeficiencia: "required",
+                    email: {
+                    	required: true,
+                    	email: true
+                    	},
+                    telefoneCelular: {
+                    	required: true,
+                    	minlength: true
+                    	},
+                    telefoneResidencial: "required",
+                    indDisponivelViagem: "required",
+                    indDisponivelMudarCidade: "required",
+                    foto: "required",
+                    tipoForca: "required",
+                    indOficial: "required",
+                    certificadoReservista: "required",
+                    postoGraduacao: "required",
+                    nomeDeGuerra: "required",
+                    nomeUltimoBatalhao: "required",
+                    urlLinkedIn: "required"
+    			},
+    			messages: {
+    			},
+    			errorElement: 'span',
+                errorPlacement: function (error, element) {
+                  error.addClass('invalid-feedback');
+                  element.closest('.form-group').append(error);
+                },
+                highlight: function (element, errorClass, validClass) {
+                  $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                  $(element).removeClass('is-invalid');
+                }
+    		});      
         });     
     </script>
 @stop
