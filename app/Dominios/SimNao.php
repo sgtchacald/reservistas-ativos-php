@@ -13,4 +13,8 @@ class SimNao extends Model
             "N" => "Não",
         );
     }
+    
+    public static function retornaSimNaoSeVazio($str){
+        return empty($str) ? 'N' : 'S';
+    }
 }

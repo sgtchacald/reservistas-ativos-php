@@ -164,15 +164,15 @@
                     				<div class="col-sm-4">
                         				<div class="form-group clearfix">
     										<div class="icheck-danger d-inline">
-    											<input type="checkbox" name="indCelularWhatsapp" id="checkboxDanger3"> 
+    											<input type="checkbox" name="indCelularWhatsapp" id="checkboxDanger3" class="initCheckboxSN" value="S"> 
     											<label for="checkboxDanger3">Este celular é meu whatsapp.</label><br>
-    											<input type="checkbox" name="indMsgWhatsapp" id="checkboxDanger3"> 
+    											<input type="checkbox" name="indMsgWhatsapp" id="checkboxDanger3" class="initCheckboxSN" value="S"> 
     											<label for="checkboxDanger3" style="color:#FF0000;">Desejo receber msgs neste cel.</label>
     										</div>
     									</div>
     								</div>
     
-        							<div class="col-sm-12">
+        							<!--  <div class="col-sm-12">
         								<div class="form-group">
         									<label for="exampleInputFile">Inserir Foto</label>
         									<div class="input-group">
@@ -186,7 +186,7 @@
         										</div>
         									</div>
         								</div>
-        							</div>
+        							</div>-->
     						</div>
             				</div>
             				
@@ -293,6 +293,15 @@
                     			<div class="row">
                     				<div class="col-sm-6">
                     					<div class="form-group">
+                        					<label>Youtube:</label> 
+                        					<input type="text" name="urlYoutube" id="urlYoutube" class="form-control" placeholder="Digite sua URL do perfil do Youtube">
+                    					</div>
+                    				</div>
+                    			</div>
+                    			
+                    			<div class="row">
+                    				<div class="col-sm-6">
+                    					<div class="form-group">
                         					<label>Site Pessoal:</label> 
                         					<input type="text" name="urlBlogSite" id="urlBlogSite" class="form-control" placeholder="Digite sua URL do perfil do seu website">
                     					</div>
@@ -364,8 +373,10 @@
     <script> 
         $(document).ready(function(){
  
+            //ativando máscaras de entrada
             $('[data-mask]').inputmask();
             
+            //ativando dateRagePicker
             $('.initData').daterangepicker({
             	singleDatePicker: true,
               	autoUpdateInput: false,
@@ -376,8 +387,8 @@
               $('.initData').val(chosen_date.format('DD/MM/YYYY'));
             });
             
-            // validate signup form on keyup and submit
-    		$("#cadastrarUsuarioReservista").validate({
+            // validacao de campos
+    		/*$("#cadastrarUsuarioReservista").validate({
     			rules: {
     				permissaoUsuario: "required",
     				nomeCompleto: "required",
@@ -427,7 +438,9 @@
                 unhighlight: function (element, errorClass, validClass) {
                   $(element).removeClass('is-invalid');
                 }
-    		});      
+    		});*/
+    		
+    		//ativando valores "S" ou "N" para checkboxes "true" ou "false"
         });     
     </script>
 @stop

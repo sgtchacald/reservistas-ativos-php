@@ -42,12 +42,12 @@ class CreateUsersTable extends Migration
             $table->char('ind_portador_deficiencia', 1);
             //Informações Sociais
             $table->string('url_imagem', 512);
-            $table->string('url_linkedin', 512);
-            $table->string('url_facebook', 512);
-            $table->string('url_twitter', 512);
-            $table->string('url_youtube', 512);
-            $table->string('url_instagram', 512);
-            $table->string('url_blog_site', 512);
+            $table->string('url_linkedin', 512)->nullable();
+            $table->string('url_facebook', 512)->nullable();
+            $table->string('url_twitter', 512)->nullable();
+            $table->string('url_youtube', 512)->nullable();
+            $table->string('url_instagram', 512)->nullable();
+            $table->string('url_blog_site', 512)->nullable();
             //Informações Disponibilidade
             $table->char('ind_disponivel_viagem', 1);
             $table->char('ind_disponivel_mudar_cidade', 1);
