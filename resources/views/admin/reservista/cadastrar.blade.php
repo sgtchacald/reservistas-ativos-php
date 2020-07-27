@@ -254,52 +254,47 @@
             				</div>
             				
             				<div class="tab-pane fade" id="tabs-d-social" role="tabpanel" aria-labelledby="tabs-d-social-tab">
-            					<div class="row">
+            			
+        						<div class="row">
             						<div class="col-sm-6">
                     					<div class="form-group">
                         					<label>Linked In:</label> 
                         					<input type="text" name="urlLinkedIn" id="urlLinkedIn" class="form-control" placeholder="Digite sua URL do perfil do Linked In">
                     					</div>
                     				</div>	
-                    			</div>
                     			
-                    			<div class="row">
                     				<div class="col-sm-6">
                     					<div class="form-group">
                         					<label>Facebook:</label> 
                         					<input type="text" name="urlFacebook" id="urlFacebook" class="form-control" placeholder="Digite sua URL do perfil do Facebook">
                     					</div>
                     				</div>
-                    			</div>
-                    			
-                    			<div class="row">
+                				</div>
+                				
+                				<div class="row">
                     				<div class="col-sm-6">
                     					<div class="form-group">
                         					<label>Instagram:</label> 
                         					<input type="text" name="urlInstagram" id="urlInstagram" class="form-control" placeholder="Digite sua URL do perfil do Instagram">
                     					</div>
                     				</div>
-                    			</div>
                     			
-                    			<div class="row">
                     				<div class="col-sm-6">
                     					<div class="form-group">
                         					<label>Twitter:</label> 
                         					<input type="text" name="urlTwitter" id="urlTwitter" class="form-control" placeholder="Digite sua URL do perfil do Twitter">
                     					</div>
                     				</div>
-                    			</div>
-                    			
-                    			<div class="row">
+                				</div>
+                				
+                				<div class="row">
                     				<div class="col-sm-6">
                     					<div class="form-group">
                         					<label>Youtube:</label> 
                         					<input type="text" name="urlYoutube" id="urlYoutube" class="form-control" placeholder="Digite sua URL do perfil do Youtube">
                     					</div>
                     				</div>
-                    			</div>
-                    			
-                    			<div class="row">
+
                     				<div class="col-sm-6">
                     					<div class="form-group">
                         					<label>Site Pessoal:</label> 
