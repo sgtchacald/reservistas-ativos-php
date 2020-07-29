@@ -28,31 +28,43 @@
 	</div>
 
 	<div class="card-body">
+		@foreach (['danger', 'warning', 'success', 'info'] as $msg)
+            @if(Session::has('alert-' . $msg))
+                <div class="alert alert-{{ $msg }}" role="alert">
+                    {!! Session::get('alert-' . $msg) !!}
+                </div>
+            @endif
+        @endforeach
+	
 		<table id="selecionarReservista"  class="dataTableInit table table-bordered table-hover">
 			<thead>
 				<tr>
 					<th>Ações</th>
-					<th>Nome</th>
+					<th>Força</th>
 					<th>Posto/Graduação</th>
 					<th>Nome de Guerra</th>
-					<th>Email</th>
-					<th>Nascimento</th>
+					<th>Batalhão</th>
+					<th>E-mail</th>
+					<th>Celular</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td align="center">
-    					<a href="" data-toggle="tooltip" data-placement="bottom" title="Editar"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;
-    					<a href="" data-toggle="tooltip" data-placement="bottom" title="Excluir"><i class="far fa-trash-alt"></i></a>&nbsp;&nbsp;
-    					<a href="" data-toggle="tooltip" data-placement="bottom" title="visualizar Currículo"><i class="far fa-file-pdf"></i></a>
-					</td>
-
-					<td>Diego Dos Santos</td>
-					<td>3º Sargento</td>
-					<td>Diego Santos</td>
-					<td>sgt.chacal.d@gmail.com</td>
-					<td>12/07/1986</td>
-				</tr>
+				@foreach($usuarios as $usuario)
+    				<tr>
+    					<td align="center">
+        					<a href="" data-toggle="tooltip" data-placement="bottom" title="Editar"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;
+        					<a href="" data-toggle="tooltip" data-placement="bottom" title="Excluir"><i class="far fa-trash-alt"></i></a>&nbsp;&nbsp;
+        					<a href="" data-toggle="tooltip" data-placement="bottom" title="visualizar Currículo"><i class="far fa-file-pdf"></i></a>
+    					</td>
+    
+    					<td>{{$usuario->tipo_forca}}</td>
+    					<td>{{$usuario->posto_graduacao}}</td>
+    					<td>{{$usuario->nome_de_guerra}}</td>
+    					<td>{{$usuario->nome_ultimo_batalhao}}</td>
+    					<td>{{$usuario->email}}</td>
+    					<td>{{$usuario->telefone_celular}}</td>
+    				</tr>
+				@endforeach
 			</tbody>
 		</table>
 	</div>
@@ -68,10 +80,10 @@ $(function () {
     $(".dataTableInit").DataTable({
       "paging": true,
       "lengthChange": true,
-      "pageLength": 6,
+      "pageLength": 5,
       "searching": true,
       "ordering": true,
-      "info": true,
+      "info": false,
       "autoWidth": false,
       "responsive": true,
       "language": {"url": "http://cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"}

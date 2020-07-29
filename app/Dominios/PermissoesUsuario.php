@@ -14,4 +14,16 @@ class PermissoesUsuario extends Model
             "E" => "Representante de Empresa"
         );
     }
+    
+    public static function getValueAdmin(){
+        return 'A';
+    }
+    
+    public static function getValueReservista(){
+        return 'R';
+    }
+    
+    public static function getValueRepresentanteEmpresa(){
+        return 'E';
+    }
 }

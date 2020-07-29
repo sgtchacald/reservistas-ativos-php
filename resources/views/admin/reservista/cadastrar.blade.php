@@ -24,6 +24,15 @@
 	<form name="cadastrarUsuarioReservista" id="cadastrarUsuarioReservista" method="post" action="{{route('reservista.insert')}}">
     	<div class="card-body">
     			@csrf
+    			
+    			@foreach (['danger', 'warning', 'success', 'info'] as $msg)
+                    @if(Session::has('alert-' . $msg))
+                        <div class="alert alert-{{ $msg }}" role="alert">
+                            {!! Session::get('alert-' . $msg) !!}
+                        </div>
+                    @endif
+                @endforeach
+    			
                 <div class="row">
                 	<div class="col-5 col-sm-3">
                 		<div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
@@ -225,7 +234,7 @@
                     			<div class="row">
                     				<div class="col-sm-2">
                     					<div class="form-group">
-                        					<label>Posto / Graduação:</label> 
+                        					<label>Post/Grad:</label> 
                                 			<select name="postoGraduacao" id="postoGraduacao" class="form-control">
                             					<option value="">Selecione</option> 
                             					@foreach ((\App\Dominios\PostoGraduacao::getDominio()) as $key => $value)
@@ -315,7 +324,7 @@
                     				
                     				<div class="col-sm-2">
                     					<div class="form-group">
-                        					<label>Data do Cadastro:</label> 
+                        					<label>Dt. Cadastro:</label> 
                         					<input type="text" name="createdAt" id="createdAt" class="form-control" placeholder="XX/XX/XXXX" disabled>
                     					</div>
                     				</div>
@@ -331,7 +340,7 @@
                     				
                     				<div class="col-sm-2">
                     					<div class="form-group">
-                        					<label>Data da Edição:</label> 
+                        					<label>Dt. Edição:</label> 
                         					<input type="text" name="updatedAt" id="updatedAt" class="form-control" placeholder="XX/XX/XXXX" disabled>
                     					</div>
                     				</div>
@@ -347,7 +356,7 @@
                     				
                     				<div class="col-sm-2">
                     					<div class="form-group">
-                        					<label>Data da Inativação:</label> 
+                        					<label>Dt. Inativação:</label> 
                         					<input type="text" name="deletedAt" id="deletedAt" class="form-control" placeholder="XX/XX/XXXX" disabled>
                     					</div>
                     				</div>
