@@ -1,5 +1,10 @@
 <?php
 
+use App\Dominios\IndStatus;
+use App\Dominios\PermissoesUsuario;
+
+
+
 return [
 
     /*
@@ -234,7 +239,7 @@ return [
         ['header' => 'account_settings'],
         [
             'text' => 'Reservistas',
-            'url'  => '/admin/reservista',
+            'url'  => '/admin/reservista/'.PermissoesUsuario::getValueReservista().'/'. IndStatus::getValueAtivo(),
             'icon' => 'fas fa-fw fa-user',
         ],
     ],
