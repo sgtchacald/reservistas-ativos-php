@@ -14,5 +14,18 @@ class UtilsController extends Controller{
         return '$' . Str::random(10) . '!';
     }
     
+    public static function getValueArray($itens, $key){
+        foreach($itens as $item => $value){
+            if($key == $item){
+                return $value;
+            }else{
+                return 'Valor não encontrado';
+            }
+        }
+    }
+    
+    
+   
+    
     
 }
