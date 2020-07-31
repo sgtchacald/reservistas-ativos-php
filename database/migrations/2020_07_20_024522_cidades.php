@@ -13,16 +13,16 @@ class Cidades extends Migration
      */
     public function up()
     {
-        Schema::create('cidades', function (Blueprint $table) {
-            $table->bigIncrements('cidade_id');
-            $table->string('nome', 100);
-            //Informações Segurança
+        Schema::create('CIDADES', function (Blueprint $table) {
+            $table->bigIncrements('idcidade');
+            $table->string('cidnome', 100);
+            //Informações Segurança 
             $table->timestamps();
-            $table->timestamp('deleted_at')->nullable();
-            $table->bigInteger('usuario_id_created')->nullable();
-            $table->bigInteger('usuario_id_updated')->nullable();
-            $table->bigInteger('usuario_id_deleted')->nullable();
-            $table->char('ind_status',1);
+            $table->timestamp('dtinativacao')->nullable();
+            $table->bigInteger('usucriou')->nullable();
+            $table->bigInteger('usueditou')->nullable();
+            $table->bigInteger('usuexcluiu')->nullable();
+            $table->char('cidindstatus', 1);
         });
     }
 
@@ -33,6 +33,6 @@ class Cidades extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cidades');
+        Schema::dropIfExists('CIDADES');
     }
 }

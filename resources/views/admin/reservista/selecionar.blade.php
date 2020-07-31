@@ -57,10 +57,8 @@
         					<a href="" data-toggle="tooltip" data-placement="bottom" title="visualizar Currículo"><i class="far fa-file-pdf"></i></a>
     					</td>
     						
-    					<td>
-    						{{(\App\Dominios\TipoForca::getDominio())[$usuario->tipo_forca]}}
-    					</td>
-    					<td>{{(\App\Dominios\PostoGraduacao::getDominio())[$usuario->posto_graduacao]}}</td>
+    					<td>{{(\App\Dominios\TipoForca::getDominio())[$usuario->tipo_forca]}}</td>
+    					<td>{{(\App\Dominios\PostoGraduacao::getDominio())[$usuario->posto_graduacvoao]}}</td>
     					<td>{{$usuario->nome_de_guerra}}</td>
     					<td>{{$usuario->nome_ultimo_batalhao}}</td>
     					<td>{{$usuario->email}}</td>

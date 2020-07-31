@@ -13,22 +13,22 @@ class CursosUsuario extends Migration
      */
     public function up()
     {
-        Schema::create('cursos_usuario', function (Blueprint $table) {
-            $table->bigIncrements('cursos_u_id');
-            $table->bigInteger('usuario_id')->unsigned();
-            $table->string('nome', 100);
-            $table->string('instituicao_ensino', 100);
-            $table->date('dt_inicio');
-            $table->date('dt_fim');
-            $table->string('url_certificado', 512);
-            //Informações Segurança
+        Schema::create('CURSOSUSUARIO', function (Blueprint $table) {
+            $table->bigIncrements('idcursousuario');
+            $table->bigInteger('idusuario')->unsigned();
+            $table->string('csunome', 100);
+            $table->string('csuinstituicaoensino', 100);
+            $table->date('csudtinicio');
+            $table->date('csudtfim');
+            $table->string('csuurlcertificado', 512);
+            //Informações Segurança 
             $table->timestamps();
-            $table->timestamp('deleted_at')->nullable();
-            $table->bigInteger('usuario_id_created')->nullable();
-            $table->bigInteger('usuario_id_updated')->nullable();
-            $table->bigInteger('usuario_id_deleted')->nullable();
-            $table->char('ind_status', 1);
-            $table->foreign('usuario_id')->references('usuario_id')->on('usuarios');
+            $table->timestamp('dtinativacao')->nullable();
+            $table->bigInteger('usucriou')->nullable();
+            $table->bigInteger('usueditou')->nullable();
+            $table->bigInteger('usuexcluiu')->nullable();
+            $table->char('csuindstatus', 1);
+            $table->foreign('idusuario')->references('idusuario')->on('USUARIOS');
         });
     }
 
@@ -39,6 +39,6 @@ class CursosUsuario extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cursos_usuario');
+        Schema::dropIfExists('CURSOSUSUARIO');
     }
 }

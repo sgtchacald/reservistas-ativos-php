@@ -13,16 +13,16 @@ class Paises extends Migration
      */
     public function up()
     {
-        Schema::create('paises', function (Blueprint $table) {
-            $table->bigIncrements('pais_id');
-            $table->string('nome', 100);
-            //Informações Segurança
+        Schema::create('PAISES', function (Blueprint $table) {
+            $table->bigIncrements('idpais');
+            $table->string('panome', 100);
+            //Informações Segurança 
             $table->timestamps();
-            $table->timestamp('deleted_at')->nullable();
-            $table->bigInteger('usuario_id_created')->nullable();
-            $table->bigInteger('usuario_id_updated')->nullable();
-            $table->bigInteger('usuario_id_deleted')->nullable();
-            $table->char('ind_status', 1);
+            $table->timestamp('dtinativacao')->nullable();
+            $table->bigInteger('usucriou')->nullable();
+            $table->bigInteger('usueditou')->nullable();
+            $table->bigInteger('usuexcluiu')->nullable();
+            $table->char('paindStatus', 1);
         });
     }
 
@@ -33,6 +33,6 @@ class Paises extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('paises');
+        Schema::dropIfExists('PAISES');
     }
 }
