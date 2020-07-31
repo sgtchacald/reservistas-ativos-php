@@ -13,18 +13,18 @@ class IdiomasUsuario extends Migration
      */
     public function up()
     {
-        Schema::create('idiomas_usuario', function (Blueprint $table) {
-            $table->bigIncrements('idiomas_u_id');
-            $table->bigInteger('usuario_id')->unsigned();
-            $table->char('nivel', 1);
-            //Informações Segurança
+        Schema::create('IDIOMASUSUARIO', function (Blueprint $table) {
+            $table->bigIncrements('ididiomausuario');
+            $table->bigInteger('idusuario')->unsigned();
+            $table->char('idusunivel', 1);
+            //Informações Segurança 
             $table->timestamps();
-            $table->timestamp('deleted_at')->nullable();
-            $table->bigInteger('usuario_id_created')->nullable();
-            $table->bigInteger('usuario_id_updated')->nullable();
-            $table->bigInteger('usuario_id_deleted')->nullable();
-            $table->char('ind_status', 1);
-            $table->foreign('usuario_id')->references('usuario_id')->on('usuarios');
+            $table->timestamp('dtinativacao')->nullable();
+            $table->bigInteger('usucriou')->nullable();
+            $table->bigInteger('usueditou')->nullable();
+            $table->bigInteger('usuexcluiu')->nullable();
+            $table->char('idusuindstatus', 1);
+            $table->foreign('idusuario')->references('idusuario')->on('USUARIOS');
         });
     }
 
@@ -35,6 +35,6 @@ class IdiomasUsuario extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('idiomas_usuario');
+        Schema::dropIfExists('IDIOMASUSUARIO');
     }
 }

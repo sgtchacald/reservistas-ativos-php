@@ -13,16 +13,16 @@ class CursosAcademicos extends Migration
      */
     public function up()
     {
-        Schema::create('cursos_academicos', function (Blueprint $table) {
-            $table->bigIncrements('curso_acad_id');
-            $table->string('nome', 100);
-            //Informações Segurança
-            $table->timestamps();
-            $table->timestamp('deleted_at')->nullable();
-            $table->bigInteger('usuario_id_created')->nullable();
-            $table->bigInteger('usuario_id_updated')->nullable();
-            $table->bigInteger('usuario_id_deleted')->nullable();
-            $table->char('ind_status', 1);
+        Schema::create('CURSOSACADEMICOS', function (Blueprint $table) {
+            $table->bigIncrements('idcursoacademico');
+            $table->string('cacnome', 100);
+             //Informações Segurança 
+             $table->timestamps();
+             $table->timestamp('dtinativacao')->nullable();
+             $table->bigInteger('usucriou')->nullable();
+             $table->bigInteger('usueditou')->nullable();
+             $table->bigInteger('usuexcluiu')->nullable();
+            $table->char('cacindstatus', 1);
         });
     }
 
@@ -33,6 +33,6 @@ class CursosAcademicos extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('niveis_estudo');
+        Schema::dropIfExists('CURSOSACADEMICOS');
     }
 }
