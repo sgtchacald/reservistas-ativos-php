@@ -25,14 +25,14 @@ class FormacoesAcademicas extends Migration
             $table->date('foadtinicio');
             $table->date('foadtfim');
             $table->string('foaindsituacao', 1);
+            $table->char('foaindstatus', 1);
             //Informações Segurança 
-            $table->timestamps();
-            $table->timestamp('dtinativacao')->nullable();
+            $table->timestamp('dtcadastro')->nullable();
+            $table->timestamp('dtedicao')->nullable();
+            $table->timestamp('dtexclusao')->nullable();
             $table->bigInteger('usucriou')->nullable();
             $table->bigInteger('usueditou')->nullable();
             $table->bigInteger('usuexcluiu')->nullable();
-            $table->char('foaindstatus', 1);
-            
             //Chaves Estrangeiras
             $table->foreign('idusuario')->references('idusuario')->on('USUARIOS');
             $table->foreign('idpais')->references('idpais')->on('PAISES');

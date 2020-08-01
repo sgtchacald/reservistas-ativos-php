@@ -16,13 +16,14 @@ class TiposHabilitacao extends Migration
         Schema::create('TIPOSHABILITACAO', function (Blueprint $table) {
             $table->bigIncrements('idtipohabilitacao');
             $table->string('habnome', 100);
+            $table->char('habindstatus', 1);
             //Informações Segurança 
-            $table->timestamps();
-            $table->timestamp('dtinativacao')->nullable();
+            $table->timestamp('dtcadastro')->nullable();
+            $table->timestamp('dtedicao')->nullable();
+            $table->timestamp('dtexclusao')->nullable();
             $table->bigInteger('usucriou')->nullable();
             $table->bigInteger('usueditou')->nullable();
             $table->bigInteger('usuexcluiu')->nullable();
-            $table->char('habindstatus', 1);
         });
     }
 

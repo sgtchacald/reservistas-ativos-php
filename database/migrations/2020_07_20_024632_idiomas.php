@@ -16,13 +16,14 @@ class Idiomas extends Migration
         Schema::create('IDIOMAS', function (Blueprint $table) {
             $table->bigIncrements('ididioma');
             $table->string('idnome', 100);
+            $table->char('idindstatus', 1);
             //Informações Segurança 
-            $table->timestamps();
-            $table->timestamp('dtinativacao')->nullable();
+            $table->timestamp('dtcadastro')->nullable();
+            $table->timestamp('dtedicao')->nullable();
+            $table->timestamp('dtexclusao')->nullable();
             $table->bigInteger('usucriou')->nullable();
             $table->bigInteger('usueditou')->nullable();
             $table->bigInteger('usuexcluiu')->nullable();
-            $table->char('idindstatus', 1);
         });
     }
 

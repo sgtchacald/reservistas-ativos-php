@@ -50,7 +50,7 @@ class UsuarioController extends Controller{
       $indErro = false;
             
       try {
-          User::create([
+          Usuarios::create([
               'permissao_usuario'           => $request->input('permissaoUsuario'),
               'nome_completo'               => $request->input('nomeCompleto'),
               'cpf'                         => UtilsController::apenasNumeros($request->input('cpf')),
@@ -93,7 +93,7 @@ class UsuarioController extends Controller{
           return view('admin.reservista.cadastrar');
       }else{
           $request->session()->flash('alert-success', 'Dados criados com sucesso.');
-          return index('R','A');
+          //return index('R','A');
       }
     }
     

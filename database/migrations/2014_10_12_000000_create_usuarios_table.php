@@ -22,7 +22,7 @@ class CreateUsuariosTable extends Migration
             $table->char('usupermissao', 1);
             //Informacoes Civis
             $table->string('usucpf', 11);
-            $table->string('usunomecompleto', 100);
+            $table->string('name', 100);
             $table->date('usudtnascimento');
             $table->char('usuestadoCivil', 2);
             $table->char('ususexo', 1);
@@ -52,15 +52,16 @@ class CreateUsuariosTable extends Migration
             $table->char('usuindmudarcidade', 1);
             //Informações Segurança Usuário
             $table->timestamp('usudtverificacaoemail')->nullable();
-            $table->string('senha');
+            $table->string('ususenha');
             $table->rememberToken();
+            $table->char('usuindstatus', 1);
             //Informações Segurança 
-            $table->timestamps();
-            $table->timestamp('dtinativacao')->nullable();
+            $table->timestamp('dtcadastro')->nullable();
+            $table->timestamp('dtedicao')->nullable();
+            $table->timestamp('dtexclusao')->nullable();
             $table->bigInteger('usucriou')->nullable();
             $table->bigInteger('usueditou')->nullable();
             $table->bigInteger('usuexcluiu')->nullable();
-            $table->char('usuindstatus', 1);
             //chave estrangeira se for representante de empresa
             $table->foreign('idempresa')->references('idempresa')->on('EMPRESAS');
         });

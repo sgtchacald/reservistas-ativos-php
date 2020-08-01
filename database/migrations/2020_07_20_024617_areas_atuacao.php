@@ -16,13 +16,14 @@ class AreasAtuacao extends Migration
         Schema::create('AREASATUACAO', function (Blueprint $table) {
             $table->bigIncrements('idareaatuacao');
             $table->string('atunome', 100);
+            $table->char('atuindstatus', 1);
             //Informações Segurança 
-            $table->timestamps();
-            $table->timestamp('dtinativacao')->nullable();
+            $table->timestamp('dtcadastro')->nullable();
+            $table->timestamp('dtedicao')->nullable();
+            $table->timestamp('dtexclusao')->nullable();
             $table->bigInteger('usucriou')->nullable();
             $table->bigInteger('usueditou')->nullable();
             $table->bigInteger('usuexcluiu')->nullable();
-            $table->char('atuindstatus', 1);
         });
     }
 
