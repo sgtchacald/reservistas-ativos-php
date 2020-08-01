@@ -16,13 +16,14 @@ class Especializacoes extends Migration
         Schema::create('ESPECIALIZACOES', function (Blueprint $table) {
             $table->bigIncrements('idespecializacao');
             $table->string('espnome', 100);
+            $table->char('espindstatus', 1);
             //Informações Segurança 
-            $table->timestamps();
-            $table->timestamp('dtinativacao')->nullable();
+            $table->timestamp('dtcadastro')->nullable();
+            $table->timestamp('dtedicao')->nullable();
+            $table->timestamp('dtexclusao')->nullable();
             $table->bigInteger('usucriou')->nullable();
             $table->bigInteger('usueditou')->nullable();
             $table->bigInteger('usuexcluiu')->nullable();
-            $table->char('espindstatus', 1);
         });
     }
 

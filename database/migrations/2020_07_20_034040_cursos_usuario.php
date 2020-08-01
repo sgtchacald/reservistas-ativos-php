@@ -21,13 +21,14 @@ class CursosUsuario extends Migration
             $table->date('csudtinicio');
             $table->date('csudtfim');
             $table->string('csuurlcertificado', 512);
+            $table->char('csuindstatus', 1);
             //Informações Segurança 
-            $table->timestamps();
-            $table->timestamp('dtinativacao')->nullable();
+            $table->timestamp('dtcadastro')->nullable();
+            $table->timestamp('dtedicao')->nullable();
+            $table->timestamp('dtexclusao')->nullable();
             $table->bigInteger('usucriou')->nullable();
             $table->bigInteger('usueditou')->nullable();
             $table->bigInteger('usuexcluiu')->nullable();
-            $table->char('csuindstatus', 1);
             $table->foreign('idusuario')->references('idusuario')->on('USUARIOS');
         });
     }

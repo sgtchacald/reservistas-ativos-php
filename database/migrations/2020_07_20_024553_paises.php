@@ -15,14 +15,15 @@ class Paises extends Migration
     {
         Schema::create('PAISES', function (Blueprint $table) {
             $table->bigIncrements('idpais');
-            $table->string('panome', 100);
+            $table->string('pnome', 100);
+            $table->char('pindStatus', 1);
             //Informações Segurança 
-            $table->timestamps();
-            $table->timestamp('dtinativacao')->nullable();
+            $table->timestamp('dtcadastro')->nullable();
+            $table->timestamp('dtedicao')->nullable();
+            $table->timestamp('dtexclusao')->nullable();
             $table->bigInteger('usucriou')->nullable();
             $table->bigInteger('usueditou')->nullable();
             $table->bigInteger('usuexcluiu')->nullable();
-            $table->char('paindStatus', 1);
         });
     }
 

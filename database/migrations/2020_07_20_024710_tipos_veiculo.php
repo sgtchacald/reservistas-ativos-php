@@ -16,13 +16,14 @@ class TiposVeiculo extends Migration
         Schema::create('TIPOSVEICULO', function (Blueprint $table) {
             $table->bigIncrements('idtipoveiculo');
             $table->string('tvenome', 100);
+            $table->char('tveindstatus', 1);
             //Informações Segurança 
-            $table->timestamps();
-            $table->timestamp('dtinativacao')->nullable();
+            $table->timestamp('dtcadastro')->nullable();
+            $table->timestamp('dtedicao')->nullable();
+            $table->timestamp('dtexclusao')->nullable();
             $table->bigInteger('usucriou')->nullable();
             $table->bigInteger('usueditou')->nullable();
             $table->bigInteger('usuexcluiu')->nullable();
-            $table->char('tveindstatus', 1);
         });
     }
 

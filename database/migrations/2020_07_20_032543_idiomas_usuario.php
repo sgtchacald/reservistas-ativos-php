@@ -17,13 +17,14 @@ class IdiomasUsuario extends Migration
             $table->bigIncrements('ididiomausuario');
             $table->bigInteger('idusuario')->unsigned();
             $table->char('idusunivel', 1);
+            $table->char('idusuindstatus', 1);
             //Informações Segurança 
-            $table->timestamps();
-            $table->timestamp('dtinativacao')->nullable();
+            $table->timestamp('dtcadastro')->nullable();
+            $table->timestamp('dtedicao')->nullable();
+            $table->timestamp('dtexclusao')->nullable();
             $table->bigInteger('usucriou')->nullable();
             $table->bigInteger('usueditou')->nullable();
             $table->bigInteger('usuexcluiu')->nullable();
-            $table->char('idusuindstatus', 1);
             $table->foreign('idusuario')->references('idusuario')->on('USUARIOS');
         });
     }

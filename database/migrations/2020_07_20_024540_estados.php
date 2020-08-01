@@ -16,13 +16,14 @@ class Estados extends Migration
         Schema::create('ESTADOS', function (Blueprint $table) {
             $table->bigIncrements('idestado');
             $table->string('estnome', 100);
+            $table->char('estindstatus', 1);
             //Informações Segurança 
-            $table->timestamps();
-            $table->timestamp('dtinativacao')->nullable();
+            $table->timestamp('dtcadastro')->nullable();
+            $table->timestamp('dtedicao')->nullable();
+            $table->timestamp('dtexclusao')->nullable();
             $table->bigInteger('usucriou')->nullable();
             $table->bigInteger('usueditou')->nullable();
             $table->bigInteger('usuexcluiu')->nullable();
-            $table->char('estindstatus', 1);
         });
     }
 

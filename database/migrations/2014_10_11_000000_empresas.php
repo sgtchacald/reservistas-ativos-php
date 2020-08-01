@@ -23,13 +23,14 @@ class Empresas extends Migration
             $table->string('empemail', 255)->unique();
             $table->string('empurlsite', 512);
             $table->string('empurllogotipo', 512);
+            $table->char('empindstatus', 1);
             //Informações Segurança 
-            $table->timestamps();
-            $table->timestamp('dtinativacao')->nullable();
+            $table->timestamp('dtcadastro')->nullable();
+            $table->timestamp('dtedicao')->nullable();
+            $table->timestamp('dtexclusao')->nullable();
             $table->bigInteger('usucriou')->nullable();
             $table->bigInteger('usueditou')->nullable();
             $table->bigInteger('usuexcluiu')->nullable();
-            $table->char('empindstatus', 1);
         });
     }
 
@@ -38,8 +39,26 @@ class Empresas extends Migration
      *
      * @return void
      */
-    public function down()
-    {
-        Schema::dropIfExists('empresas');
+    public function down(){
+        Schema::dropIfExists('password_resets');
+        Schema::dropIfExists('migrations');
+        Schema::dropIfExists('failed_jobs');
+        Schema::dropIfExists('EXPERIENCIASPROFISSIONAIS');
+        Schema::dropIfExists('FORMACOESACADEMICAS');
+        Schema::dropIfExists('AREASATUACAO');
+        Schema::dropIfExists('CIDADES');
+        Schema::dropIfExists('CURSOSACADEMICOS');
+        Schema::dropIfExists('CURSOSUSUARIO');
+        Schema::dropIfExists('ESPECIALIZACOES');
+        Schema::dropIfExists('ESTADOS');
+        Schema::dropIfExists('IDIOMAS');
+        Schema::dropIfExists('IDIOMASUSUARIO');
+        Schema::dropIfExists('NIVEISESTUDO');
+        Schema::dropIfExists('NIVEISHIERARQUICOS');
+        Schema::dropIfExists('PAISES');
+        Schema::dropIfExists('TIPOSHABILITACAO');
+        Schema::dropIfExists('TIPOSVEICULO');
+        Schema::dropIfExists('USUARIOS');
+        Schema::dropIfExists('EMPRESAS');
     }
 }

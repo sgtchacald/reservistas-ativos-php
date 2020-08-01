@@ -31,15 +31,14 @@ class ExperienciasProfissionais extends Migration
             $table->date('expdtinicio');
             $table->date('expdtfim');
             $table->char('expindatual', 1);
-            
+            $table->char('expindstatus', 1);
             //Informações Segurança 
-            $table->timestamps();
-            $table->timestamp('dtinativacao')->nullable();
+            $table->timestamp('dtcadastro')->nullable();
+            $table->timestamp('dtedicao')->nullable();
+            $table->timestamp('dtexclusao')->nullable();
             $table->bigInteger('usucriou')->nullable();
             $table->bigInteger('usueditou')->nullable();
             $table->bigInteger('usuexcluiu')->nullable();
-            $table->char('expindstatus', 1);
-            
             //Chaves Estrangeiras
             $table->foreign('idusuario')->references('idusuario')->on('USUARIOS');
             $table->foreign('idnivelhierarquico')->references('idnivelhierarquico')->on('NIVEISHIERARQUICOS');
