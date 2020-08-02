@@ -459,5 +459,25 @@ return [
                 ],
             ],
         ],
+
+        [
+            'name' => 'utilsCssJs',
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => '/js/utils.js',
+                ],
+
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => '/css/utils.css',
+                ],
+            ],
+        ],
+
+        
     ],
 ];

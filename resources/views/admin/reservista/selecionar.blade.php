@@ -18,6 +18,9 @@
 @stop 
 
 @section('content')
+
+@include('utils.erro')
+
 <div class="card">
 	<div class="card-header">
 		<h3 class="card-title">Seleção de Reservistas</h3>
@@ -28,14 +31,6 @@
 	</div>
 
 	<div class="card-body">
-		@foreach (['danger', 'warning', 'success', 'info'] as $msg)
-            @if(Session::has('alert-' . $msg))
-                <div class="alert alert-{{ $msg }}" role="alert">
-                    {!! Session::get('alert-' . $msg) !!}
-                </div>
-            @endif
-        @endforeach
-	
 		<table id="selecionarReservista"  class="dataTableInit table table-bordered table-hover">
 			<thead>
 				<tr>
@@ -57,12 +52,12 @@
         					<a href="" data-toggle="tooltip" data-placement="bottom" title="visualizar Currículo"><i class="far fa-file-pdf"></i></a>
     					</td>
     						
-    					<td>{{(\App\Dominios\TipoForca::getDominio())[$usuario->tipo_forca]}}</td>
-    					<td>{{(\App\Dominios\PostoGraduacao::getDominio())[$usuario->posto_graduacvoao]}}</td>
-    					<td>{{$usuario->nome_de_guerra}}</td>
-    					<td>{{$usuario->nome_ultimo_batalhao}}</td>
+    					<td>{{(\App\Dominios\TipoForca::getDominio())[$usuario->usutipoforca]}}</td>
+    					<td>{{(\App\Dominios\PostoGraduacao::getDominio())[$usuario->usupostograd]}}</td>
+    					<td>{{$usuario->usunomeguerra}}</td>
+    					<td>{{$usuario->usunomeultbtl}}</td>
     					<td>{{$usuario->email}}</td>
-    					<td>{{$usuario->telefone_celular}}</td>
+    					<td>{{$usuario->usutelcelular}}</td>
     				</tr>
 				@endforeach
 			</tbody>

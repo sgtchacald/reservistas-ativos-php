@@ -25,7 +25,6 @@ class UsuarioController extends Controller{
         switch ($permissaoUsuario) {
             case 'R':
                 return view('admin.reservista.selecionar')->with(compact('usuarios'));
-                //dd($usuarios);
                 break;
             case 'E':
                 return view('admin.representanteempresas.selecionar')->with(compact('usuarios'));
@@ -45,56 +44,93 @@ class UsuarioController extends Controller{
     }
     
     public function store(Request $request){
-      $senhaAleatoria = UtilsController::geraSenhaAleatoria();
-      
-      $indErro = false;
+        $senhaAleatoria = UtilsController::geraSenhaAleatoria();
+
+        $indErro = false;
+        $usuPermissao = $request->input('usuPermissao');
+        $indStatus = 'A';
+
+        $request->validate([
+            'usuPermissao'          => 'bail|required',
+            'name'                  => 'bail|required',
+            'usuCPF'                => 'bail|required|unique:USUARIOS',
+            'usuDtNascimento'       => 'bail|required',
+            'usuEstadoCivil'        => 'bail|required',
+            'usuGenero'             => 'bail|required',
+            'usuIndPortDeficiente'  => 'bail|required',
+            'email'                 => 'bail|required|unique:USUARIOS|email',
+            'usuTelCelular'         => 'bail|required',
+            'usuTelFixo'            => 'bail|required',
+            'usuIndViagem'          => 'bail|required',
+            'usuIndMudarCidade'     => 'bail|required',
+            //'usuimagemurl'          => 'bail|required',
+            'usuTipoForca'          => 'bail|required',
+            'usuIndOficial'         => 'bail|required',
+            'usuCertReservista'     => 'bail|required',
+            'usuPostoGrad'          => 'bail|required',
+            'usuNomeGuerra'         => 'bail|required',
+            'usuNomeUltBtl'         => 'bail|required',
+            'usuLinkedinUrl'        => 'bail|required',
+        ]);
             
-      try {
-          Usuarios::create([
-              'permissao_usuario'           => $request->input('permissaoUsuario'),
-              'nome_completo'               => $request->input('nomeCompleto'),
-              'cpf'                         => UtilsController::apenasNumeros($request->input('cpf')),
-              'dt_nascimento'               => Carbon::parse($request->input('dtNascimento'))->format('Y-m-d H:i'),
-              'estado_civil'                => $request->input('estadoCivil'),
-              'sexo'                        => $request->input('sexo'),
-              'ind_portador_deficiencia'    => $request->input('indPortadorDeficiencia'),
-              'email'                       => $request->input('email'),
-              'telefone_celular'            => UtilsController::apenasNumeros($request->input('telefoneCelular')),
-              'telefone_residencial'        => UtilsController::apenasNumeros($request->input('telefoneResidencial')),
-              'ind_disponivel_viagem'       => $request->input('indDisponivelViagem'),
-              'ind_disponivel_mudar_cidade' => $request->input('indDisponivelMudarCidade'),
-              'ind_celular_whatsapp'        => SimNao::retornaSimNaoSeVazio($request->input('indCelularWhatsapp')),
-              'ind_msg_whatssap'            => SimNao::retornaSimNaoSeVazio($request->input('indMsgWhatsapp')),
-              'url_imagem'                  => NULL,
-              'tipo_forca'                  => SimNao::retornaSimNaoSeVazio($request->input('tipoForca')),
-              'ind_oficial'                 => $request->input('indOficial'),
-              'certificado_reservista'      => $request->input('certificadoReservista'),
-              'posto_graduacao'             => $request->input('postoGraduacao'),
-              'nome_de_guerra'              => $request->input('nomeDeGuerra'),
-              'nome_ultimo_batalhao'        => $request->input('nomeUltimoBatalhao'),
-              'url_linkedin'                => $request->input('urlLinkedIn'),
-              'url_facebook'                => $request->input('urlFacebook'),
-              'url_instagram'               => $request->input('urlInstagram'),
-              'url_twitter'                 => $request->input('urlTwitter'),
-              'url_youtube'                 => $request->input('urlYoutube'),
-              'url_blog_site'               => $request->input('urlBlogSite'),
-              'password'                    => Hash::make($senhaAleatoria),
-              'usuario_id_created'          => Auth::user()->getAuthIdentifier(),
-              'created_at'                  => date('Y-m-d H:i:s'),
-              'ind_status'                  => 'A'
-          ]);
-      } catch (Throwable $e) {
-          $indErro = true;
-      }
+        try {
+            Usuarios::create([
+                'usupermissao'        => $usuPermissao,
+                'name'                => $request->input('name'),
+                'usucpf'              => UtilsController::apenasNumeros($request->input('usuCPF')),
+                'usudtnascimento'     => Carbon::parse($request->input('usuDtNascimento'))->format('Y-m-d H:i'),
+                'usuestadocivil'      => $request->input('usuEstadoCivil'),
+                'usugenero'           => $request->input('usuGenero'),
+                'usuindportdeficiente'=> $request->input('usuIndPortDeficiente'),
+                'email'               => $request->input('email'),
+                'usutelcelular'       => UtilsController::apenasNumeros($request->input('usuTelCelular')),
+                'usutelfixo'          => UtilsController::apenasNumeros($request->input('usuTelFixo')),
+                'usuindviagem'        => $request->input('usuIndViagem'),
+                'usuindmudarcidade'   => $request->input('usuIndMudarCidade'),
+                'usuindcelwhatsapp'   => SimNao::retornaSimNaoSeVazio($request->input('usuIndCelWhatsapp')),
+                'usuindmsg'           => SimNao::retornaSimNaoSeVazio($request->input('usuIndMsg')),
+                'usuimagemurl'        => NULL,
+                'usutipoforca'        => $request->input('usuTipoForca'),
+                'usuindoficial'       => $request->input('usuIndOficial'),
+                'usucertreservista'   => $request->input('usuCertReservista'),
+                'usupostograd'        => $request->input('usuPostoGrad'),
+                'usunomeguerra'       => $request->input('usuNomeGuerra'),
+                'usunomeultbtl'       => $request->input('usuNomeUltBtl'),
+                'usulinkedinurl'      => $request->input('usuLinkedinUrl'),
+                'usufacebookurl'      => $request->input('usuFacebookUrl'),
+                'usuinstagramurl'     => $request->input('usuInstagramUrl'),
+                'usutwitterurl'       => $request->input('usuTwitterUrl'),
+                'usuyoutubeurl'       => $request->input('usuYoutubeUrl'),
+                'usublogsiteurl'      => $request->input('usuBlogSiteUrl'),
+                'password'            => Hash::make($senhaAleatoria),
+                'usuindstatus'        => $indStatus,
+                'usucriou'            => Auth::user()->getAuthIdentifier(),
+                'dtcadastro'          => date('Y-m-d H:i:s')
+            ]);
+        } catch (Throwable $e) {
+            $indErro = true;
+        }
       
-      if($indErro){
-          $request->session()->flash('alert-danger', "Erro Inesperado, verifique o log de registros.");
-          $request->session()->flash('alert-warning', "Para verificar o Log de registros acesse o caminho: CAMINHO_LOG.");
-          return view('admin.reservista.cadastrar');
-      }else{
-          $request->session()->flash('alert-success', 'Dados criados com sucesso.');
-          //return index('R','A');
-      }
+        if($indErro){
+            $request->session()->flash('alert-danger', "Erro Inesperado, verifique o log de registros." . $e);
+            //$request->session()->flash('alert-warning', "Para verificar o Log de registros acesse o caminho: CAMINHO_LOG.");
+            return view('admin.reservista.cadastrar');
+        }else{
+            $request->session()->flash('alert-success', 'Dados criados com sucesso.');
+            
+            switch ($usuPermissao) {
+                case 'R':
+                    $rota = 'reservista.selecionar';
+                    break;
+                case 'E':
+                    $rota = 'rep.empresa.selecionar';
+                    break;
+                case 'A':
+                    $rota = 'administrador.selecionar';
+                    break;
+            }  
+            return redirect()->route($rota, ['permissaoUsuario' => $usuPermissao,'indStatus' => $indStatus]);
+        }
     }
     
     public function edit(){

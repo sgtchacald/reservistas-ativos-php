@@ -25,13 +25,7 @@
     	<div class="card-body">
     			@csrf
     			
-    			@foreach (['danger', 'warning', 'success', 'info'] as $msg)
-                    @if(Session::has('alert-' . $msg))
-                        <div class="alert alert-{{ $msg }}" role="alert">
-                            {!! Session::get('alert-' . $msg) !!}
-                        </div>
-                    @endif
-                @endforeach
+    			@include('utils.erro')
     			
                 <div class="row">
                 	<div class="col-5 col-sm-3">
@@ -49,7 +43,7 @@
             					<div class="row">
             						<div class="col-sm-3 form-group">
                         				<label>Perfil de Usuário:</label>
-                        				<select name="permissaoUsuario" id="permissaoUsuario" class="form-control">
+                        				<select name="usuPermissao" id="usuPermissao" class="form-control">
                         					<option value="">Selecione</option> 
                         					@foreach((\App\Dominios\PermissoesUsuario::getDominio()) as $key => $value)
                         					<option value="{{$key}}">{{$value}}</option> 
@@ -60,7 +54,7 @@
                     				<div class="col-sm-9">
                     					<div class="form-group">
                         					<label>Nome Completo:</label> 
-                        					<input type="text"  name="nomeCompleto" id="nomeCompleto" class="form-control" placeholder="Digite seu nome">
+                        					<input type="text"  name="name" id="name" class="form-control" placeholder="Digite seu nome">
                     					</div>
                     				</div>
                     			</div>
@@ -69,7 +63,7 @@
                     				<div class="col-sm-3">
                     					<div class="form-group">
                         					<label>CPF:</label> 
-                        					<input type="text" name="cpf" id="cpf" class="form-control" data-inputmask="'mask': ['999.999.999-99']" data-mask="">
+                        					<input type="text" name="usuCPF" id="usuCPF" class="form-control" data-inputmask="'mask': ['999.999.999-99']" data-mask="">
                     					</div>
                     				</div>
                     				
@@ -77,7 +71,7 @@
                     					<div class="form-group">
                         					<label>Dt Nascimento:</label>
                                             <div class="input-group date reservationdate" id="reservationdate" data-target-input="nearest">
-                                                <input type="text" name="dtNascimento" id="dtNascimento" class="form-control initData" data-inputmask-alias="datetime"  data-inputmask="'mask': ['99/99/9999']" data-mask="" im-insert="false">
+                                                <input type="text" name="usuDtNascimento" id="usuDtNascimento" class="form-control initData" data-inputmask-alias="datetime"  data-inputmask="'mask': ['99/99/9999']" data-mask="" im-insert="false">
                                                     <div class="input-group-append">
                                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                            		</div>
@@ -88,7 +82,7 @@
                     				<div class="col-sm-2">
                     					<div class="form-group">
                         					<label>Estado Civil:</label> 
-                                			<select name="estadoCivil" id="estadoCivil" class="form-control">
+                                			<select name="usuEstadoCivil" id="usuEstadoCivil" class="form-control">
                             					<option value="">Selecione</option> 
                             					@foreach ((\App\Dominios\EstadoCivil::getDominio()) as $key => $value)
                             						<option value="{{$key}}">{{$value}}</option> 
@@ -100,7 +94,7 @@
                     				<div class="col-sm-2">
                     					<div class="form-group">
                     						<label>Gênero:</label> 
-                                			<select name="sexo" id="sexo" class="form-control">
+                                			<select name="usuGenero" id="usuGenero" class="form-control">
                             					<option value="">Selecione</option> 
                             					@foreach ((\App\Dominios\Sexo::getDominio()) as $key => $value)
                             						<option value="{{$key}}">{{$value}}</option> 
@@ -112,7 +106,7 @@
                     				<div class="col-sm-2">
                     					<div class="form-group">
                     						<label>Port. Deficiência?</label> 
-                                			<select name="indPortadorDeficiencia" id="indPortadorDeficiencia" class="form-control">
+                                			<select name="usuIndPortDeficiente" id="usuIndPortDeficiente" class="form-control">
                             					<option value="">Selecione</option> 
                             					@foreach ((\App\Dominios\SimNao::getDominio()) as $key => $value)
                             						<option value="{{$key}}">{{$value}}</option> 
@@ -131,14 +125,16 @@
                     				</div>
                     				
                     				<div class="col-sm-2">
-                    					<label>Telefone Celular:</label> 
-                        				<input type="text" name="telefoneCelular" id="telefoneCelular" class="form-control" placeholder="Digite seu celular" data-inputmask="'mask': ['99 9 9999-9999']" data-mask="">
+										<div class="form-group">
+											<label>Telefone Celular:</label> 
+											<input type="text" name="usuTelCelular" id="usuTelCelular" class="form-control" placeholder="" data-inputmask="'mask': ['99 9 9999-9999']" data-mask="">
+										</div>
                     				</div>
                     				
                     				<div class="col-sm-2">
                     					<div class="form-group">
                         					<label>Telefone Fixo:</label> 
-                        					<input type="text" name="telefoneResidencial" id="telefoneResidencial" class="form-control" placeholder="Digite seu telefone fixo" data-inputmask="'mask': ['99 9999-9999']" data-mask="">
+                        					<input type="text" name="usuTelFixo" id="usuTelFixo" class="form-control" placeholder="" data-inputmask="'mask': ['99 9999-9999']" data-mask="">
                     					</div>
                     				</div>
                     			</div>
@@ -149,7 +145,7 @@
                     						<label>Disponível para viajar?</label>
                     						<div class="form-check">
                     							@foreach ((\App\Dominios\SimNao::getDominio()) as $key => $value)
-                        							<input type="radio" name="indDisponivelViagem" id="indDisponivelViagem" class="form-check-input" style="" value="{{$key}}">
+                        							<input type="radio" name="usuIndViagem" id="usuIndViagem" class="form-check-input" style="" value="{{$key}}">
                         							{{$value}}&nbsp;&nbsp; &nbsp;&nbsp;                         							
                     							@endforeach
                     						</div>
@@ -161,7 +157,7 @@
                     						<label>Disponível para mudar de cidade?</label>
                     						<div class="form-check">
                     							@foreach ((\App\Dominios\SimNao::getDominio()) as $key => $value)
-                        							<input type="radio" name="indDisponivelMudarCidade" id="indDisponivelMudarCidade" class="form-check-input" style="" value="{{$key}}">
+                        							<input type="radio" name="usuIndMudarCidade" id="usuIndMudarCidade" class="form-check-input" style="" value="{{$key}}">
                         							{{$value}}&nbsp;&nbsp; &nbsp;&nbsp;                         							
                     							@endforeach
                     						</div>
@@ -173,9 +169,9 @@
                     				<div class="col-sm-4">
                         				<div class="form-group clearfix">
     										<div class="icheck-danger d-inline">
-    											<input type="checkbox" name="indCelularWhatsapp" id="checkboxDanger3" class="initCheckboxSN" value="S"> 
+    											<input type="checkbox" name="usuIndCelWhatsapp" id="checkboxDanger3" class="initCheckboxSN" value="S"> 
     											<label for="checkboxDanger3">Este celular é meu whatsapp.</label><br>
-    											<input type="checkbox" name="indMsgWhatsapp" id="checkboxDanger3" class="initCheckboxSN" value="S"> 
+    											<input type="checkbox" name="usuIndMsg" id="checkboxDanger3" class="initCheckboxSN" value="S"> 
     											<label for="checkboxDanger3" style="color:#FF0000;">Desejo receber msgs neste cel.</label>
     										</div>
     									</div>
@@ -200,10 +196,10 @@
             				</div>
             				
             				<div class="tab-pane fade" id="tabs-d-militares" role="tabpanel" aria-labelledby="tabs-d-militares-tab">
-            					<div class="row mb-3">
+            					<div class="row">
                         			<div class="col-sm-3 form-group">
                         				<label>Força de Origem:</label> 
-                            			<select name="tipoForca" id="tipoForca" class="form-control">
+                            			<select name="usuTipoForca" id="usuTipoForca" class="form-control">
                         					<option value="">Selecione</option> 
                         					@foreach ((\App\Dominios\TipoForca::getDominio()) as $key => $value)
                         						<option value="{{$key}}">{{$value}}</option> 
@@ -216,17 +212,17 @@
                     						<label>Sou Oficial?</label>
                     						<div class="form-check" style="padding-top: 6px;">
                     							@foreach ((\App\Dominios\SimNao::getDominio()) as $key => $value)
-                        							<input type="radio" name="indOficial" id="indOficial" class="form-check-input" style="" value="{{$key}}">
+                        							<input type="radio" name="usuIndOficial" id="usuIndOficial" class="form-check-input" style="" value="{{$key}}">
                         							{{$value}}&nbsp;&nbsp; &nbsp;&nbsp;                         							
                     							@endforeach
                     						</div>
                     					</div>
                     				</div>
                     				
-                    				<div class="col-sm-3">
+                    				<div class="col-sm-4">
                     					<div class="form-group">
                     						<label>Certificado de Reservista:</label> 
-                    						<input type="text" name="certificadoReservista" id="certificadoReservista" class="form-control" placeholder="Digite o Número do Certificado">
+                    						<input type="text" name="usuCertReservista" id="usuCertReservista" class="form-control" placeholder="Digite o Número do Certificado">
                     					</div>
                     				</div>
                 				</div>
@@ -235,7 +231,7 @@
                     				<div class="col-sm-2">
                     					<div class="form-group">
                         					<label>Post/Grad:</label> 
-                                			<select name="postoGraduacao" id="postoGraduacao" class="form-control">
+                                			<select name="usuPostoGrad" id="usuPostoGrad" class="form-control">
                             					<option value="">Selecione</option> 
                             					@foreach ((\App\Dominios\PostoGraduacao::getDominio()) as $key => $value)
                             						<option value="{{$key}}">{{$value}}</option> 
@@ -244,19 +240,19 @@
                             			</div>
                     				</div>
                     				
-                    				<div class="col-sm-6">
+                    				<div class="col-sm-7">
                     					<div class="form-group">
                         					<label>Nome de Guerra:</label> 
-                        					<input type="text" name="nomeDeGuerra" id="nomeDeGuerra" class="form-control" placeholder="Digite o nome de guerra">
+                        					<input type="text" name="usuNomeGuerra" id="usuNomeGuerra" class="form-control" placeholder="Digite o nome de guerra">
                     					</div>
                     				</div>
                     			</div>
                     			
                     			<div class="row">
-                    				<div class="col-sm-8">
+                    				<div class="col-sm-9">
                     					<div class="form-group">
                         					<label>Ultimo batalhão que serviu:</label> 
-                        					<input type="text" name="nomeUltimoBatalhao" id="nomeUltimoBatalhao" class="form-control" placeholder="Digite o nome do último batalhão que serviu">
+                        					<input type="text" name="usuNomeUltBtl" id="usuNomeUltBtl" class="form-control" placeholder="Digite o nome do último batalhão que serviu">
                     					</div>
                     				</div>
                     			</div>
@@ -268,14 +264,14 @@
             						<div class="col-sm-6">
                     					<div class="form-group">
                         					<label>Linked In:</label> 
-                        					<input type="text" name="urlLinkedIn" id="urlLinkedIn" class="form-control" placeholder="Digite sua URL do perfil do Linked In">
+                        					<input type="text" name="usuLinkedinUrl" id="usuLinkedinUrl" class="form-control" placeholder="Digite sua URL do perfil do Linked In">
                     					</div>
                     				</div>	
                     			
                     				<div class="col-sm-6">
                     					<div class="form-group">
                         					<label>Facebook:</label> 
-                        					<input type="text" name="urlFacebook" id="urlFacebook" class="form-control" placeholder="Digite sua URL do perfil do Facebook">
+                        					<input type="text" name="usuFacebookUrl" id="usuFacebookUrl" class="form-control" placeholder="Digite sua URL do perfil do Facebook">
                     					</div>
                     				</div>
                 				</div>
@@ -284,14 +280,14 @@
                     				<div class="col-sm-6">
                     					<div class="form-group">
                         					<label>Instagram:</label> 
-                        					<input type="text" name="urlInstagram" id="urlInstagram" class="form-control" placeholder="Digite sua URL do perfil do Instagram">
+                        					<input type="text" name="usuInstagramUrl" id="usuInstagramUrl" class="form-control" placeholder="Digite sua URL do perfil do Instagram">
                     					</div>
                     				</div>
                     			
                     				<div class="col-sm-6">
                     					<div class="form-group">
                         					<label>Twitter:</label> 
-                        					<input type="text" name="urlTwitter" id="urlTwitter" class="form-control" placeholder="Digite sua URL do perfil do Twitter">
+                        					<input type="text" name="usuTwitterUrl" id="usuTwitterUrl" class="form-control" placeholder="Digite sua URL do perfil do Twitter">
                     					</div>
                     				</div>
                 				</div>
@@ -300,14 +296,14 @@
                     				<div class="col-sm-6">
                     					<div class="form-group">
                         					<label>Youtube:</label> 
-                        					<input type="text" name="urlYoutube" id="urlYoutube" class="form-control" placeholder="Digite sua URL do perfil do Youtube">
+                        					<input type="text" name="usuYoutubeUrl" id="usuYoutubeUrl" class="form-control" placeholder="Digite sua URL do perfil do Youtube">
                     					</div>
                     				</div>
 
                     				<div class="col-sm-6">
                     					<div class="form-group">
                         					<label>Site Pessoal:</label> 
-                        					<input type="text" name="urlBlogSite" id="urlBlogSite" class="form-control" placeholder="Digite sua URL do perfil do seu website">
+                        					<input type="text" name="usuBlogSiteUrl" id="usuBlogSiteUrl" class="form-control" placeholder="Digite sua URL do perfil do seu website">
                     					</div>
                     				</div>
                     			</div>
@@ -318,14 +314,14 @@
                     				<div class="col-sm-6">
                     					<div class="form-group">
                         					<label>Usuário que Cadastrou:</label> 
-                        					<input type="text" name="usuarioIdCreated" id="usuarioIdCreated" class="form-control" placeholder="XXXXXXXXX XXX XXXXXXXXX XXXXXXXXX" disabled>
+                        					<input type="text" name="usuCriou" id="usuCriou" class="form-control" placeholder="XXXXXXXXX XXX XXXXXXXXX XXXXXXXXX" disabled>
                     					</div>
                     				</div>
                     				
-                    				<div class="col-sm-2">
+                    				<div class="col-sm-3">
                     					<div class="form-group">
                         					<label>Dt. Cadastro:</label> 
-                        					<input type="text" name="createdAt" id="createdAt" class="form-control" placeholder="XX/XX/XXXX" disabled>
+                        					<input type="text" name="dtCadastro" id="dtCadastro" class="form-control" placeholder="XX/XX/XXXX" disabled>
                     					</div>
                     				</div>
                     			</div>
@@ -334,14 +330,14 @@
                     				<div class="col-sm-6">
                     					<div class="form-group">
                         					<label>Usuário que Editou:</label> 
-                        					<input type="text" name="usuarioIdUpdated" id="usuarioIdUpdated" class="form-control" placeholder="XXXXXXXXX XXX XXXXXXXXX XXXXXXXXX" disabled>
+                        					<input type="text" name="usueditou" id="usueditou" class="form-control" placeholder="XXXXXXXXX XXX XXXXXXXXX XXXXXXXXX" disabled>
                     					</div>
                     				</div>
                     				
-                    				<div class="col-sm-2">
+                    				<div class="col-sm-3">
                     					<div class="form-group">
                         					<label>Dt. Edição:</label> 
-                        					<input type="text" name="updatedAt" id="updatedAt" class="form-control" placeholder="XX/XX/XXXX" disabled>
+                        					<input type="text" name="dtedicao" id="dtedicao" class="form-control" placeholder="XX/XX/XXXX" disabled>
                     					</div>
                     				</div>
                     			</div>
@@ -350,14 +346,14 @@
                     				<div class="col-sm-6">
                     					<div class="form-group">
                         					<label>Usuario que Inativou:</label> 
-                        					<input type="text" name="usuarioIdDeleted" id="usuarioIdDeleted" class="form-control" placeholder="XXXXXXXXX XXX XXXXXXXXX XXXXXXXXX" disabled>
+                        					<input type="text" name="usuexcluiu" id="usuexcluiu" class="form-control" placeholder="XXXXXXXXX XXX XXXXXXXXX XXXXXXXXX" disabled>
                     					</div>
                     				</div>
                     				
-                    				<div class="col-sm-2">
+                    				<div class="col-sm-3">
                     					<div class="form-group">
                         					<label>Dt. Inativação:</label> 
-                        					<input type="text" name="deletedAt" id="deletedAt" class="form-control" placeholder="XX/XX/XXXX" disabled>
+                        					<input type="text" name="dtexclusao" id="dtexclusao" class="form-control" placeholder="XX/XX/XXXX" disabled>
                     					</div>
                     				</div>
                     			</div>
@@ -392,44 +388,31 @@
             });
             
             // validacao de campos
-    		/*$("#cadastrarUsuarioReservista").validate({
+    		$("#cadastrarUsuarioReservista").validate({
     			rules: {
-    				permissaoUsuario: "required",
-    				nomeCompleto: "required",
-    				permissaoUsuario: "required",
-                    nomeCompleto: "required",
-                    cpf: {
-                    	required: true,
-                    	cpfBR: true
-                    },
-                    dataNascimento: {
-                        required: true,
-                        dateITA: true
-	                },
-                    estadoCivil: "required",
-                    sexo: "required",
-                    indPortadorDeficiencia: "required",
-                    email: {
-                    	required: true,
-                    	email: true
-                    	},
-                    telefoneCelular: {
-                    	required: true,
-                    	minlength: true
-                    	},
-                    telefoneResidencial: "required",
-                    indDisponivelViagem: "required",
-                    indDisponivelMudarCidade: "required",
-                    foto: "required",
-                    tipoForca: "required",
-                    indOficial: "required",
-                    certificadoReservista: "required",
-                    postoGraduacao: "required",
-                    nomeDeGuerra: "required",
-                    nomeUltimoBatalhao: "required",
-                    urlLinkedIn: "required"
+    				usuPermissao: "required",
+    				name: "required",
+                    usuCPF: { required:	true, cpfBR: true },
+                    usuDtNascimento: { required: true, dateITA:	true},
+                    usuEstadoCivil:	"required",
+                    usuGenero: "required",
+                    usuIndPortDeficiente: "required",
+                    email: {required: true, email: true },
+					usuTelCelular: "required",
+                    usuTelFixo: "required",
+                    usuIndViagem: "required",
+                    usuIndMudarCidade:"required",
+                    usuImagemUrl: "required",
+                    usuTipoForca: "required",
+                    usuIndOficial: "required",
+                    usuCertReservista: "required",
+                    usuPostoGrad: "required",
+                    usuNomeGuerra: "required",
+                    usuNomeUltBtl: "required",
+                    usuLinkedinUrl: "required",
     			},
     			messages: {
+					//colocar as mensagens aqui
     			},
     			errorElement: 'span',
                 errorPlacement: function (error, element) {
@@ -442,9 +425,7 @@
                 unhighlight: function (element, errorClass, validClass) {
                   $(element).removeClass('is-invalid');
                 }
-    		});*/
-    		
-    		//ativando valores "S" ou "N" para checkboxes "true" ou "false"
+    		});
         });     
     </script>
 @stop
