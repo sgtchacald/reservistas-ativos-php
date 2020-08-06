@@ -43,10 +43,10 @@
             					<div class="row">
             						<div class="col-sm-3 form-group">
                         				<label>Perfil de Usuário:</label>
-                        				<select name="usuPermissao" id="usuPermissao" class="form-control">
+                        				<select name="usuPermissao" id="usuPermissao" class="form-control" disabled>
                         					<option value="">Selecione</option> 
                         					@foreach((\App\Dominios\PermissoesUsuario::getDominio()) as $key => $value)
-                        					<option value="{{$key}}">{{$value}}</option> 
+                        					<option value="{{$key}}" @if($key == 'R') selected @endif>{{$value}}</option> 
                         					@endforeach
                         				</select>
                         			</div>
@@ -54,7 +54,7 @@
                     				<div class="col-sm-9">
                     					<div class="form-group">
                         					<label>Nome Completo:</label> 
-                        					<input type="text"  name="name" id="name" class="form-control" placeholder="Digite seu nome">
+										<input type="text"  name="name" id="name" class="form-control" placeholder="Digite seu nome" value="{{old('name')}}">
                     					</div>
                     				</div>
                     			</div>
@@ -63,7 +63,7 @@
                     				<div class="col-sm-3">
                     					<div class="form-group">
                         					<label>CPF:</label> 
-                        					<input type="text" name="usuCPF" id="usuCPF" class="form-control" data-inputmask="'mask': ['999.999.999-99']" data-mask="">
+                        					<input type="text" name="usuCPF" id="usuCPF" class="form-control" data-inputmask="'mask': ['999.999.999-99']" data-mask="" value="{{old('usuCPF')}}">
                     					</div>
                     				</div>
                     				
@@ -71,7 +71,7 @@
                     					<div class="form-group">
                         					<label>Dt Nascimento:</label>
                                             <div class="input-group date reservationdate" id="reservationdate" data-target-input="nearest">
-                                                <input type="text" name="usuDtNascimento" id="usuDtNascimento" class="form-control initData" data-inputmask-alias="datetime"  data-inputmask="'mask': ['99/99/9999']" data-mask="" im-insert="false">
+                                                <input type="text" name="usuDtNascimento" id="usuDtNascimento" class="form-control initData" data-inputmask-alias="datetime"  data-inputmask="'mask': ['99/99/9999']" data-mask="" im-insert="false" value="{{old('usuDtNascimento')}}">
                                                     <div class="input-group-append">
                                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                            		</div>
@@ -372,21 +372,7 @@
 @section('js')
     <script> 
         $(document).ready(function(){
- 
-            //ativando máscaras de entrada
-            $('[data-mask]').inputmask();
-            
-            //ativando dateRagePicker
-            $('.initData').daterangepicker({
-            	singleDatePicker: true,
-              	autoUpdateInput: false,
-              	locale: {
-                  format: 'DD/MM/YYYY'
-                }
-            }, function(chosen_date) {
-              $('.initData').val(chosen_date.format('DD/MM/YYYY'));
-            });
-            
+			
             // validacao de campos
     		$("#cadastrarUsuarioReservista").validate({
     			rules: {
@@ -414,7 +400,8 @@
     			messages: {
 					//colocar as mensagens aqui
     			},
-    			errorElement: 'span',
+				
+				errorElement: 'span',
                 errorPlacement: function (error, element) {
                   error.addClass('invalid-feedback');
                   element.closest('.form-group').append(error);

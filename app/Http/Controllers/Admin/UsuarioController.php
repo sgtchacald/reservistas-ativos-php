@@ -50,7 +50,7 @@ class UsuarioController extends Controller{
         $usuPermissao = $request->input('usuPermissao');
         $indStatus = 'A';
 
-        $request->validate([
+        $rules = [
             'usuPermissao'          => 'bail|required',
             'name'                  => 'bail|required',
             'usuCPF'                => 'bail|required|unique:USUARIOS',
@@ -70,9 +70,36 @@ class UsuarioController extends Controller{
             'usuPostoGrad'          => 'bail|required',
             'usuNomeGuerra'         => 'bail|required',
             'usuNomeUltBtl'         => 'bail|required',
-            'usuLinkedinUrl'        => 'bail|required',
-        ]);
-            
+            'usuLinkedinUrl'        => 'bail|required'
+        ];
+
+        $messages = [];
+
+        $customAttributes = [
+            'usuPermissao'          => 'Perfil de Usuário',
+            'name'                  => 'Nome Completo',
+            'usuCPF'                => 'CPF',
+            'usuDtNascimento'       => 'Dt Nascimento',
+            'usuEstadoCivil'        => 'Estado Civil',
+            'usuGenero'             => 'Genero',
+            'usuIndPortDeficiente'  => 'Port. Deficiência',
+            'email'                 => 'E-mail',
+            'usuTelCelular'         => 'Telefone Celular',
+            'usuTelFixo'            => 'Telefone Fixo',
+            'usuIndViagem'          => 'Disponível para viajar?',
+            'usuIndMudarCidade'     => 'Disponível para mudar de cidade?',
+            'usuimagemurl'          => 'Imagem',
+            'usuTipoForca'          => 'Força de Origem',
+            'usuIndOficial'         => 'Sou Oficial?',
+            'usuCertReservista'     => 'Certificado Reservista',
+            'usuPostoGrad'          => 'Post/Grad:',
+            'usuNomeGuerra'         => 'Nome de Guerra',
+            'usuNomeUltBtl'         => 'Ultimo batalhão que serviu',
+            'usuLinkedinUrl'        => 'Linked In'
+        ];
+
+        $this->validate($request,$rules,$messages,$customAttributes);
+
         try {
             Usuarios::create([
                 'usupermissao'        => $usuPermissao,
@@ -140,32 +167,5 @@ class UsuarioController extends Controller{
     }
     
     public function destroy(){
-    }
-    
-    public function testaValoresEmTela(Request $request){
-        echo "permissaoUsuario: "           . $request->input('permissaoUsuario') . '<br>';
-        echo "nomeCompleto: "               . $request->input('nomeCompleto') . '<br>';
-        echo "cpf: "                        . UtilsController::apenasNumeros($request->input('cpf')) . '<br>';
-        echo "dtNascimento: "               . Carbon::parse($request->input('dtNascimento'))->format('d-m-Y') . '<br>';
-        echo "estadoCivil: "                . $request->input('estadoCivil') . '<br>';
-        echo "sexo: "                       . $request->input('sexo') . '<br>';
-        echo "indPortadorDeficiencia: "     . $request->input('indPortadorDeficiencia') . '<br>';
-        echo "email: "                      . $request->input('email') . '<br>';
-        echo "telefoneCelular: "            . UtilsController::apenasNumeros($request->input('telefoneCelular')) . '<br>';
-        echo "telefoneResidencial: "        . UtilsController::apenasNumeros($request->input('telefoneResidencial')) . '<br>';
-        echo "indDisponivelViagem: "        . $request->input('indDisponivelViagem') . '<br>';
-        echo "indDisponivelMudarCidade: "   . $request->input('indDisponivelMudarCidade') . '<br>';
-        echo "indCelularWhatsapp: "         . SimNao::retornaSimNaoSeVazio($request->input('indCelularWhatsapp')) . '<br>';
-        echo "indMsgWhatsapp: "             . SimNao::retornaSimNaoSeVazio($request->input('indMsgWhatsapp')) . '<br>';
-        echo "tipoForca: "                  . $request->input('tipoForca') . '<br>';
-        echo "certificadoReservista: "      . $request->input('certificadoReservista') . '<br>';
-        echo "postoGraduacao: "             . $request->input('postoGraduacao') . '<br>';
-        echo "nomeDeGuerra: "               . $request->input('nomeDeGuerra') . '<br>';
-        echo "nomeUltimoBatalhao: "         . $request->input('nomeUltimoBatalhao') . '<br>';
-        echo "urlLinkedIn: "                . $request->input('urlLinkedIn') . '<br>';
-        echo "urlFacebook: "                . $request->input('urlFacebook') . '<br>';
-        echo "urlInstagram: "               . $request->input('urlInstagram') . '<br>';
-        echo "urlTwitter: "                 . $request->input('urlTwitter') . '<br>';
-        echo "urlBlogSite: "                . $request->input('urlBlogSite') . '<br>';      
     }
 }
