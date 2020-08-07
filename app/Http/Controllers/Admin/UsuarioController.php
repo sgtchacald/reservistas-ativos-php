@@ -18,21 +18,12 @@ class UsuarioController extends Controller{
         $this->usuarios = new Usuarios();
     }
     
-    public function index($permissaoUsuario, $indStatus){
-       
-        $usuarios =  $this->usuarios->getUsuarios($permissaoUsuario, $indStatus);
-        
-        switch ($permissaoUsuario) {
-            case 'R':
-                return view('admin.reservista.selecionar')->with(compact('usuarios'));
-                break;
-            case 'E':
-                return view('admin.representanteempresas.selecionar')->with(compact('usuarios'));
-                break;
-            case 'A':
-                return view('admin.usuarios.selecionar')->with(compact('usuarios'));
-                break;
-        }
+    public function index(){
+    }
+
+    public function getUsuariosReservistasAtivos(){
+        $usuarios =   $this->usuarios->getUsuarios('R','A');
+        return view('admin.reservista.selecionar')->with(compact('usuarios'));
     }
     
     public function show(){

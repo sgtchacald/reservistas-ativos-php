@@ -7,8 +7,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class Usuarios extends Authenticatable
-{
+class Usuarios extends Authenticatable{
     use Notifiable;
     
     protected $primaryKey = 'idusuario';
@@ -94,7 +93,12 @@ class Usuarios extends Authenticatable
     }
 
     public function adminlte_desc(){
-        return 'That\'s a nice guy';
+
+        foreach ($this->getUsuarioLogado() as $usuarioLogado) {
+            $descricaoUsuarioLogado = (\App\Dominios\PostoGraduacao::getDominio())[$usuarioLogado->usupostograd] . ' - ' . (\App\Dominios\TipoForca::getDominio())[$usuarioLogado->usutipoforca];
+        }
+        
+        return $descricaoUsuarioLogado;
     }
     
     public function adminlte_profile_url(){
@@ -105,10 +109,16 @@ class Usuarios extends Authenticatable
      * Método para buscar todos os usuários
      */
 
-    public function getUsuarios($indStatus,$permissaoUsuario){
-        
-        //return DB::table('usuarios')->where('ind_status' == $indStatus and 'permissao_usuario' == $permissaoUsuario)->get();
-        return DB::table('USUARIOS')->get();
+    public function getUsuarios($permissaoUsuario, $indStatus){
+        return DB::table('USUARIOS')
+                ->where('usupermissao','=','R','and','usuindstatus','=','A')
+                ->get();
     }
+
+    public function getUsuarioLogado(){
+        return DB::table('USUARIOS')
+                ->where('idUsuario', '=', auth()->user()->idusuario)
+                ->get();
+    } 
     
 }

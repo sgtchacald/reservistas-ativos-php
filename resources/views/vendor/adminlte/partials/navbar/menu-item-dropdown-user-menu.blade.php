@@ -1,3 +1,4 @@
+<? use \App\Http\Controllers\Utils\UtilsController; ?>
 @php( $logout_url = View::getSection('logout_url') ?? config('adminlte.logout_url', 'logout') )
 @php( $profile_url = View::getSection('profile_url') ?? config('adminlte.profile_url', 'logout') )
 
@@ -22,9 +23,9 @@
                  class="user-image img-circle elevation-2"
                  alt="{{ Auth::user()->name }}">
         @endif
-        <span @if(config('adminlte.usermenu_image')) class="d-none d-md-inline" @endif>
+        <!--<span @if(config('adminlte.usermenu_image')) class="d-none d-md-inline" @endif>
             {{ Auth::user()->name }}
-        </span>
+        </span> -->
     </a>
 
     {{-- User menu dropdown --}}
