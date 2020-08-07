@@ -72,8 +72,10 @@
                         					<label>Dt Nascimento:</label>
                                             <div class="input-group date reservationdate" id="reservationdate" data-target-input="nearest">
                                                 <input type="text" name="usuDtNascimento" id="usuDtNascimento" class="form-control initData" data-inputmask-alias="datetime"  data-inputmask="'mask': ['99/99/9999']" data-mask="" im-insert="false" value="{{old('usuDtNascimento')}}">
-                                                    <div class="input-group-append">
-                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                <div class="input-group-append">
+                                                    <div class="input-group-text">
+														<i class="fa fa-calendar"></i>
+													</div>
                                            		</div>
                                             </div>
                     					</div>

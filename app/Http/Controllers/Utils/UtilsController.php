@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Utils;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
+use App\Usuarios;
 
 class UtilsController extends Controller{
     
