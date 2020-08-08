@@ -41,55 +41,36 @@ class UsuarioController extends Controller{
         $usuPermissao = $request->input('usuPermissao');
         $indStatus = 'A';
 
-        echo 'Teste: '.$usuPermissao;
+        
 
         $rules = [
-            'usuPermissao'          => 'bail|required',
-            'name'                  => 'bail|required',
-            'usuCPF'                => 'bail|required|unique:USUARIOS',
-            'usuDtNascimento'       => 'bail|required',
-            'usuEstadoCivil'        => 'bail|required',
-            'usuGenero'             => 'bail|required',
-            'usuIndPortDeficiente'  => 'bail|required',
-            'email'                 => 'bail|required|unique:USUARIOS|email',
-            'usuTelCelular'         => 'bail|required',
-            'usuTelFixo'            => 'bail|required',
-            'usuIndViagem'          => 'bail|required',
-            'usuIndMudarCidade'     => 'bail|required',
-            //'usuimagemurl'          => 'bail|required',
-            'usuTipoForca'          => 'bail|required',
-            'usuIndOficial'         => 'bail|required',
-            'usuCertReservista'     => 'bail|required',
-            'usuPostoGrad'          => 'bail|required',
-            'usuNomeGuerra'         => 'bail|required',
-            'usuNomeUltBtl'         => 'bail|required',
-            'usuLinkedinUrl'        => 'bail|required'
+            'usuPermissao'          => 'required',
+            'name'                  => 'required',
+            'usuCPF'                => 'required|unique:USUARIOS',
+            'usuDtNascimento'       => 'required',
+            'usuEstadoCivil'        => 'required',
+            'usuGenero'             => 'required',
+            'usuIndPortDeficiente'  => 'required',
+            'email'                 => 'required|unique:USUARIOS|email',
+            'usuTelCelular'         => 'required',
+            'usuTelFixo'            => 'required',
+            'usuIndViagem'          => 'required',
+            'usuIndMudarCidade'     => 'required',
+            //'usuimagemurl'          => 'required',
+            'usuTipoForca'          => 'required',
+            'usuIndOficial'         => 'required',
+            'usuCertReservista'     => 'required',
+            'usuPostoGrad'          => 'required',
+            'usuNomeGuerra'         => 'required',
+            'usuNomeUltBtl'         => 'required',
+            'usuLinkedinUrl'        => 'required'
         ];
 
-        $messages = [];
-
-        $customAttributes = [
-            'usuPermissao'          => 'Perfil de Usuário',
-            'name'                  => 'Nome Completo',
-            'usuCPF'                => 'CPF',
-            'usuDtNascimento'       => 'Dt Nascimento',
-            'usuEstadoCivil'        => 'Estado Civil',
-            'usuGenero'             => 'Genero',
-            'usuIndPortDeficiente'  => 'Port. Deficiência',
-            'email'                 => 'E-mail',
-            'usuTelCelular'         => 'Telefone Celular',
-            'usuTelFixo'            => 'Telefone Fixo',
-            'usuIndViagem'          => 'Disponível para viajar?',
-            'usuIndMudarCidade'     => 'Disponível para mudar de cidade?',
-            'usuimagemurl'          => 'Imagem',
-            'usuTipoForca'          => 'Força de Origem',
-            'usuIndOficial'         => 'Sou Oficial?',
-            'usuCertReservista'     => 'Certificado Reservista',
-            'usuPostoGrad'          => 'Post/Grad:',
-            'usuNomeGuerra'         => 'Nome de Guerra',
-            'usuNomeUltBtl'         => 'Ultimo batalhão que serviu',
-            'usuLinkedinUrl'        => 'Linked In'
+        $messages = [
+            'required' => 'Campo obrigatório.',
         ];
+
+        $customAttributes = [];
 
         $this->validate($request,$rules,$messages,$customAttributes);
 
@@ -140,7 +121,7 @@ class UsuarioController extends Controller{
             
             switch ($usuPermissao) {
                 case 'R':
-                    $rota = 'reservistas.selecionar';
+                    $rota = 'reservista.selecionar';
                     break;
                 case 'E':
                     $rota = 'rep.empresa.selecionar';

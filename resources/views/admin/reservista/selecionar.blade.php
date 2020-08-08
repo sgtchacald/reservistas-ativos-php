@@ -1,3 +1,5 @@
+@inject('carbon', \Carbon\Carbon)
+
 @extends('adminlte::page') 
 
 @section('title', 'Selecionar Reservista')
@@ -41,6 +43,7 @@
 					<th>Batalhão</th>
 					<th>E-mail</th>
 					<th>Celular</th>
+					<th>Cadastro</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -57,7 +60,8 @@
     					<td>{{$usuario->usunomeguerra}}</td>
     					<td>{{$usuario->usunomeultbtl}}</td>
     					<td>{{$usuario->email}}</td>
-    					<td>{{$usuario->usutelcelular}}</td>
+						<td>{{$usuario->usutelcelular}}</td>
+						<td>{{$carbon::parse($usuario->dtcadastro)->format('d/m/Y')}}</td>
     				</tr>
 				@endforeach
 			</tbody>
