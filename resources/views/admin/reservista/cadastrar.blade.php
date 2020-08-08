@@ -43,12 +43,13 @@
             					<div class="row">
             						<div class="col-sm-3 form-group">
                         				<label>Perfil de Usuário:</label>
-                        				<select name="usuPermissao" id="usuPermissao" class="form-control" disabled>
-                        					<option value="">Selecione</option> 
+                        				<select class="form-control" disabled>
+                        					<option>Selecione</option> 
                         					@foreach((\App\Dominios\PermissoesUsuario::getDominio()) as $key => $value)
                         					<option value="{{$key}}" @if($key == 'R') selected @endif>{{$value}}</option> 
                         					@endforeach
-                        				</select>
+										</select>
+										<input type="hidden" name="usuPermissao" id="usuPermissao" value="R">
                         			</div>
                         			
                     				<div class="col-sm-9">
@@ -87,7 +88,9 @@
                                 			<select name="usuEstadoCivil" id="usuEstadoCivil" class="form-control">
                             					<option value="">Selecione</option> 
                             					@foreach ((\App\Dominios\EstadoCivil::getDominio()) as $key => $value)
-                            						<option value="{{$key}}">{{$value}}</option> 
+													<option @if(old('usuEstadoCivil')==$key) {{'selected="selected"'}} @endif value="{{ $key  }}">
+														{{ $value }}
+													</option>
                             					@endforeach
                                 			</select>
                             			</div>
@@ -99,7 +102,9 @@
                                 			<select name="usuGenero" id="usuGenero" class="form-control">
                             					<option value="">Selecione</option> 
                             					@foreach ((\App\Dominios\Sexo::getDominio()) as $key => $value)
-                            						<option value="{{$key}}">{{$value}}</option> 
+													<option @if(old('usuGenero')==$key) {{'selected="selected"'}} @endif value="{{ $key  }}">
+														{{ $value }}
+													</option>
                             					@endforeach
                                 			</select>
                     					</div>
@@ -111,7 +116,9 @@
                                 			<select name="usuIndPortDeficiente" id="usuIndPortDeficiente" class="form-control">
                             					<option value="">Selecione</option> 
                             					@foreach ((\App\Dominios\SimNao::getDominio()) as $key => $value)
-                            						<option value="{{$key}}">{{$value}}</option> 
+													<option @if(old('usuIndPortDeficiente')==$key) {{'selected="selected"'}} @endif value="{{ $key  }}">
+														{{ $value }}
+													</option>
                             					@endforeach
                                 			</select>
                     					</div>
@@ -122,21 +129,21 @@
                     				<div class="col-sm-8">
                     					<div class="form-group">
                         					<label>E-mail:</label> 
-                        					<input type="text" name="email" id="email" class="form-control" placeholder="Digite seu e-mail">
+                        					<input type="text" name="email" id="email" class="form-control" placeholder="Digite seu e-mail" value="{{old('email')}}">
                     					</div>
                     				</div>
                     				
                     				<div class="col-sm-2">
 										<div class="form-group">
 											<label>Telefone Celular:</label> 
-											<input type="text" name="usuTelCelular" id="usuTelCelular" class="form-control" placeholder="" data-inputmask="'mask': ['99 9 9999-9999']" data-mask="">
+											<input type="text" name="usuTelCelular" id="usuTelCelular" class="form-control" placeholder="" data-inputmask="'mask': ['99 9 9999-9999']" data-mask="" value="{{old('usuTelCelular')}}">
 										</div>
                     				</div>
                     				
                     				<div class="col-sm-2">
                     					<div class="form-group">
                         					<label>Telefone Fixo:</label> 
-                        					<input type="text" name="usuTelFixo" id="usuTelFixo" class="form-control" placeholder="" data-inputmask="'mask': ['99 9999-9999']" data-mask="">
+                        					<input type="text" name="usuTelFixo" id="usuTelFixo" class="form-control" placeholder="" data-inputmask="'mask': ['99 9999-9999']" data-mask="" value="{{old('usuTelFixo')}}">
                     					</div>
                     				</div>
                     			</div>
@@ -146,8 +153,8 @@
                     					<div class="form-group">
                     						<label>Disponível para viajar?</label>
                     						<div class="form-check">
-                    							@foreach ((\App\Dominios\SimNao::getDominio()) as $key => $value)
-                        							<input type="radio" name="usuIndViagem" id="usuIndViagem" class="form-check-input" style="" value="{{$key}}">
+												@foreach ((\App\Dominios\SimNao::getDominio()) as $key => $value)
+													<input type="radio" name="usuIndViagem" id="usuIndViagem" class="form-check-input" style="" value="{{$key}}" {{old('usuIndViagem') == $key ? 'checked' : ''}}>
                         							{{$value}}&nbsp;&nbsp; &nbsp;&nbsp;                         							
                     							@endforeach
                     						</div>
@@ -159,7 +166,7 @@
                     						<label>Disponível para mudar de cidade?</label>
                     						<div class="form-check">
                     							@foreach ((\App\Dominios\SimNao::getDominio()) as $key => $value)
-                        							<input type="radio" name="usuIndMudarCidade" id="usuIndMudarCidade" class="form-check-input" style="" value="{{$key}}">
+                        							<input type="radio" name="usuIndMudarCidade" id="usuIndMudarCidade" class="form-check-input" style="" value="{{$key}}" {{old('usuIndMudarCidade') == $key ? 'checked' : ''}}>
                         							{{$value}}&nbsp;&nbsp; &nbsp;&nbsp;                         							
                     							@endforeach
                     						</div>
@@ -171,9 +178,9 @@
                     				<div class="col-sm-4">
                         				<div class="form-group clearfix">
     										<div class="icheck-danger d-inline">
-    											<input type="checkbox" name="usuIndCelWhatsapp" id="checkboxDanger3" class="initCheckboxSN" value="S"> 
+    											<input type="checkbox" name="usuIndCelWhatsapp" id="checkboxDanger3" class="initCheckboxSN" value="S" {{old('usuIndCelWhatsapp') == 'S' ? 'checked' : ''}}> 
     											<label for="checkboxDanger3">Este celular é meu whatsapp.</label><br>
-    											<input type="checkbox" name="usuIndMsg" id="checkboxDanger3" class="initCheckboxSN" value="S"> 
+    											<input type="checkbox" name="usuIndMsg" id="checkboxDanger3" class="initCheckboxSN" value="S" {{old('usuIndMsg') == 'S' ? 'checked' : ''}}> 
     											<label for="checkboxDanger3" style="color:#FF0000;">Desejo receber msgs neste cel.</label>
     										</div>
     									</div>
@@ -204,7 +211,9 @@
                             			<select name="usuTipoForca" id="usuTipoForca" class="form-control">
                         					<option value="">Selecione</option> 
                         					@foreach ((\App\Dominios\TipoForca::getDominio()) as $key => $value)
-                        						<option value="{{$key}}">{{$value}}</option> 
+												<option @if(old('usuTipoForca')==$key) {{'selected="selected"'}} @endif value="{{$key}}">
+													{{$value}}
+												</option>
                         					@endforeach
                             			</select>
                         			</div>
@@ -214,7 +223,7 @@
                     						<label>Sou Oficial?</label>
                     						<div class="form-check" style="padding-top: 6px;">
                     							@foreach ((\App\Dominios\SimNao::getDominio()) as $key => $value)
-                        							<input type="radio" name="usuIndOficial" id="usuIndOficial" class="form-check-input" style="" value="{{$key}}">
+                        							<input type="radio" name="usuIndOficial" id="usuIndOficial" class="form-check-input" style="" value="{{$key}}" {{old('usuIndOficial') == $key ? 'checked' : ''}}>
                         							{{$value}}&nbsp;&nbsp; &nbsp;&nbsp;                         							
                     							@endforeach
                     						</div>
@@ -224,7 +233,7 @@
                     				<div class="col-sm-4">
                     					<div class="form-group">
                     						<label>Certificado de Reservista:</label> 
-                    						<input type="text" name="usuCertReservista" id="usuCertReservista" class="form-control" placeholder="Digite o Número do Certificado">
+                    						<input type="text" name="usuCertReservista" id="usuCertReservista" class="form-control" placeholder="Digite o Número do Certificado" data-inputmask="'mask': '9', 'repeat': 10, 'greedy' : false" data-mask="" value="{{old('usuCertReservista')}}">
                     					</div>
                     				</div>
                 				</div>
@@ -233,10 +242,12 @@
                     				<div class="col-sm-2">
                     					<div class="form-group">
                         					<label>Post/Grad:</label> 
-                                			<select name="usuPostoGrad" id="usuPostoGrad" class="form-control">
+                                			<select name="usuPostoGrad" id="usuPostoGrad" class="form-control" >
                             					<option value="">Selecione</option> 
                             					@foreach ((\App\Dominios\PostoGraduacao::getDominio()) as $key => $value)
-                            						<option value="{{$key}}">{{$value}}</option> 
+													<option @if(old('usuPostoGrad')==$key) {{'selected="selected"'}} @endif value="{{$key}}">
+														{{$value}}
+													</option>
                             					@endforeach
                                 			</select>
                             			</div>
@@ -245,7 +256,7 @@
                     				<div class="col-sm-7">
                     					<div class="form-group">
                         					<label>Nome de Guerra:</label> 
-                        					<input type="text" name="usuNomeGuerra" id="usuNomeGuerra" class="form-control" placeholder="Digite o nome de guerra">
+                        					<input type="text" name="usuNomeGuerra" id="usuNomeGuerra" class="form-control" placeholder="Digite o nome de guerra" value="{{old('usuNomeGuerra')}}">
                     					</div>
                     				</div>
                     			</div>
@@ -254,7 +265,7 @@
                     				<div class="col-sm-9">
                     					<div class="form-group">
                         					<label>Ultimo batalhão que serviu:</label> 
-                        					<input type="text" name="usuNomeUltBtl" id="usuNomeUltBtl" class="form-control" placeholder="Digite o nome do último batalhão que serviu">
+                        					<input type="text" name="usuNomeUltBtl" id="usuNomeUltBtl" class="form-control" placeholder="Digite o nome do último batalhão que serviu" value="{{old('usuNomeUltBtl')}}">
                     					</div>
                     				</div>
                     			</div>
@@ -266,14 +277,14 @@
             						<div class="col-sm-6">
                     					<div class="form-group">
                         					<label>Linked In:</label> 
-                        					<input type="text" name="usuLinkedinUrl" id="usuLinkedinUrl" class="form-control" placeholder="Digite sua URL do perfil do Linked In">
+                        					<input type="text" name="usuLinkedinUrl" id="usuLinkedinUrl" class="form-control" placeholder="Digite sua URL do perfil do Linked In" value="{{old('usuLinkedinUrl')}}">
                     					</div>
                     				</div>	
                     			
                     				<div class="col-sm-6">
                     					<div class="form-group">
                         					<label>Facebook:</label> 
-                        					<input type="text" name="usuFacebookUrl" id="usuFacebookUrl" class="form-control" placeholder="Digite sua URL do perfil do Facebook">
+                        					<input type="text" name="usuFacebookUrl" id="usuFacebookUrl" class="form-control" placeholder="Digite sua URL do perfil do Facebook" value="{{old('usuFacebookUrl')}}">
                     					</div>
                     				</div>
                 				</div>
@@ -282,14 +293,14 @@
                     				<div class="col-sm-6">
                     					<div class="form-group">
                         					<label>Instagram:</label> 
-                        					<input type="text" name="usuInstagramUrl" id="usuInstagramUrl" class="form-control" placeholder="Digite sua URL do perfil do Instagram">
+                        					<input type="text" name="usuInstagramUrl" id="usuInstagramUrl" class="form-control" placeholder="Digite sua URL do perfil do Instagram" value="{{old('usuInstagramUrl')}}">
                     					</div>
                     				</div>
                     			
                     				<div class="col-sm-6">
                     					<div class="form-group">
                         					<label>Twitter:</label> 
-                        					<input type="text" name="usuTwitterUrl" id="usuTwitterUrl" class="form-control" placeholder="Digite sua URL do perfil do Twitter">
+                        					<input type="text" name="usuTwitterUrl" id="usuTwitterUrl" class="form-control" placeholder="Digite sua URL do perfil do Twitter" value="{{old('usuTwitterUrl')}}">
                     					</div>
                     				</div>
                 				</div>
@@ -298,14 +309,14 @@
                     				<div class="col-sm-6">
                     					<div class="form-group">
                         					<label>Youtube:</label> 
-                        					<input type="text" name="usuYoutubeUrl" id="usuYoutubeUrl" class="form-control" placeholder="Digite sua URL do perfil do Youtube">
+                        					<input type="text" name="usuYoutubeUrl" id="" class="form-control" placeholder="Digite sua URL do perfil do Youtube" value="{{old('usuYoutubeUrl')}}">
                     					</div>
                     				</div>
 
                     				<div class="col-sm-6">
                     					<div class="form-group">
                         					<label>Site Pessoal:</label> 
-                        					<input type="text" name="usuBlogSiteUrl" id="usuBlogSiteUrl" class="form-control" placeholder="Digite sua URL do perfil do seu website">
+                        					<input type="text" name="usuBlogSiteUrl" id="usuBlogSiteUrl" class="form-control" placeholder="Digite sua URL do perfil do seu website" value="{{old('usuBlogSiteUrl')}}">
                     					</div>
                     				</div>
                     			</div>

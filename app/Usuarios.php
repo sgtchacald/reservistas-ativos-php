@@ -95,7 +95,12 @@ class Usuarios extends Authenticatable{
     public function adminlte_desc(){
 
         foreach ($this->getUsuarioLogado() as $usuarioLogado) {
-            $descricaoUsuarioLogado = (\App\Dominios\PostoGraduacao::getDominio())[$usuarioLogado->usupostograd] . ' - ' . (\App\Dominios\TipoForca::getDominio())[$usuarioLogado->usutipoforca];
+            $descricaoUsuarioLogado = 
+                (\App\Dominios\TipoForca::getDominio())[$usuarioLogado->usutipoforca]
+                . " - "
+                . $usuarioLogado->usunomeultbtl
+                . " - "
+                . (\App\Dominios\PostoGraduacao::getDominio())[$usuarioLogado->usupostograd];
         }
         
         return $descricaoUsuarioLogado;
@@ -111,7 +116,7 @@ class Usuarios extends Authenticatable{
 
     public function getUsuarios($permissaoUsuario, $indStatus){
         return DB::table('USUARIOS')
-                ->where('usupermissao','=','R','and','usuindstatus','=','A')
+                ->where('usupermissao','=', $permissaoUsuario,'and','usuindstatus','=', $indStatus)
                 ->get();
     }
 
