@@ -41,6 +41,8 @@ class UsuarioController extends Controller{
         $usuPermissao = $request->input('usuPermissao');
         $indStatus = 'A';
 
+        echo 'Teste: '.$usuPermissao;
+
         $rules = [
             'usuPermissao'          => 'bail|required',
             'name'                  => 'bail|required',
@@ -138,7 +140,7 @@ class UsuarioController extends Controller{
             
             switch ($usuPermissao) {
                 case 'R':
-                    $rota = 'reservista.selecionar';
+                    $rota = 'reservistas.selecionar';
                     break;
                 case 'E':
                     $rota = 'rep.empresa.selecionar';
