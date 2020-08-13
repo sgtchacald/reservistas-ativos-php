@@ -50,9 +50,9 @@
 				@foreach($usuarios as $usuario)
        				<tr>
     					<td align="center">
-        					<a href="" data-toggle="tooltip" data-placement="bottom" title="Editar"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;
+        					<a href="{{route('reservista.editar', $usuario->idusuario)}}" data-toggle="tooltip" data-placement="bottom" title="Editar"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;
         					<a href="" data-toggle="tooltip" data-placement="bottom" title="Excluir"><i class="far fa-trash-alt"></i></a>&nbsp;&nbsp;
-        					<a href="" data-toggle="tooltip" data-placement="bottom" title="visualizar Currículo"><i class="far fa-file-pdf"></i></a>
+        					<!--<a href="" data-toggle="tooltip" data-placement="bottom" title="visualizar Currículo"><i class="far fa-file-pdf"></i></a>-->
     					</td>
     						
     					<td>{{(\App\Dominios\TipoForca::getDominio())[$usuario->usutipoforca]}}</td>
