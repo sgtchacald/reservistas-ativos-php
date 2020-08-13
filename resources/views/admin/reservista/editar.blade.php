@@ -1,3 +1,4 @@
+@inject('carbon', \Carbon\Carbon)
 @extends('adminlte::page') 
 @section('title', 'Cadastrar Reservista')
 
@@ -18,15 +19,14 @@
 @section('content')
 <div class="card card-primary">
 	<div class="card-header">
-		<h3 class="card-title">Cadastrar Reservista</h3>
+		<h3 class="card-title">Editar Reservista</h3>
 	</div>
 	
 	<form name="cadastrarUsuarioReservista" id="cadastrarUsuarioReservista" method="post" action="{{route('reservista.insert')}}">
     	<div class="card-body">
     			@csrf
-    			
+    			@method('PUT')
 				{{--@include('utils.erro')--}}
-    			
                 <div class="row">
                 	<div class="col-5 col-sm-3">
                 		<div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
@@ -55,7 +55,7 @@
                     				<div class="col-sm-9">
                     					<div class="form-group">
 											<label>Nome Completo:</label> 
-											<input type="text"  name="name" id="name" class="form-control @error('name') is-invalid @enderror" placeholder="Digite seu nome" value="{{old('name')}}">
+											<input type="text"  name="name" id="name" class="form-control @error('name') is-invalid @enderror" placeholder="Digite seu nome" value="{{!empty($usuario[0]->name) ? $usuario[0]->name : old('name')}}">
 											
 											@error('name')
 												<span class="invalid-feedback" role="alert">
@@ -70,7 +70,7 @@
                     				<div class="col-sm-3">
                     					<div class="form-group">
                         					<label>CPF:</label> 
-											<input type="text" name="usuCPF" id="usuCPF" class="form-control @error('usuCPF') is-invalid @enderror" data-inputmask="'mask': ['999.999.999-99']" data-mask="" value="{{old('usuCPF')}}">
+											<input type="text" name="usuCPF" id="usuCPF" class="form-control @error('usuCPF') is-invalid @enderror" data-inputmask="'mask': ['999.999.999-99']" data-mask="" value="{{!empty($usuario[0]->usucpf) ? $usuario[0]->usucpf : old('usuCPF')}}">
 											
 											@error('usuCPF')
 												<span class="invalid-feedback" role="alert">
@@ -84,7 +84,7 @@
                     					<div class="form-group">
                         					<label>Dt Nascimento:</label>
                                             <div class="input-group date reservationdate" id="reservationdate" data-target-input="nearest">
-                                                <input type="text" name="usuDtNascimento" id="usuDtNascimento" class="form-control initData @error('usuDtNascimento') is-invalid @enderror" data-inputmask-alias="datetime"  data-inputmask="'mask': ['99/99/9999']" data-mask="" im-insert="false" value="{{old('usuDtNascimento')}}">
+                                                <input type="text" name="usuDtNascimento" id="usuDtNascimento" class="form-control initData @error('usuDtNascimento') is-invalid @enderror" data-inputmask-alias="datetime"  data-inputmask="'mask': ['99/99/9999']" data-mask="" im-insert="false" value="{{!empty($usuario[0]->dtcadastro) ? $carbon::parse($usuario[0]->dtcadastro)->format('d/m/Y') : old('usuDtNascimento')}}">
                                                 <div class="input-group-append">
                                                     <div class="input-group-text">
 														<i class="fa fa-calendar"></i>
