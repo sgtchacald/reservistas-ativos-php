@@ -132,5 +132,15 @@ class Usuarios extends Authenticatable{
                 ->where('idUsuario', '=', auth()->user()->idusuario)
                 ->get();
     } 
+
+    public static function getNomeUsuario($idUsuario){        
+        $query = DB::table('USUARIOS')
+                ->select('name')
+                ->where('idusuario','=', $idUsuario)
+                ->get();
+        
+        return $query[0]->name;
+        
+    }
     
 }

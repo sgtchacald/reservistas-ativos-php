@@ -24,6 +24,12 @@ class UtilsController extends Controller{
             }
         }
     }
+
+    public static function getNomeUsuarioById($idUsuario){
+        return Usuarios::getNomeUsuario($idUsuario);
+    }
+
+    
     
     
    
