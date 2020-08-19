@@ -43,7 +43,7 @@ class UsuarioController extends Controller{
         //Validação de Campos do formulário
         $this->validaCampos($request, 'i');
         
-        $insert = Usuarios::create([
+        $varOperacao = Usuarios::create([
             'usupermissao'        => $usuPermissao,
             'name'                => $request->input('name'),
             'usucpf'              => UtilsController::apenasNumeros($request->input('usuCPF')),
@@ -77,26 +77,7 @@ class UsuarioController extends Controller{
             'dtcadastro'          => date('Y-m-d H:i:s')
         ]);
         
-      
-        if(!$insert){
-            $request->session()->flash('alert-danger', "Erro Inesperado, verifique o log de registros.");
-            return view('admin.reservista.cadastrar');
-        }else{
-            $request->session()->flash('alert-success', 'Dados criados com sucesso.');
-            
-            switch ($usuPermissao) {
-                case 'R':
-                    $rota = 'reservistas.selecionar';
-                    break;
-                case 'E':
-                    $rota = 'rep.empresa.selecionar';
-                    break;
-                case 'A':
-                    $rota = 'administrador.selecionar';
-                    break;
-            }  
-            return redirect()->route($rota, ['permissaoUsuario' => $usuPermissao,'indStatus' => $indStatus]);
-        }
+        $this->validaERedirecionaOperacao($request, $varOperacao, 'Inclusão', $usuPermissao);
     }
     
     public function edit($idusuario){
@@ -111,7 +92,7 @@ class UsuarioController extends Controller{
         //Validação de Campos do formulário
         $this->validaCampos($request,'u');
         
-        $update = Usuarios::where(['idusuario' => $request->input('idUsuario')])->update([
+        $varOperacao = Usuarios::where(['idusuario' => $request->input('idUsuario')])->update([
             'usupermissao'        => $usuPermissao,
             'name'                => $request->input('name'),
             //'usucpf'              => UtilsController::apenasNumeros($request->input('usuCPF')),
@@ -144,12 +125,25 @@ class UsuarioController extends Controller{
             'usueditou'            => Auth::user()->getAuthIdentifier(),
             'dtedicao'          => date('Y-m-d H:i:s')
         ]);
-        
-        if(!$update){
-            $request->session()->flash('alert-danger', "Erro Inesperado, verifique o log de registros.".$update);
+
+        $this->validaERedirecionaOperacao($request, $varOperacao, 'Edição', $usuPermissao);
+    }
+    
+    public function destroy(Request $request, $idusuario){
+        $usuPermissao = $request->input('usuPermissao');
+       
+        $varOperacao = Usuarios::where(['idusuario' => $idusuario])
+        ->update([
+            'usuindstatus'=>'I',
+            'usuexcluiu' => Auth::user()->getAuthIdentifier(),
+            'dtexclusao'=> date('Y-m-d H:i:s')
+        ]);
+
+        if(!$varOperacao){
+            $request->session()->flash('alert-danger', "Erro Inesperado, verifique o log de registros.");
             return view('admin.reservista.selecionar')->with(compact('usuario'));
         }else{
-            $request->session()->flash('alert-success', 'Dados Alterados com sucesso.');
+            $request->session()->flash('alert-success', 'Exclusão' .' efetuada com sucesso.');
             
             switch ($usuPermissao) {
                 case 'R':
@@ -164,11 +158,6 @@ class UsuarioController extends Controller{
             }  
             return redirect()->route($rota, ['permissaoUsuario' => $usuPermissao,'indStatus' => 'A']);
         }
-
-    }
-    
-    public function destroy(){
-
     }
 
     public function validaCampos(Request $request, $tipoPersistencia){
@@ -201,4 +190,9 @@ class UsuarioController extends Controller{
 
         $request->validate($rules, $messages, $customAttributes);
     }
+
+
+    public function validaERedirecionaOperacao(Request $request, $varOperacao, $strTipoOperacao, $usuPermissao){
+    }
+
 }

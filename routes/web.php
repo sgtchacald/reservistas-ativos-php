@@ -8,6 +8,7 @@ route::group(['middleware' => ['auth'],'namespace'  => 'Admin'],function(){
     Route::post('admin/reservista/insert', 'UsuarioController@store')->name('reservista.insert');
     Route::get('admin/reservista/editar/{idusuario}', 'UsuarioController@edit')->name('reservista.editar');
     Route::put('admin/reservista/update', 'UsuarioController@update')->name('reservista.update');
+    Route::put('admin/reservista/excluir/{idusuario}', 'UsuarioController@destroy')->name('reservista.excluir');
 });
     
 Route::get('admin', 'Admin\AdminController@index')->name('admin');
