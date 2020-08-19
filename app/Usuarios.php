@@ -116,9 +116,11 @@ class Usuarios extends Authenticatable{
 
     public function getUsuarios($permissaoUsuario, $indStatus){
         return DB::table('USUARIOS')
-                ->where('usupermissao','=', $permissaoUsuario,'and','usuindstatus','=', $indStatus)
-                ->orderBy('idusuario','desc')
-                ->get();
+                    ->select('*')
+                    ->where('usupermissao','=', $permissaoUsuario)
+                    ->where('usuindstatus','=', $indStatus)
+                    ->orderBy('idusuario','desc')
+                    ->get();
     }
 
     public function getUsuario($idUsuario){

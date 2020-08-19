@@ -38,7 +38,7 @@
 				<tr>
 					<th>Ações</th>
 					<th>Força</th>
-					<th>Posto/Graduação</th>
+					<th>Graduação</th>
 					<th>Nome de Guerra</th>
 					<th>Batalhão</th>
 					<th>E-mail</th>
@@ -49,10 +49,20 @@
 			<tbody>
 				@foreach($usuarios as $usuario)
        				<tr>
-    					<td align="center">
-        					<a href="{{route('reservista.editar', $usuario->idusuario)}}" data-toggle="tooltip" data-placement="bottom" title="Editar"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;
-        					<a href="" data-toggle="tooltip" data-placement="bottom" title="Excluir"><i class="far fa-trash-alt"></i></a>&nbsp;&nbsp;
-        					<!--<a href="" data-toggle="tooltip" data-placement="bottom" title="visualizar Currículo"><i class="far fa-file-pdf"></i></a>-->
+    					<td>
+							<table>
+								<tr align="center">
+									<a href="{{route('reservista.editar', $usuario->idusuario)}}" data-toggle="tooltip" data-placement="bottom" title="Editar" style="margin-right: 10%"><i class="fas fa-edit"></i></a>
+									
+									<form action="{{route('reservista.excluir', $usuario->idusuario)}}" method="POST">
+										@csrf
+										@method('PUT')
+										<input id="usuPermissao" type="hidden" name="usuPermissao" value="R">
+										<button type="submit" class="retiraEstilos" data-toggle="tooltip" data-placement="bottom" title="Excluir"><i class="far fa-trash-alt"></i></button>
+									</form>
+									
+								</tr>
+							</table>	
     					</td>
     						
     					<td>{{(\App\Dominios\TipoForca::getDominio())[$usuario->usutipoforca]}}</td>
@@ -82,7 +92,7 @@ $(function () {
       "pageLength": 5,
       "searching": true,
       "ordering": true,
-      "info": false,
+      "info": true,
       "autoWidth": false,
       "responsive": true,
       "language": {"url": "http://cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"}
