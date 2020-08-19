@@ -26,7 +26,7 @@ class UtilsController extends Controller{
     }
 
     public static function getNomeUsuarioById($idUsuario){
-        return Usuarios::getNomeUsuario($idUsuario);
+        return !empty($idUsuario)?Usuarios::getNomeUsuario($idUsuario):'';
     }
 
     

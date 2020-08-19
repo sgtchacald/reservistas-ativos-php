@@ -105,9 +105,8 @@ class UsuarioController extends Controller{
     }
     
     public function update(Request $request){
-        $usuario = $this->usuarios->getUsuario($request->input('idUsuario'));
-        dd($request->input());
-        /*$usuPermissao = $request->input('usuPermissao');        
+       $usuario = $this->usuarios->getUsuario($request->input('idUsuario'));
+       $usuPermissao = $request->input('usuPermissao');
 
         //Validação de Campos do formulário
         $this->validaCampos($request,'u');
@@ -115,7 +114,7 @@ class UsuarioController extends Controller{
         $update = Usuarios::where(['idusuario' => $request->input('idUsuario')])->update([
             'usupermissao'        => $usuPermissao,
             'name'                => $request->input('name'),
-            'usucpf'              => UtilsController::apenasNumeros($request->input('usuCPF')),
+            //'usucpf'              => UtilsController::apenasNumeros($request->input('usuCPF')),
             'usudtnascimento'     => Carbon::parse($request->input('usuDtNascimento'))->format('Y-m-d H:i'),
             'usuestadocivil'      => $request->input('usuEstadoCivil'),
             'usugenero'           => $request->input('usuGenero'),
@@ -142,13 +141,13 @@ class UsuarioController extends Controller{
             'usublogsiteurl'      => $request->input('usuBlogSiteUrl'),
             //'password'            => Hash::make($senhaAleatoria),
             //'usuindstatus'        => $indStatus,
-            'usucriou'            => Auth::user()->getAuthIdentifier(),
-            'dtcadastro'          => date('Y-m-d H:i:s')
+            'usueditou'            => Auth::user()->getAuthIdentifier(),
+            'dtedicao'          => date('Y-m-d H:i:s')
         ]);
         
         if(!$update){
             $request->session()->flash('alert-danger', "Erro Inesperado, verifique o log de registros.".$update);
-            return view('admin.reservista.editar')->with(compact('usuario'));
+            return view('admin.reservista.selecionar')->with(compact('usuario'));
         }else{
             $request->session()->flash('alert-success', 'Dados Alterados com sucesso.');
             
@@ -163,19 +162,20 @@ class UsuarioController extends Controller{
                     $rota = 'administrador.selecionar';
                     break;
             }  
-            return redirect()->route($rota, ['permissaoUsuario' => $usuPermissao,'indStatus' => $indStatus]);
-        }*/
+            return redirect()->route($rota, ['permissaoUsuario' => $usuPermissao,'indStatus' => 'A']);
+        }
 
     }
     
     public function destroy(){
+
     }
 
     public function validaCampos(Request $request, $tipoPersistencia){
         $rules = [
             'usuPermissao'          => 'required',
             'name'                  => 'required',
-            'usuCPF'                => $tipoPersistencia == 'i' ? 'required|unique:USUARIOS' : 'required',
+            'usuCPF'                => $tipoPersistencia == 'i' ? 'required|unique:USUARIOS' : '',
             'usuDtNascimento'       => 'required',
             'usuEstadoCivil'        => 'required',
             'usuGenero'             => 'required',
