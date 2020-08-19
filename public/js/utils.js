@@ -21,4 +21,8 @@ $(document).ready(function(){
     }, function(chosen_date) {
         $('.initData').val(chosen_date.format('DD/MM/YYYY'));
     });
+
+    $('.addUrl').bind('click', function(e){
+        if($.trim($(e.target).val())==='') $(e.target).val('http://www.');
+    });
 });     
