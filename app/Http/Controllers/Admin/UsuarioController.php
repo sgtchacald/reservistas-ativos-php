@@ -43,7 +43,7 @@ class UsuarioController extends Controller{
         //Validação de Campos do formulário
         $this->validaCampos($request, 'i');
         
-        $varOperacao = Usuarios::create([
+        $insert = Usuarios::create([
             'usupermissao'        => $usuPermissao,
             'name'                => $request->input('name'),
             'usucpf'              => UtilsController::apenasNumeros($request->input('usuCPF')),
@@ -77,7 +77,25 @@ class UsuarioController extends Controller{
             'dtcadastro'          => date('Y-m-d H:i:s')
         ]);
         
-        $this->validaERedirecionaOperacao($request, $varOperacao, 'Inclusão', $usuPermissao);
+        if(!$insert){
+            $request->session()->flash('alert-danger', "Erro Inesperado, verifique o log de registros.");
+            return view('admin.reservista.selecionar')->with(compact('usuario'));
+        }else{
+            $request->session()->flash('alert-success', 'Inclusão' .' efetuada com sucesso.');
+            
+            switch ($usuPermissao) {
+                case 'R':
+                    $rota = 'reservistas.selecionar';
+                    break;
+                case 'E':
+                    $rota = 'rep.empresa.selecionar';
+                    break;
+                case 'A':
+                    $rota = 'administrador.selecionar';
+                    break;
+            }  
+            return redirect()->route($rota, ['permissaoUsuario' => $usuPermissao,'indStatus' => 'A']);
+        }
     }
     
     public function edit($idusuario){
@@ -92,7 +110,7 @@ class UsuarioController extends Controller{
         //Validação de Campos do formulário
         $this->validaCampos($request,'u');
         
-        $varOperacao = Usuarios::where(['idusuario' => $request->input('idUsuario')])->update([
+        $update = Usuarios::where(['idusuario' => $request->input('idUsuario')])->update([
             'usupermissao'        => $usuPermissao,
             'name'                => $request->input('name'),
             //'usucpf'              => UtilsController::apenasNumeros($request->input('usuCPF')),
@@ -126,7 +144,25 @@ class UsuarioController extends Controller{
             'dtedicao'          => date('Y-m-d H:i:s')
         ]);
 
-        $this->validaERedirecionaOperacao($request, $varOperacao, 'Edição', $usuPermissao);
+        if(!$update){
+            $request->session()->flash('alert-danger', "Erro Inesperado, verifique o log de registros.");
+            return view('admin.reservista.selecionar')->with(compact('usuario'));
+        }else{
+            $request->session()->flash('alert-success', 'Edição' .' efetuada com sucesso.');
+            
+            switch ($usuPermissao) {
+                case 'R':
+                    $rota = 'reservistas.selecionar';
+                    break;
+                case 'E':
+                    $rota = 'rep.empresa.selecionar';
+                    break;
+                case 'A':
+                    $rota = 'administrador.selecionar';
+                    break;
+            }  
+            return redirect()->route($rota, ['permissaoUsuario' => $usuPermissao,'indStatus' => 'A']);
+        }
     }
     
     public function destroy(Request $request, $idusuario){
@@ -164,14 +200,14 @@ class UsuarioController extends Controller{
         $rules = [
             'usuPermissao'          => 'required',
             'name'                  => 'required',
-            'usuCPF'                => $tipoPersistencia == 'i' ? 'required|unique:USUARIOS' : '',
+            'usuCPF'                => $tipoPersistencia == 'i' ? 'required' : '',
             'usuDtNascimento'       => 'required',
             'usuEstadoCivil'        => 'required',
             'usuGenero'             => 'required',
             'usuIndPortDeficiente'  => 'required',
             'email'                 => $tipoPersistencia == 'i' ? 'required|unique:USUARIOS|email' : 'required',
             'usuTelCelular'         => 'required',
-            'usuTelFixo'            => 'required',
+            //'usuTelFixo'            => 'required',
             'usuIndViagem'          => 'required',
             'usuIndMudarCidade'     => 'required',
             //'usuimagemurl'          => 'required',
@@ -190,9 +226,4 @@ class UsuarioController extends Controller{
 
         $request->validate($rules, $messages, $customAttributes);
     }
-
-
-    public function validaERedirecionaOperacao(Request $request, $varOperacao, $strTipoOperacao, $usuPermissao){
-    }
-
 }

@@ -40,7 +40,7 @@
 					<th>Força</th>
 					<th>Graduação</th>
 					<th>Nome de Guerra</th>
-					<th>Batalhão</th>
+					<th>Organização Militar</th>
 					<th>E-mail</th>
 					<th>Celular</th>
 					<th>Cadastro</th>
@@ -54,10 +54,10 @@
 								<tr align="center">
 									<a href="{{route('reservista.editar', $usuario->idusuario)}}" data-toggle="tooltip" data-placement="bottom" title="Editar" style="margin-right: 10%"><i class="fas fa-edit"></i></a>
 									
-									<form action="{{route('reservista.excluir', $usuario->idusuario)}}" method="POST">
+									<form class="excluirRegistro" action="{{route('reservista.excluir', $usuario->idusuario)}}" method="POST">
 										@csrf
 										@method('PUT')
-										<input id="usuPermissao" type="hidden" name="usuPermissao" value="R">
+									<input id="usuPermissao{{$usuario->idusuario}}" type="hidden" name="usuPermissao" value="R">
 										<button type="submit" class="retiraEstilos" data-toggle="tooltip" data-placement="bottom" title="Excluir"><i class="far fa-trash-alt"></i></button>
 									</form>
 									
@@ -97,8 +97,6 @@ $(function () {
       "responsive": true,
       "language": {"url": "http://cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"}
     });
-    
-     $('[data-toggle="tooltip"]').tooltip()
     
   }); 
     </script>

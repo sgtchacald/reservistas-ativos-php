@@ -144,5 +144,15 @@ class Usuarios extends Authenticatable{
         return $query[0]->name;
         
     }
+
+    public static function verificaSeExisteCPF($cpf){        
+        $count = DB::table('USUARIOS')
+                ->select('idusuario')
+                ->where('usucpf','=', $cpf)
+                ->get()->count;
+        
+        return $count > 0 ? true : false;
+        
+    }
     
 }
