@@ -41,7 +41,7 @@
             			<div class="tab-content" id="vert-tabs-tabContent"> 
             				<div class="tab-pane fade active show" id="tabs-d-pessoais" role="tabpanel" aria-labelledby="tabs-d-pessoais-tab">
             					<div class="row">
-            						<div class="col-sm-3 form-group">
+            						<div class="col-sm-3 form-group required">
                         				<label>Perfil de Usuário:</label>
                         				<select class="form-control" disabled>
                         					<option>Selecione</option> 
@@ -53,7 +53,7 @@
                         			</div>
                         			
                     				<div class="col-sm-9">
-                    					<div class="form-group">
+                    					<div class="form-group required" >
 											<label>Nome Completo:</label> 
 											<input type="text"  name="name" id="name" class="form-control @error('name') is-invalid @enderror" placeholder="Digite seu nome" value="{{old('name')}}">
 											
@@ -68,7 +68,7 @@
                     			
                     			<div class="row">
                     				<div class="col-sm-3">
-                    					<div class="form-group">
+                    					<div class="form-group required">
                         					<label>CPF:</label> 
 											<input type="text" name="usuCPF" id="usuCPF" class="form-control @error('usuCPF') is-invalid @enderror" data-inputmask="'mask': ['999.999.999-99']" data-mask="" value="{{old('usuCPF')}}">
 											
@@ -81,7 +81,7 @@
                     				</div>
                     				
                     				<div class="col-sm-3">
-                    					<div class="form-group">
+                    					<div class="form-group required">
                         					<label>Dt Nascimento:</label>
                                             <div class="input-group date reservationdate" id="reservationdate" data-target-input="nearest">
                                                 <input type="text" name="usuDtNascimento" id="usuDtNascimento" class="form-control initData @error('usuDtNascimento') is-invalid @enderror" data-inputmask-alias="datetime"  data-inputmask="'mask': ['99/99/9999']" data-mask="" im-insert="false" value="{{old('usuDtNascimento')}}">
@@ -101,7 +101,7 @@
                     				</div>
                     				
                     				<div class="col-sm-2">
-                    					<div class="form-group">
+                    					<div class="form-group required">
                         					<label>Estado Civil:</label> 
                                 			<select name="usuEstadoCivil" id="usuEstadoCivil" class="form-control @error('usuEstadoCivil') is-invalid @enderror">
                             					<option value="">Selecione</option> 
@@ -121,7 +121,7 @@
                     				</div>
                     				
                     				<div class="col-sm-2">
-                    					<div class="form-group">
+                    					<div class="form-group required">
                     						<label>Gênero:</label> 
                                 			<select name="usuGenero" id="usuGenero" class="form-control @error('usuGenero') is-invalid @enderror">
                             					<option value="">Selecione</option> 
@@ -141,7 +141,7 @@
                     				</div>
                     				
                     				<div class="col-sm-2">
-                    					<div class="form-group">
+                    					<div class="form-group required">
                     						<label>Port. Deficiência?</label> 
                                 			<select name="usuIndPortDeficiente" id="usuIndPortDeficiente" class="form-control @error('usuIndPortDeficiente') is-invalid @enderror">
                             					<option value="">Selecione</option> 
@@ -163,7 +163,7 @@
                     			
                     			<div class="row">
                     				<div class="col-sm-8">
-                    					<div class="form-group">
+                    					<div class="form-group required">
                         					<label>E-mail:</label> 
 											<input type="text" name="email" id="email" class="form-control @error('email') is-invalid @enderror" placeholder="Digite seu e-mail" value="{{old('email')}}">
 											
@@ -176,7 +176,7 @@
                     				</div>
                     				
                     				<div class="col-sm-2">
-										<div class="form-group">
+										<div class="form-group required">
 											<label>Telefone Celular:</label> 
 											<input type="text" name="usuTelCelular" id="usuTelCelular" class="form-control @error('usuTelCelular') is-invalid @enderror" placeholder="" data-inputmask="'mask': ['99 9 9999-9999']" data-mask="" value="{{old('usuTelCelular')}}">
 
@@ -204,7 +204,7 @@
                     			
                     			<div class="row">
                     				<div class="col-sm-3">
-                    					<div class="form-group">
+                    					<div class="form-group required">
                     						<label>Disponível para viajar?</label>
                     						<div class="form-check @error('usuIndViagem') is-invalid @enderror">
 												@foreach ((\App\Dominios\SimNao::getDominio()) as $key => $value)
@@ -222,7 +222,7 @@
                     				</div>
                     				
                     				<div class="col-sm-4">
-                    					<div class="form-group">
+                    					<div class="form-group required">
                     						<label>Disponível para mudar de cidade?</label>
                     						<div class="form-check @error('usuIndMudarCidade') is-invalid @enderror">
                     							@foreach ((\App\Dominios\SimNao::getDominio()) as $key => $value)
@@ -272,7 +272,7 @@
             				
             				<div class="tab-pane fade" id="tabs-d-militares" role="tabpanel" aria-labelledby="tabs-d-militares-tab">
             					<div class="row">
-                        			<div class="col-sm-3 form-group">
+                        			<div class="col-sm-3 form-group required">
                         				<label>Força de Origem:</label> 
                             			<select name="usuTipoForca" id="usuTipoForca" class="form-control @error('usuTipoForca') is-invalid @enderror">
                         					<option value="">Selecione</option> 
@@ -291,7 +291,7 @@
                         			</div>
                         			
                         			<div class="col-sm-2">
-                    					<div class="form-group">
+                    					<div class="form-group required">
                     						<label>Sou Oficial?</label>
                     						<div class="form-check @error('usuIndOficial') is-invalid @enderror" style="padding-top: 6px;">
                     							@foreach ((\App\Dominios\SimNao::getDominio()) as $key => $value)
@@ -324,7 +324,7 @@
                     			
                     			<div class="row">
                     				<div class="col-sm-2">
-                    					<div class="form-group">
+                    					<div class="form-group required">
                         					<label>Post/Grad:</label> 
                                 			<select name="usuPostoGrad" id="usuPostoGrad" class="form-control @error('name') is-invalid @enderror" >
                             					<option value="">Selecione</option> 
@@ -344,7 +344,7 @@
                     				</div>
                     				
                     				<div class="col-sm-7">
-                    					<div class="form-group">
+                    					<div class="form-group required">
                         					<label>Nome de Guerra:</label> 
 											<input type="text" name="usuNomeGuerra" id="usuNomeGuerra" class="form-control @error('name') is-invalid @enderror" placeholder="Digite o nome de guerra" value="{{old('usuNomeGuerra')}}">
 											
@@ -359,8 +359,8 @@
                     			
                     			<div class="row">
                     				<div class="col-sm-9">
-                    					<div class="form-group">
-                        					<label>Ultimo batalhão que serviu:</label> 
+                    					<div class="form-group required">
+                        					<label>Última Organização Militar que serviu:</label> 
 											<input type="text" name="usuNomeUltBtl" id="usuNomeUltBtl" class="form-control @error('name') is-invalid @enderror" placeholder="Digite o nome do último batalhão que serviu" value="{{old('usuNomeUltBtl')}}">
 											
 											@error('usuNomeUltBtl')
@@ -377,7 +377,7 @@
             			
         						<div class="row">
             						<div class="col-sm-6">
-                    					<div class="form-group">
+                    					<div class="form-group required">
                         					<label>Linked In:</label> 
 											<input type="url" name="usuLinkedinUrl" id="usuLinkedinUrl" class="form-control @error('name') is-invalid @enderror addUrl" placeholder="Digite sua URL do perfil do Linked In" value="{{old('usuLinkedinUrl')}}">
 											
@@ -484,7 +484,7 @@
         	</div>
         	
         	<div class="card-footer">
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <button type="submit" class="btn btn-primary">Salvar</button>
             </div>
         </div>
 	</form>		
