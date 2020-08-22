@@ -1,6 +1,5 @@
 <?php
 
-use App\User;
 use App\Usuarios;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;

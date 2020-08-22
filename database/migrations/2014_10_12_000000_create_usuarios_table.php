@@ -38,7 +38,7 @@ class CreateUsuariosTable extends Migration
             //Informacoes militares
             $table->char('usutipoforca', 1);
             $table->char('usuindoficial', 1);
-            $table->string('usucertreservista', 40);
+            $table->string('usucertreservista', 40)->nullable();
             $table->string('usupostograd', 4);
             $table->string('usunomeguerra', 100);
             $table->string('usunomeultbtl', 100);            

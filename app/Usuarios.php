@@ -4,7 +4,6 @@ namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 class Usuarios extends Authenticatable{
@@ -146,13 +145,12 @@ class Usuarios extends Authenticatable{
     }
 
     public static function verificaSeExisteCPF($cpf){        
-        $count = DB::table('USUARIOS')
-                ->select('idusuario')
+        $query = DB::table('USUARIOS')
                 ->where('usucpf','=', $cpf)
-                ->get()->count;
+                ->count();
+
         
-        return $count > 0 ? true : false;
-        
+        return  $query > 0 ? false : true;
     }
     
 }

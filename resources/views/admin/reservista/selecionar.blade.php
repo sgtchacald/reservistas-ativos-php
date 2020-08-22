@@ -38,11 +38,11 @@
 				<tr>
 					<th>Ações</th>
 					<th>Força</th>
-					<th>Graduação</th>
-					<th>Nome de Guerra</th>
 					<th>Organização Militar</th>
+					<th>Graduação</th>
+					<th>N. Guerra</th>
 					<th>E-mail</th>
-					<th>Celular</th>
+					{{--<th>Celular</th>--}}
 					<th>Cadastro</th>
 				</tr>
 			</thead>
@@ -66,11 +66,11 @@
     					</td>
     						
     					<td>{{(\App\Dominios\TipoForca::getDominio())[$usuario->usutipoforca]}}</td>
-    					<td>{{(\App\Dominios\PostoGraduacao::getDominio())[$usuario->usupostograd]}}</td>
+						<td>{{$usuario->usunomeultbtl}}</td>
+						<td>{{(\App\Dominios\PostoGraduacao::getDominio())[$usuario->usupostograd]}}</td>
     					<td>{{$usuario->usunomeguerra}}</td>
-    					<td>{{$usuario->usunomeultbtl}}</td>
     					<td>{{$usuario->email}}</td>
-						<td>{{$usuario->usutelcelular}}</td>
+						{{--<td>{{$usuario->usutelcelular}}</td>--}}
 						<td>{{$carbon::parse($usuario->dtcadastro)->format('d/m/Y')}}</td>
     				</tr>
 				@endforeach
