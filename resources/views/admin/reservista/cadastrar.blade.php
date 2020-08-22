@@ -311,7 +311,7 @@
                     				<div class="col-sm-4">
                     					<div class="form-group">
                     						<label>Certificado de Reservista:</label> 
-											<input type="text" name="usuCertReservista" id="usuCertReservista" class="form-control @error('name') is-invalid @enderror" placeholder="Digite o Número do Certificado" data-inputmask="'mask': '9', 'repeat': 10, 'greedy' : false" data-mask="" value="{{old('usuCertReservista')}}">
+											<input type="text" name="usuCertReservista" id="usuCertReservista" class="form-control @error('usuCertReservista') is-invalid @enderror" placeholder="Digite o Número do Certificado" data-inputmask="'mask': '9', 'repeat': 10, 'greedy' : false" data-mask="" value="{{old('usuCertReservista')}}">
 											
 											@error('usuCertReservista')
 											<span class="invalid-feedback" role="alert">
@@ -326,7 +326,7 @@
                     				<div class="col-sm-2">
                     					<div class="form-group required">
                         					<label>Post/Grad:</label> 
-                                			<select name="usuPostoGrad" id="usuPostoGrad" class="form-control @error('name') is-invalid @enderror" >
+                                			<select name="usuPostoGrad" id="usuPostoGrad" class="form-control @error('usuPostoGrad') is-invalid @enderror" >
                             					<option value="">Selecione</option> 
                             					@foreach ((\App\Dominios\PostoGraduacao::getDominio()) as $key => $value)
 													<option @if(old('usuPostoGrad')==$key) {{'selected="selected"'}} @endif value="{{$key}}">
@@ -346,7 +346,7 @@
                     				<div class="col-sm-7">
                     					<div class="form-group required">
                         					<label>Nome de Guerra:</label> 
-											<input type="text" name="usuNomeGuerra" id="usuNomeGuerra" class="form-control @error('name') is-invalid @enderror" placeholder="Digite o nome de guerra" value="{{old('usuNomeGuerra')}}">
+											<input type="text" name="usuNomeGuerra" id="usuNomeGuerra" class="form-control @error('usuNomeGuerra') is-invalid @enderror" placeholder="Digite o nome de guerra" value="{{old('usuNomeGuerra')}}">
 											
 											@error('usuNomeGuerra')
 												<span class="invalid-feedback" role="alert">
@@ -361,7 +361,7 @@
                     				<div class="col-sm-9">
                     					<div class="form-group required">
                         					<label>Última Organização Militar que serviu:</label> 
-											<input type="text" name="usuNomeUltBtl" id="usuNomeUltBtl" class="form-control @error('name') is-invalid @enderror" placeholder="Digite o nome do último batalhão que serviu" value="{{old('usuNomeUltBtl')}}">
+											<input type="text" name="usuNomeUltBtl" id="usuNomeUltBtl" class="form-control @error('usuNomeUltBtl') is-invalid @enderror" placeholder="Digite o nome do último batalhão que serviu" value="{{old('usuNomeUltBtl')}}">
 											
 											@error('usuNomeUltBtl')
 												<span class="invalid-feedback" role="alert">

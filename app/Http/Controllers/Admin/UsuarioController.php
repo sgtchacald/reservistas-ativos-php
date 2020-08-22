@@ -7,11 +7,11 @@ use App\Usuarios;
 use App\Dominios\SimNao;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Utils\UtilsController;
+use App\Rules\ValidaCpfUnico;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Throwable;
 
 class UsuarioController extends Controller{
     public function __construct(){
@@ -200,7 +200,7 @@ class UsuarioController extends Controller{
         $rules = [
             'usuPermissao'          => 'required',
             'name'                  => 'required',
-            'usuCPF'                => $tipoPersistencia == 'i' ? 'required' : '',
+            'usuCPF'                =>  $tipoPersistencia == 'i' ? ['required', new ValidaCpfUnico()] : '',
             'usuDtNascimento'       => 'required',
             'usuEstadoCivil'        => 'required',
             'usuGenero'             => 'required',
@@ -213,7 +213,7 @@ class UsuarioController extends Controller{
             //'usuimagemurl'          => 'required',
             'usuTipoForca'          => 'required',
             'usuIndOficial'         => 'required',
-            'usuCertReservista'     => 'required',
+            'usuCertReservista'     => $request->input('usuIndOficial') == 'N' ? 'required' : '',
             'usuPostoGrad'          => 'required',
             'usuNomeGuerra'         => 'required',
             'usuNomeUltBtl'         => 'required',
@@ -225,5 +225,30 @@ class UsuarioController extends Controller{
         $customAttributes = [];
 
         $request->validate($rules, $messages, $customAttributes);
+
+        $this->controlarTabs();
+    }
+
+    public function controlarTabs(){
+        $active_tab = 0;
+        
+        $errors = session('errors');
+        
+        if ($errors) {
+            $fields_tabs = [
+                ['usuPermissao', 'name', 'usuCPF', 'usuDtNascimento', 'usuEstadoCivil', 'usuGenero', 'usuIndPortDeficiente', 'email', 'usuTelCelular', 'usuIndViagem', 'usuIndMudarCidade'], // Tab 1
+                ['usuTipoForca', 'usuIndOficial', 'usuCertReservista', 'usuPostoGrad', 'usuNomeGuerra', 'usuNomeUltBtl'], // Tab 2
+                ['usuLinkedinUrl'], //Tab 3
+            ];
+            
+            foreach ($fields_tabs as $tab => $fields) {
+                foreach ($fields as $field) {
+                    if ($errors->has($field)) {
+                        $active_tab = $tab;
+                        break;
+                    }
+                }
+            }
+        }
     }
 }
