@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Exception;
 
 class UsuarioController extends Controller{
     public function __construct(){
@@ -93,7 +94,8 @@ class UsuarioController extends Controller{
                 case 'A':
                     $rota = 'administrador.selecionar';
                     break;
-            }  
+            } 
+ 
             return redirect()->route($rota, ['permissaoUsuario' => $usuPermissao,'indStatus' => 'A']);
         }
     }
@@ -104,11 +106,10 @@ class UsuarioController extends Controller{
     }
     
     public function update(Request $request){
-       $usuario = $this->usuarios->getUsuario($request->input('idUsuario'));
-       $usuPermissao = $request->input('usuPermissao');
-
-        //Validação de Campos do formulário
-        $this->validaCampos($request,'u');
+        $usuario = $this->usuarios->getUsuario($request->input('idUsuario'));
+        $usuPermissao = $request->input('usuPermissao');
+        
+        $this->validaCampos($request, 'u');
         
         $update = Usuarios::where(['idusuario' => $request->input('idUsuario')])->update([
             'usupermissao'        => $usuPermissao,
@@ -161,8 +162,10 @@ class UsuarioController extends Controller{
                     $rota = 'administrador.selecionar';
                     break;
             }  
+
             return redirect()->route($rota, ['permissaoUsuario' => $usuPermissao,'indStatus' => 'A']);
         }
+                   
     }
     
     public function destroy(Request $request, $idusuario){
@@ -197,58 +200,73 @@ class UsuarioController extends Controller{
     }
 
     public function validaCampos(Request $request, $tipoPersistencia){
-        $rules = [
-            'usuPermissao'          => 'required',
-            'name'                  => 'required',
-            'usuCPF'                =>  $tipoPersistencia == 'i' ? ['required', new ValidaCpfUnico()] : '',
-            'usuDtNascimento'       => 'required',
-            'usuEstadoCivil'        => 'required',
-            'usuGenero'             => 'required',
-            'usuIndPortDeficiente'  => 'required',
-            'email'                 => $tipoPersistencia == 'i' ? 'required|unique:USUARIOS|email' : 'required',
-            'usuTelCelular'         => 'required',
-            //'usuTelFixo'            => 'required',
-            'usuIndViagem'          => 'required',
-            'usuIndMudarCidade'     => 'required',
-            //'usuimagemurl'          => 'required',
-            'usuTipoForca'          => 'required',
-            'usuIndOficial'         => 'required',
-            'usuCertReservista'     => $request->input('usuIndOficial') == 'N' ? 'required' : '',
-            'usuPostoGrad'          => 'required',
-            'usuNomeGuerra'         => 'required',
-            'usuNomeUltBtl'         => 'required',
-            'usuLinkedinUrl'        => 'required'
-        ];
-
-        $messages = ['required' => 'Campo obrigatório.'];
-
-        $customAttributes = [];
-
-        $request->validate($rules, $messages, $customAttributes);
-
-        $this->controlarTabs();
-    }
-
-    public function controlarTabs(){
-        $active_tab = 0;
-        
-        $errors = session('errors');
-        
-        if ($errors) {
-            $fields_tabs = [
-                ['usuPermissao', 'name', 'usuCPF', 'usuDtNascimento', 'usuEstadoCivil', 'usuGenero', 'usuIndPortDeficiente', 'email', 'usuTelCelular', 'usuIndViagem', 'usuIndMudarCidade'], // Tab 1
-                ['usuTipoForca', 'usuIndOficial', 'usuCertReservista', 'usuPostoGrad', 'usuNomeGuerra', 'usuNomeUltBtl'], // Tab 2
-                ['usuLinkedinUrl'], //Tab 3
+        $emailUsuarioBanco = $this->usuarios->getEmailUsuario($request->input('idUsuario'));
+        $emailUsuarioTela  = $request->input('email');
+        try{
+            $rules = [
+                'usuPermissao'          => 'required',
+                'name'                  => 'required',
+                'usuCPF'                =>  $tipoPersistencia == 'i' ? ['required', new ValidaCpfUnico()] : '',
+                'usuDtNascimento'       => 'required',
+                'usuEstadoCivil'        => 'required',
+                'usuGenero'             => 'required',
+                'usuIndPortDeficiente'  => 'required',
+                
+                'email'                 => 
+                    (
+                     ($tipoPersistencia == 'i')
+                     || 
+                     ($tipoPersistencia == 'u' && ($emailUsuarioTela != $emailUsuarioBanco)) 
+                    )
+                    ? 'required|unique:USUARIOS|email' 
+                    : 'required',
+                
+                'usuTelCelular'         => 'required',
+                //'usuTelFixo'            => 'required',
+                'usuIndViagem'          => 'required',
+                'usuIndMudarCidade'     => 'required',
+                //'usuimagemurl'          => 'required',
+                'usuTipoForca'          => 'required',
+                'usuIndOficial'         => 'required',
+                'usuCertReservista'     => $request->input('usuIndOficial') == 'N' ? 'required' : '',
+                'usuPostoGrad'          => 'required',
+                'usuNomeGuerra'         => 'required',
+                'usuNomeUltBtl'         => 'required',
+                'usuLinkedinUrl'        => 'required'
             ];
+    
+            $messages = ['required' => 'Campo obrigatório.'];
+    
+            $customAttributes = [];
             
-            foreach ($fields_tabs as $tab => $fields) {
-                foreach ($fields as $field) {
-                    if ($errors->has($field)) {
-                        $active_tab = $tab;
-                        break;
+            $request->validate($rules, $messages, $customAttributes);
+
+        }catch (Exception $exception) {
+
+            $activeTab = 0;  
+  
+            $errors = $exception->errors();
+                    
+            if ($errors) {
+                $fields_tabs = [
+                    ['usuPermissao', 'name', 'usuCPF', 'usuDtNascimento', 'usuEstadoCivil', 'usuGenero', 'usuIndPortDeficiente', 'email', 'usuTelCelular', 'usuIndViagem', 'usuIndMudarCidade'], // Tab 1
+                    ['usuTipoForca', 'usuIndOficial', 'usuCertReservista', 'usuPostoGrad', 'usuNomeGuerra', 'usuNomeUltBtl'], // Tab 2
+                    ['usuLinkedinUrl'], //Tab 3
+                ];
+                               
+                foreach ($fields_tabs as $tab => $fields) {
+                    foreach ($fields as $field) {
+                        if(array_key_exists($field, $errors)){
+                            $activeTab = $tab;
+                            break;
+                        }
                     }
                 }
             }
+
+            session()->put('activeTab', $activeTab);
+
+            $request->validate($rules, $messages, $customAttributes);
         }
     }
 }
