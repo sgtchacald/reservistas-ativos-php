@@ -84,20 +84,17 @@
                     				<div class="col-sm-3">
                     					<div class="form-group required">
                         					<label>Dt Nascimento:</label>
-                                            <div class="input-group date reservationdate" id="reservationdate" data-target-input="nearest">
-                                                <input type="text" name="usuDtNascimento" id="usuDtNascimento" class="form-control initData @error('usuDtNascimento') is-invalid @enderror" data-inputmask-alias="datetime"  data-inputmask="'mask': ['99/99/9999']" data-mask="" im-insert="false" value="{{old('usuDtNascimento', $carbon::parse($usuario[0]->usudtnascimento)->format('d/m/Y'))}}">
-                                                <div class="input-group-append">
-                                                    <div class="input-group-text">
-														<i class="fa fa-calendar"></i>
-													</div>
-												   </div>
+												<input 	type="date" 
+														name="usuDtNascimento" 
+														id="usuDtNascimento" 
+														class="form-control @error('usuDtNascimento') is-invalid @enderror"  
+														value="{{old('usuDtNascimento', $usuario[0]->usudtnascimento)}}">
 												
 												@error('usuDtNascimento')
 													<span class="invalid-feedback" role="alert">
 														<strong>{{ $message }}</strong>
 													</span>
 												@enderror
-											</div>
                     					</div>
                     				</div>
                     				
@@ -497,7 +494,6 @@
     		$("#editarUsuarioReservista").validate({
     			rules: {
                     usuCPF: { cpfBR: true },
-                    usuDtNascimento: { dateITA:	true},
                     email: {email: true },
     			},
     			messages: {
