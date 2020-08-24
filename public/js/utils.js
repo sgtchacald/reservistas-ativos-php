@@ -6,7 +6,7 @@ $(document).ready(function(){
     //ativando máscaras de entrada 
     $('[data-mask]').inputmask();
 
-    //ativando campos data 
+    /*//ativando campos data 
     $('.initData').daterangepicker({
         singleDatePicker: true,
         autoUpdateInput: false,
@@ -20,7 +20,7 @@ $(document).ready(function(){
         },
     }, function(chosen_date) {
         $('.initData').val(chosen_date.format('DD/MM/YYYY'));
-    });
+    });*/
 
     //ativando tooltip
     $('[data-toggle="tooltip"]').tooltip()
@@ -44,5 +44,6 @@ $(document).ready(function(){
     //Faz o elemento que estiver com [class="desaparecer"] após 5 segundos
     setTimeout(function() {
    		$('.desaparecer').fadeOut('fast');
-	}, 2000);
+    }, 2000);
+    
 });     

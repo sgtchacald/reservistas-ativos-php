@@ -30,7 +30,7 @@
                 <div class="row">
                 	<div class="col-5 col-sm-3">
                 		<div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
-                			<a class="nav-link active" id="tabs-d-pessoais-tab"  data-toggle="pill" href="#tabs-d-pessoais"  role="tab" aria-controls="tabs-d-pessoais"  aria-selected="false">Dados Pessoais</a>
+                			<a class="nav-link" id="tabs-d-pessoais-tab"  data-toggle="pill" href="#tabs-d-pessoais"  role="tab" aria-controls="tabs-d-pessoais"  aria-selected="false">Dados Pessoais</a>
                 			<a class="nav-link" 	   id="tabs-d-militares-tab" data-toggle="pill" href="#tabs-d-militares" role="tab" aria-controls="tabs-d-militares" aria-selected="false">Dados Militares</a> 
                 			<a class="nav-link" 	   id="tabs-d-social-tab" 	 data-toggle="pill" href="#tabs-d-social" 	  role="tab" aria-controls="tabs-d-social"    aria-selected="false">Redes Sociais</a>
                 			<a class="nav-link" 	   id="tabs-d-logs-tab"   	 data-toggle="pill" href="#vert-tabs-logs"   role="tab" aria-controls="vert-tabs-logs"   aria-selected="false">Logs</a>
@@ -39,7 +39,7 @@
     
             		<div class="col-7 col-sm-9">
             			<div class="tab-content" id="vert-tabs-tabContent"> 
-            				<div class="tab-pane fade active show" id="tabs-d-pessoais" role="tabpanel" aria-labelledby="tabs-d-pessoais-tab">
+            				<div class="tab-pane fade" id="tabs-d-pessoais" role="tabpanel" aria-labelledby="tabs-d-pessoais-tab">
             					<div class="row">
             						<div class="col-sm-3 form-group required">
                         				<label>Perfil de Usuário:</label>
@@ -83,20 +83,17 @@
                     				<div class="col-sm-3">
                     					<div class="form-group required">
                         					<label>Dt Nascimento:</label>
-                                            <div class="input-group date reservationdate" id="reservationdate" data-target-input="nearest">
-                                                <input type="text" name="usuDtNascimento" id="usuDtNascimento" class="form-control initData @error('usuDtNascimento') is-invalid @enderror" data-inputmask-alias="datetime"  data-inputmask="'mask': ['99/99/9999']" data-mask="" im-insert="false" value="{{old('usuDtNascimento')}}">
-                                                <div class="input-group-append">
-                                                    <div class="input-group-text">
-														<i class="fa fa-calendar"></i>
-													</div>
-												   </div>
+											<input 	type="date" 
+													name="usuDtNascimento" 
+													id="usuDtNascimento" 
+													class="form-control @error('usuDtNascimento') is-invalid @enderror" 
+													value="{{old('usuDtNascimento')}}">
 												
-												@error('usuDtNascimento')
-													<span class="invalid-feedback" role="alert">
-														<strong>{{ $message }}</strong>
-													</span>
-												@enderror
-											</div>
+											@error('usuDtNascimento')
+												<span class="invalid-feedback" role="alert">
+													<strong>{{ $message }}</strong>
+												</span>
+											@enderror
                     					</div>
                     				</div>
                     				
@@ -497,7 +494,6 @@
     		$("#cadastrarUsuarioReservista").validate({
     			rules: {
                     usuCPF: { cpfBR: true },
-                    usuDtNascimento: { dateITA:	true},
                     email: {email: true },
     			},
     			messages: {
@@ -517,6 +513,25 @@
                 }
     		});
 			
+			arrayObjetos = [];
+
+			$("#vert-tabs-tab").find('a').each(function(){
+				var id = $(this).attr("id");
+				arrayObjetos.push(id);
+			});
+
+			var tabActive = {{session()->get('activeTab') ?? '0'}};
+
+			$(arrayObjetos).each(function (key, value) {
+				if (key == tabActive){
+					console.log(value);
+					idTabActive = value;
+				}
+			});
+
+			$("#"+idTabActive).addClass("active" );
+			$("#"+idTabActive.substring(0, idTabActive.length-4)).addClass("show active");
         });     
-    </script>
+	</script>
+	{{session()->forget('activeTab')}}
 @stop

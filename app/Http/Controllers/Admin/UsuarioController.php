@@ -41,7 +41,6 @@ class UsuarioController extends Controller{
         $usuPermissao = $request->input('usuPermissao');
         $indStatus = 'A';
 
-        //Validação de Campos do formulário
         $this->validaCampos($request, 'i');
         
         $insert = Usuarios::create([
@@ -115,7 +114,7 @@ class UsuarioController extends Controller{
             'usupermissao'        => $usuPermissao,
             'name'                => $request->input('name'),
             //'usucpf'              => UtilsController::apenasNumeros($request->input('usuCPF')),
-            'usudtnascimento'     => Carbon::parse($request->input('usuDtNascimento'))->format('Y-m-d H:i'),
+            'usudtnascimento'     => Carbon::parse($request->input('usuDtNascimento'))->format('Y-m-d'),
             'usuestadocivil'      => $request->input('usuEstadoCivil'),
             'usugenero'           => $request->input('usuGenero'),
             'usuindportdeficiente'=> $request->input('usuIndPortDeficiente'),
@@ -200,8 +199,9 @@ class UsuarioController extends Controller{
     }
 
     public function validaCampos(Request $request, $tipoPersistencia){
-        $emailUsuarioBanco = $this->usuarios->getEmailUsuario($request->input('idUsuario'));
-        $emailUsuarioTela  = $request->input('email');
+        $emailUsuarioBanco = $tipoPersistencia == 'u' ? $this->usuarios->getEmailUsuario($request->input('idUsuario')) : '';
+        $emailUsuarioTela  = $tipoPersistencia == 'u' ? $request->input('email') : '';
+        
         try{
             $rules = [
                 'usuPermissao'          => 'required',
@@ -243,7 +243,8 @@ class UsuarioController extends Controller{
 
         }catch (Exception $exception) {
 
-            $activeTab = 0;  
+            $activeTab = 0;
+            $indSai = false;  
   
             $errors = $exception->errors();
                     
@@ -258,8 +259,12 @@ class UsuarioController extends Controller{
                     foreach ($fields as $field) {
                         if(array_key_exists($field, $errors)){
                             $activeTab = $tab;
+                            $indSai = true;
                             break;
                         }
+                    }
+                    if($indSai){
+                        break;
                     }
                 }
             }
