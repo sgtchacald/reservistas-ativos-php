@@ -20,7 +20,7 @@ class Empresas extends Migration
             $table->bigIncrements('idempresa');
             $table->string('empcnpj', 14)->unique()->sise;
             $table->string('empnome', 255);
-            $table->string('empemail', 255)->unique();
+            $table->string('empemail', 250)->unique();
             $table->string('empurlsite', 512);
             $table->string('empurllogotipo', 512);
             $table->char('empindstatus', 1);
