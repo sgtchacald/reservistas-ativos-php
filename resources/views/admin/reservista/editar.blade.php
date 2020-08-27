@@ -32,7 +32,8 @@
                 		<div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
                 			<a class="nav-link" id="tabs-d-pessoais-tab"  data-toggle="pill" href="#tabs-d-pessoais"  role="tab" aria-controls="tabs-d-pessoais"  aria-selected="false">Dados Pessoais</a>
                 			<a class="nav-link" id="tabs-d-militares-tab" data-toggle="pill" href="#tabs-d-militares" role="tab" aria-controls="tabs-d-militares" aria-selected="false">Dados Militares</a> 
-                			<a class="nav-link" id="tabs-d-social-tab"	  data-toggle="pill" href="#tabs-d-social" 	  role="tab" aria-controls="tabs-d-social"    aria-selected="false">Redes Sociais</a>
+							<a class="nav-link" id="tabs-d-resumo-tab"	  data-toggle="pill" href="#tabs-d-resumo" 	  role="tab" aria-controls="tabs-d-resumo"    aria-selected="false">Resumo Profissional</a>
+							<a class="nav-link" id="tabs-d-social-tab"	  data-toggle="pill" href="#tabs-d-social" 	  role="tab" aria-controls="tabs-d-social"    aria-selected="false">Redes Sociais</a>
                 			<a class="nav-link" id="tabs-d-logs-tab"   	  data-toggle="pill" href="#vert-tabs-logs"   role="tab" aria-controls="vert-tabs-logs"   aria-selected="false">Logs</a>
                 		</div>
                 	</div>
@@ -351,10 +352,35 @@
                     					</div>
                     				</div>
                     			</div>
-            				</div>
+							</div>
+							
+							<div class="tab-pane fade" id="tabs-d-resumo" role="tabpanel" aria-labelledby="tabs-d-resumo-tab">
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="form-group required">
+											<label>Resumo:</label> 
+											<textarea 
+												name="usuResumo" 
+												id="usuResumo" 
+												class="form-control @error('usuResumo') is-invalid @enderror" 
+												placeholder="Descreva de forma resumida suas habilidades, interesses profissionais e o que deseja para seu futuro profissional" 
+												rows="10"
+												maxlength="1024">{{old('usuResumo', $usuario[0]->usuresumo)}}</textarea>
+											
+											@error('usuResumo')
+												<span class="invalid-feedback" role="alert">
+													<strong>{{ $message }}</strong>
+												</span>
+											@enderror
+										</div>
+									</div>	
+								</div>
+							</div>
+	
+							<!-- exemplo de aba <div class="tab-pane fade" id="tabs-d-militares" role="tabpanel" aria-labelledby="tabs-d-militares-tab">
+							</div>-->
             				
             				<div class="tab-pane fade" id="tabs-d-social" role="tabpanel" aria-labelledby="tabs-d-social-tab">
-            			
         						<div class="row">
             						<div class="col-sm-6">
                     					<div class="form-group required">
