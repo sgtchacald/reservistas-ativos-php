@@ -44,7 +44,9 @@ class Usuarios extends Authenticatable{
         'usucertreservista',
         'usupostograd',
         'usunomeguerra',
-        'usunomeultbtl',   
+        'usunomeultbtl',
+        //Informações Sociais
+        'usuresumo',   
         //Informações Sociais
         'usulinkedinurl',
         'usufacebookurl',

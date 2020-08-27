@@ -41,7 +41,9 @@ class CreateUsuariosTable extends Migration
             $table->string('usucertreservista', 40)->nullable();
             $table->string('usupostograd', 4);
             $table->string('usunomeguerra', 100);
-            $table->string('usunomeultbtl', 100);            
+            $table->string('usunomeultbtl', 100);
+            //Resumo
+            $table->string('usuresumo', 1024);
             //Informações Sociais
             $table->string('usulinkedinurl', 512)->nullable();
             $table->string('usufacebookurl', 512)->nullable();

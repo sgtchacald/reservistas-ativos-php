@@ -58,6 +58,7 @@ class UsuarioController extends Controller{
             'usuindmudarcidade'   => $request->input('usuIndMudarCidade'),
             'usuindcelwhatsapp'   => SimNao::retornaSimNaoSeVazio($request->input('usuIndCelWhatsapp')),
             'usuindmsg'           => SimNao::retornaSimNaoSeVazio($request->input('usuIndMsg')),
+            'usuresumo'           => $request->input('usuResumo'),
             'usuimagemurl'        => NULL,
             'usutipoforca'        => $request->input('usuTipoForca'),
             'usuindoficial'       => $request->input('usuIndOficial'),
@@ -94,7 +95,6 @@ class UsuarioController extends Controller{
                     $rota = 'administrador.selecionar';
                     break;
             } 
- 
             return redirect()->route($rota, ['permissaoUsuario' => $usuPermissao,'indStatus' => 'A']);
         }
     }
@@ -125,6 +125,7 @@ class UsuarioController extends Controller{
             'usuindmudarcidade'   => $request->input('usuIndMudarCidade'),
             'usuindcelwhatsapp'   => SimNao::retornaSimNaoSeVazio($request->input('usuIndCelWhatsapp')),
             'usuindmsg'           => SimNao::retornaSimNaoSeVazio($request->input('usuIndMsg')),
+            'usuresumo'           => $request->input('usuResumo'),
             'usuimagemurl'        => NULL,
             'usutipoforca'        => $request->input('usuTipoForca'),
             'usuindoficial'       => $request->input('usuIndOficial'),
@@ -232,6 +233,7 @@ class UsuarioController extends Controller{
                 'usuPostoGrad'          => 'required',
                 'usuNomeGuerra'         => 'required',
                 'usuNomeUltBtl'         => 'required',
+                'usuResumo'             => 'required',
                 'usuLinkedinUrl'        => 'required'
             ];
     
@@ -252,7 +254,8 @@ class UsuarioController extends Controller{
                 $fields_tabs = [
                     ['usuPermissao', 'name', 'usuCPF', 'usuDtNascimento', 'usuEstadoCivil', 'usuGenero', 'usuIndPortDeficiente', 'email', 'usuTelCelular', 'usuIndViagem', 'usuIndMudarCidade'], // Tab 1
                     ['usuTipoForca', 'usuIndOficial', 'usuCertReservista', 'usuPostoGrad', 'usuNomeGuerra', 'usuNomeUltBtl'], // Tab 2
-                    ['usuLinkedinUrl'], //Tab 3
+                    ['usuResumo'], // Tab 3
+                    ['usuLinkedinUrl'], //Tab 4
                 ];
                                
                 foreach ($fields_tabs as $tab => $fields) {

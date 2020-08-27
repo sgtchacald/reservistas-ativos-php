@@ -45,9 +45,10 @@ class Empresas extends Migration
         Schema::dropIfExists('failed_jobs');
         Schema::dropIfExists('EXPERIENCIASPROFISSIONAIS');
         Schema::dropIfExists('FORMACOESACADEMICAS');
+        Schema::dropIfExists('CURSOSACADEMICOS');
+        Schema::dropIfExists('PAISES');
         Schema::dropIfExists('AREASATUACAO');
         Schema::dropIfExists('CIDADES');
-        Schema::dropIfExists('CURSOSACADEMICOS');
         Schema::dropIfExists('CURSOSUSUARIO');
         Schema::dropIfExists('ESPECIALIZACOES');
         Schema::dropIfExists('ESTADOS');
@@ -55,7 +56,6 @@ class Empresas extends Migration
         Schema::dropIfExists('IDIOMASUSUARIO');
         Schema::dropIfExists('NIVEISESTUDO');
         Schema::dropIfExists('NIVEISHIERARQUICOS');
-        Schema::dropIfExists('PAISES');
         Schema::dropIfExists('TIPOSHABILITACAO');
         Schema::dropIfExists('TIPOSVEICULO');
         Schema::dropIfExists('USUARIOS');

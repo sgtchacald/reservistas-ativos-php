@@ -36,6 +36,7 @@ class usersTableSeeder extends Seeder
            'usupostograd'               => '3SGT',
            'usunomeguerra'              => 'Diego Santos',
            'usunomeultbtl'              => 'BEsCom',
+           'usuresumo'              => 'Lorem Ipsum',
            'usuimagemurl'               => 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fresultadosdigitais.com.br%2Fblog%2Fbancos-de-imagens%2F&psig=AOvVaw2zQnysQAoW_L3zcQ46jEkr&ust=1595380924929000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCICh9puX3eoCFQAAAAAdAAAAABAI',
            'usulinkedinurl'             => 'https://www.linkedin.com/in/diego-cordeiro-ba84a835/',  
            'usufacebookurl'             => 'https://www.facebook.com/chacalsgt',
