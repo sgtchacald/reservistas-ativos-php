@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Foundation\Auth\User;
 
-class empresasTableSeeder extends Seeder
+class EmpresasTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,7 +12,7 @@ class empresasTableSeeder extends Seeder
      */
     public function run()
     {
-       User::create([
+       Empresas::create([
            'cnpj' => '82009963000110',
            'nome' => 'Reservista Ativo',
            'email_institucional' => '',

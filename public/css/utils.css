@@ -12,3 +12,25 @@
   font-weight: bold;
   color: red;
 }
+
+.colunaAcao{
+  width: 2% !important;
+}
+
+.colunaId{
+  width: 6% !important;
+}
+
+.colunaStatus{
+  width: 6% !important;
+}
+
+.readyOnly {
+  background: #eee; /*Simular campo inativo*/
+  pointer-events: none;
+  touch-action: none;
+}
+
+.ocultar {
+  display: none !important;
+}
