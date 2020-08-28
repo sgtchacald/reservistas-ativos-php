@@ -3,6 +3,18 @@ $(document).ready(function(){
      * Ativação de plugins jquery globalmente
      */
 
+    $(".dataTableInit").DataTable({
+        "paging": true,
+        "lengthChange": true,
+        "pageLength": 5,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+        "language": {"url": "http://cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"}
+      });
+
     //ativando máscaras de entrada 
     $('[data-mask]').inputmask();
 
@@ -44,6 +56,6 @@ $(document).ready(function(){
     //Faz o elemento que estiver com [class="desaparecer"] após 5 segundos
     setTimeout(function() {
    		$('.desaparecer').fadeOut('fast');
-    }, 2000);
+    }, 15000);
     
 });     

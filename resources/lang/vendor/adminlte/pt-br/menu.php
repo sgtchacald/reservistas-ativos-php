@@ -16,4 +16,10 @@ return [
     'Important'                     => 'Importante',
     'Warning'                       => 'Aviso',
     'Information'                   => 'Informação',
+    'usuarios'                      => 'Usuários',
+    'usuarios_reservistas'          => 'Reservistas',
+    'usuarios_empresa'              => 'Representante de Empresa',
+    'usuarios_admin'                => 'Administradores',
+    'cadastro_basico'               => 'Cadastros Básicos',
+
 ];

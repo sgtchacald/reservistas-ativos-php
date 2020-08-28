@@ -231,11 +231,18 @@ return [
     */
 
     'menu' => [
-        ['header' => 'account_settings'],
+        ['header' => 'usuarios'],
         [
             'text' => 'Reservistas',
             'url'  => '/admin/reservistas',
             'icon' => 'fas fa-fw fa-user',
+        ],
+
+        ['header' => 'cadastro_basico'],
+        [
+            'text' => 'Niveis de Estudo',
+            'url'  => 'admin/niveisEstudo',
+            'icon' => 'fa fa-graduation-cap',
         ],
     ],
 
