@@ -14,7 +14,7 @@ class NiveisEstudo extends Migration
     public function up()
     {
         Schema::create('NIVEISESTUDO', function (Blueprint $table) {
-            $table->bigIncrements('idnivelestudo');
+            $table->bigIncrements('idnivelestudo')->unsigned();
             $table->string('nienome', 100);
             $table->char('nieindstatus', 1);
             //Informações Segurança 

@@ -17,6 +17,13 @@ route::group(['middleware' => ['auth'],'namespace'  => 'Admin'],function(){
     Route::get ('admin/nivelEstudo/editar/{id}', 'NivelEstudoController@edit')->name('nivel.estudo.editar');
     Route::put ('admin/nivelEstudo/update', 'NivelEstudoController@update')->name('nivel.estudo.update');
     Route::put ('admin/nivelEstudo/excluir/{id}', 'NivelEstudoController@destroy')->name('nivel.estudo.excluir');
+    //Países
+    Route::get ('admin/localizacao/paises', 'PaisController@index')->name('paises.selecionar');
+    Route::get ('admin/localizacao/paises/cadastrar', 'PaisController@create')->name('pais.cadastrar');
+    Route::post('admin/localizacao/paises/insert', 'PaisController@store')->name('pais.insert');
+    Route::get ('admin/localizacao/paises/editar/{id}', 'PaisController@edit')->name('pais.editar');
+    Route::put ('admin/localizacao/paises/update', 'PaisController@update')->name('pais.update');
+    Route::put ('admin/localizacao/paises/excluir/{id}', 'PaisController@destroy')->name('pais.excluir');    
 
 });
     

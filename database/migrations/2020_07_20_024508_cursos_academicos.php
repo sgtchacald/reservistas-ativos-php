@@ -14,7 +14,7 @@ class CursosAcademicos extends Migration
     public function up()
     {
         Schema::create('CURSOSACADEMICOS', function (Blueprint $table) {
-            $table->bigIncrements('idcursoacademico');
+            $table->bigIncrements('idcursoacademico')->unsigned();
             $table->string('cacnome', 100);
             $table->char('cacindstatus', 1);
             //Informações Segurança 

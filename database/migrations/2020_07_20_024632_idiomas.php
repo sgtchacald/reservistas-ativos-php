@@ -14,7 +14,7 @@ class Idiomas extends Migration
     public function up()
     {
         Schema::create('IDIOMAS', function (Blueprint $table) {
-            $table->bigIncrements('ididioma');
+            $table->bigIncrements('ididioma')->unsigned();
             $table->string('idnome', 100);
             $table->char('idindstatus', 1);
             //Informações Segurança 

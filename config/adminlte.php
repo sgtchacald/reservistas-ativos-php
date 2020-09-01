@@ -244,6 +244,11 @@ return [
             'url'  => 'admin/niveisEstudo',
             'icon' => 'fa fa-graduation-cap',
         ],
+        [
+            'text' => 'Países',
+            'url'  => 'admin/localizacao/paises',
+            'icon' => 'fas fa-map-marked-alt',
+        ],
     ],
 
     /*

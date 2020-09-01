@@ -18,7 +18,7 @@ class CreateUsuariosTable extends Migration
     {
         Schema::create('USUARIOS', function (Blueprint $table) {
             //Informações Pessoais
-            $table->bigIncrements('idusuario');
+            $table->bigIncrements('idusuario')->unsigned();
             $table->bigInteger('idempresa')->unsigned()->nullable();
             $table->char('usupermissao', 1);
             $table->string('name', 100);

@@ -14,7 +14,7 @@ class CursosUsuario extends Migration
     public function up()
     {
         Schema::create('CURSOSUSUARIO', function (Blueprint $table) {
-            $table->bigIncrements('idcursousuario');
+            $table->bigIncrements('idcursousuario')->unsigned();
             $table->bigInteger('idusuario')->unsigned();
             $table->string('csunome', 100);
             $table->string('csuinstituicaoensino', 100);

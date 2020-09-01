@@ -14,8 +14,12 @@ class Estados extends Migration
     public function up()
     {
         Schema::create('ESTADOS', function (Blueprint $table) {
-            $table->bigIncrements('idestado');
-            $table->string('estnome', 100);
+            $table->bigIncrements('idestado')->unsigned();
+            $table->string('estnome', 75);
+            $table->string('estuf', 2);
+            $table->integer('estidibge')->unsigned();
+            $table->integer('estpais')->unsigned();
+            $table->string('estddd', 50);
             $table->char('estindstatus', 1);
             //Informações Segurança 
             $table->timestamp('dtcadastro')->nullable();

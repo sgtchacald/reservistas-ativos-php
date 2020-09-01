@@ -14,7 +14,7 @@ class TiposHabilitacao extends Migration
     public function up()
     {
         Schema::create('TIPOSHABILITACAO', function (Blueprint $table) {
-            $table->bigIncrements('idtipohabilitacao');
+            $table->bigIncrements('idtipohabilitacao')->unsigned();
             $table->string('habnome', 100);
             $table->char('habindstatus', 1);
             //Informações Segurança 

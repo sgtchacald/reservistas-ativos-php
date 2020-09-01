@@ -14,7 +14,7 @@ class AreasAtuacao extends Migration
     public function up()
     {
         Schema::create('AREASATUACAO', function (Blueprint $table) {
-            $table->bigIncrements('idareaatuacao');
+            $table->bigIncrements('idareaatuacao')->unsigned();
             $table->string('atunome', 100);
             $table->char('atuindstatus', 1);
             //Informações Segurança 

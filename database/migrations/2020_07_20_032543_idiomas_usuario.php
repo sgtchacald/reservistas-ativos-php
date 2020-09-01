@@ -14,7 +14,7 @@ class IdiomasUsuario extends Migration
     public function up()
     {
         Schema::create('IDIOMASUSUARIO', function (Blueprint $table) {
-            $table->bigIncrements('ididiomausuario');
+            $table->bigIncrements('ididiomausuario')->unsigned();
             $table->bigInteger('idusuario')->unsigned();
             $table->char('idusunivel', 1);
             $table->char('idusuindstatus', 1);
