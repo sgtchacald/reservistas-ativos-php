@@ -1,5 +1,5 @@
 @extends('adminlte::page') 
-@section('title', Config::get('label.nivel_estudo_editar'))
+@section('title', Config::get('label.pais_editar'))
 
 @section('content_header')
 <div class="container-fluid">
@@ -8,7 +8,7 @@
 		<div class="col-sm-6">
 			<ol class="breadcrumb float-sm-right">
 				<li class="breadcrumb-item"><a href="#">Administração</a></li>
-				<li class="breadcrumb-item active">{{Config::get('label.nivel_estudo_editar')}}</li>
+				<li class="breadcrumb-item active">{{Config::get('label.pais_editar')}}</li>
 			</ol>
 		</div>
 	</div>
@@ -18,10 +18,10 @@
 @section('content')
 <div class="card card-primary">
 	<div class="card-header">
-		<h3 class="card-title">{{Config::get('label.nivel_estudo_editar')}}</h3>
+		<h3 class="card-title">{{Config::get('label.pais_editar')}}</h3>
 	</div>
 	
-	<form name="formEditar" id="formEditar" method="post" action="{{route('nivel.estudo.update')}}">
+	<form name="formEditar" id="formEditar" method="post" action="{{route('pais.update')}}">
     	<div class="card-body">
 				@csrf
 				@method('PUT')
@@ -32,12 +32,12 @@
 						<div class="form-group required">
 							<label>{{Config::get('label.id')}}:</label> 
 							<input 	type="text" 
-									name="idNivelEstudo" 
-									id="idNivelEstudo" 
-									class="form-control @error('idNivelEstudo') is-invalid @enderror " 
+									name="idPais" 
+									id="idPais" 
+									class="form-control @error('idPais') is-invalid @enderror " 
 									placeholder="{{Config::get('label.id_placeholder')}}" 
 									maxlength="100"
-									value="{{old('idNivelEstudo', $nivelEstudo[0]->idnivelestudo)}}" readonly>
+									value="{{old('idPais', $pais[0]->idpais)}}" readonly>
 						</div>
 					</div>
 
@@ -48,14 +48,29 @@
                 <div class="row">
 					<div class="col-sm-6">
 						<div class="form-group required">
-							<label>{{Config::get('label.nome')}}:</label> 
+							<label>{{Config::get('label.pais_nome_global')}}:</label> 
 							<input 	type="text" 
-									name="nieNome" 
-									id="nieNome" 
-									class="form-control @error('nieNome') is-invalid @enderror" 
-									placeholder="{{Config::get('label.nome_placeholder')}}" 
+									name="pNome" 
+									id="pNome" 
+									class="form-control @error('pNome') is-invalid @enderror" 
+									placeholder="{{Config::get('label.pais_nome_global_placeholder')}}" 
 									maxlength="100"
-									value="{{old('nieNome', $nivelEstudo[0]->nienome)}}">
+									value="{{old('pNome', $pais[0]->pnome)}}">
+						</div>
+					</div>
+
+					<div class="col-sm-6"></div>
+
+					<div class="col-sm-6">
+						<div class="form-group required">
+							<label>{{Config::get('label.pais_nome_nacional')}}:</label> 
+							<input 	type="text" 
+									name="pNomePt" 
+									id="pNomePt" 
+									class="form-control @error('pNomePt') is-invalid @enderror" 
+									placeholder="{{Config::get('label.pais_nome_nacional_placeholder')}}" 
+									maxlength="100"
+									value="{{old('pNomePt', $pais[0]->pnomept)}}">
 						</div>
 					</div>
 
@@ -63,17 +78,50 @@
 
 					<div class="col-sm-2">
 						<div class="form-group required">
+							<label>{{Config::get('label.pais_sigla')}}:</label> 
+							<input 	type="text" 
+									name="pSigla" 
+									id="pSigla" 
+									class="form-control @error('pSigla') is-invalid @enderror" 
+									placeholder="{{Config::get('label.pais_sigla_placeholder')}}" 
+									size="2"
+									maxlength="2"
+									value="{{old('pSigla', $pais[0]->psigla)}}">
+						</div>
+					</div>
+					
+					<div class="col-sm-10"></div>
+
+					<div class="col-sm-2">
+						<div class="form-group required">
+							<label>{{Config::get('label.pais_bacen')}}:</label> 
+							<input 	type="text" 
+									name="pBaCen" 
+									id="pBaCen" 
+									class="form-control @error('pBaCen') is-invalid @enderror" 
+									placeholder="{{Config::get('label.pais_bacen_placeholder')}}" 
+									maxlength="5"
+									data-inputmask="'mask': '9', 'repeat': 5, 'greedy' : false" 
+									data-mask=""
+									value="{{old('pBaCen', $pais[0]->pbacen)}}">
+						</div>
+					</div>
+
+					<div class="col-sm-10"></div>
+
+					<div class="col-sm-2">
+						<div class="form-group required">
 							<label>{{Config::get('label.status')}}:</label> 
-							<select name="nieIndStatus" id="nieIndStatus" class="form-control @error('nieIndStatus') is-invalid @enderror readyOnly" readonly>
+							<select name="pIndStatus" id="pIndStatus" class="form-control @error('pIndStatus') is-invalid @enderror readyOnly" readonly>
 								<option value="">Selecione</option> 
 								@foreach ((\App\Dominios\IndStatus::getDominio()) as $key => $value)
-									<option @if(old('nieIndStatus', $nivelEstudo[0]->nieindstatus)==$key) {{'selected="selected"'}} @endif value="{{$key}}">
+									<option @if(old('pIndStatus', $pais[0]->pindstatus)==$key) {{'selected="selected"'}} @endif value="{{$key}}">
 										{{$value}}
 									</option>
 								@endforeach
 							</select>
 							
-							@error('usuPostoGrad')
+							@error('pIndStatus')
 								<span class="invalid-feedback" role="alert">
 									<strong>{{ $message }}</strong>
 								</span>
@@ -93,25 +141,8 @@
 @section('js')
     <script> 
         $(document).ready(function(){
-            // validacao de campos
-    		$("#cadastrarUsuarioReservista").validate({
-    			rules: {},
-    			messages: {},
-				errorElement: 'span',
-					errorPlacement: function (error, element) {
-						error.addClass('invalid-feedback');
-						element.closest('.form-group').append(error);
-					},
-					highlight: function (element, errorClass, validClass) {
-						$(element).addClass('is-invalid');
-					},
-					unhighlight: function (element, errorClass, validClass) {
-						$(element).removeClass('is-invalid');
-					}
-			});
-
 			//Validação do form caso status do registro seja INATIVO
-			if('{{$nivelEstudo[0]->nieindstatus}}' == 'I'){
+			if('{{$pais[0]->pindstatus}}' == 'I'){
 				$("input").attr("disabled", true);
 				$("button").attr("disabled", true);
 			}

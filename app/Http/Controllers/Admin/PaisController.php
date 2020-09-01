@@ -32,7 +32,7 @@ class PaisController extends Controller{
     public function store(Request $request){
         $this->validaCampos($request, 'i');
         
-        $insert = NiveisEstudo::create([
+        $insert = Paises::create([
             'pnome'        => $request->input('pNome'),
             'pnomept'      => $request->input('pNomePt'),
             'psigla'       => $request->input('pSigla'),
@@ -52,21 +52,21 @@ class PaisController extends Controller{
     }
     
     public function edit($id){
-        $pais = $this->paises->getNivelEstudoById($id);
+        $pais = $this->paises->getPaisesById($id);
         return view('admin.localizacao.pais.editar')->with(compact('pais'));
     }
     
     public function update(Request $request){
         $this->validaCampos($request, 'u');
         
-        $update = NiveisEstudo::where(['idpais' => $request->input('idPais')])->update([
-            'pnome'        => $request->input('pNome'),
-            'pnomept'      => $request->input('pNomePt'),
-            'psigla'       => $request->input('pSigla'),
-            'pbacen'       => $request->input('pBaCen'),
-            'pindstatus'   => $request->input('pIndStatus'),
-            'usucriou'     => Auth::user()->getAuthIdentifier(),
-            'dtcadastro'   => date('Y-m-d H:i:s')
+        $update = Paises::where(['idpais' => $request->input('idPais')])->update([
+            'pnome'     => $request->input('pNome'),
+            'pnomept'   => $request->input('pNomePt'),
+            'psigla'    => $request->input('pSigla'),
+            'pbacen'    => $request->input('pBaCen'),
+            'pindstatus'=> $request->input('pIndStatus'),
+            'usueditou' => Auth::user()->getAuthIdentifier(),
+            'dtedicao'  => date('Y-m-d H:i:s')
         ]);
         
         if($update){
@@ -80,7 +80,7 @@ class PaisController extends Controller{
     
     public function destroy(Request $request, $id){
        
-        $delete = NiveisEstudo::where(['idpais' => $id])->update([
+        $delete = Paises::where(['idpais' => $id])->update([
             'pindstatus'=>'I',
             'usuexcluiu' => Auth::user()->getAuthIdentifier(),
             'dtexclusao'=> date('Y-m-d H:i:s')
@@ -98,9 +98,9 @@ class PaisController extends Controller{
     public function validaCampos(Request $request, $tipoPersistencia){
         
             $rules = [
-                'pNome'       => 'required|size:100',
-                'pNomePt'       => 'required|size:100',
-                'pSigla'       => 'required|size:2',
+                'pNome'       => 'required|max:100',
+                'pNomePt'       => 'required|max:100',
+                'pSigla'       => 'required|max:2',
                 'pBaCen'       => 'required|integer',
                 'pIndStatus'  => 'sometimes|required',
             ];
