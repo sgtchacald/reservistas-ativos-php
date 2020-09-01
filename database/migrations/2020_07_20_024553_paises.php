@@ -17,8 +17,8 @@ class Paises extends Migration
             $table->bigIncrements('idpais')->unsigned();
             $table->string('pnome', 100);
             $table->string('pnomept', 100);
-            $table->string('psigla', 2);
-            $table->integer('pbacen');
+            $table->string('psigla', 2)->nullable();
+            $table->integer('pbacen')->nullable();
             $table->char('pindstatus', 1);
             //Informações Segurança 
             $table->timestamp('dtcadastro')->nullable();
