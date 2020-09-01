@@ -57,5 +57,12 @@ $(document).ready(function(){
     setTimeout(function() {
    		$('.desaparecer').fadeOut('fast');
     }, 15000);
+
+    //console.log(maxLength);
+    $('textarea').keyup(function() {
+    var length = $(this).val().length;
+    var length = document.getElementById("textarea").maxLength-length;
+    $('#chars').text(length);
+    });
     
 });     
