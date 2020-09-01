@@ -41,7 +41,7 @@ class Empresas extends Migration
      */
     public function down(){
         Schema::dropIfExists('password_resets');
-        Schema::dropIfExists('migrations');
+        //Schema::dropIfExists('migrations');
         Schema::dropIfExists('failed_jobs');
         Schema::dropIfExists('EXPERIENCIASPROFISSIONAIS');
         Schema::dropIfExists('FORMACOESACADEMICAS');
