@@ -51,7 +51,7 @@
 								<tr align="center">
 									<a href="{{route('pais.editar', $pais->idpais)}}" data-toggle="tooltip" data-placement="bottom" title="Editar" style="margin-right: 10%"><i class="fas fa-edit"></i></a>
 									
-									<form class="excluirRegistro" action="{{route('nivel.estudo.excluir', $pais->idpais)}}" method="POST">
+									<form class="excluirRegistro" action="{{route('pais.excluir', $pais->idpais)}}" method="POST">
 										@csrf
 										@method('PUT')
 										<button type="submit" class="retiraEstilos" data-toggle="tooltip" data-placement="bottom" title="Excluir"><i class="far fa-trash-alt"></i></button>

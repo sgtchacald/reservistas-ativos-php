@@ -32,10 +32,11 @@
     'pais_cadastrar' => 'Cadastrar País',
     'pais_editar' => 'Editar País',
     'pais_nome_global' => 'Nome Global',
-    'pais_nome_nacional' => 'Nome PT-BR',
+    'pais_nome_nacional' => 'Nome Traduzido',
     'pais_sigla' => 'Sigla',
     'pais_bacen' => 'Código do banco Central',
-    
-
-    
+    'pais_nome_global_placeholder' => 'Digite o nome global. Ex. Brazil',
+    'pais_nome_nacional_placeholder' => 'Digite o Nome traduzido em PT_BR. Ex. Brasil',
+    'pais_sigla_placeholder' => 'Digite a sigla',
+    'pais_bacen_placeholder' => 'Digite o código do banco central',
   );
