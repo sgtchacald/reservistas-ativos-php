@@ -14,7 +14,7 @@ class FormacoesAcademicas extends Migration
     public function up()
     {
         Schema::create('FORMACOESACADEMICAS', function (Blueprint $table) {
-            $table->bigIncrements('idformacaoacad');
+            $table->bigIncrements('idformacaoacad')->unsigned();
             $table->bigInteger('idusuario')->unsigned();
             $table->string('foanomeinstituicao', 100);
             $table->bigInteger('idpais')->unsigned();

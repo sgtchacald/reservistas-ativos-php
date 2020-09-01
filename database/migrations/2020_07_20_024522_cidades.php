@@ -14,9 +14,12 @@ class Cidades extends Migration
     public function up()
     {
         Schema::create('CIDADES', function (Blueprint $table) {
-            $table->bigIncrements('idcidade');
-            $table->string('cidnome', 100);
-            $table->char('cidindstatus', 1);
+            $table->bigIncrements('idcidade')->unsigned();
+            $table->string('cidnome', 120);
+            $table->string('ciduf', 2);
+            $table->integer('cididibge')->unsigned();
+            $table->string('cidddd', 2);
+            $table->string('cidindstatus', 1);
             //Informações Segurança 
             $table->timestamp('dtcadastro')->nullable();
             $table->timestamp('dtedicao')->nullable();

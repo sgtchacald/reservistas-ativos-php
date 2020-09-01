@@ -14,7 +14,7 @@ class Especializacoes extends Migration
     public function up()
     {
         Schema::create('ESPECIALIZACOES', function (Blueprint $table) {
-            $table->bigIncrements('idespecializacao');
+            $table->bigIncrements('idespecializacao')->unsigned();
             $table->string('espnome', 100);
             $table->char('espindstatus', 1);
             //Informações Segurança 

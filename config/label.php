@@ -27,5 +27,15 @@
     'nivel_estudo_selecionar' => 'Selecionar Nível de Estudo',
     'nivel_estudo_cadastrar' => 'Cadastrar Nível de Estudo',
     'nivel_estudo_editar' => 'Editar Nível de Estudo',
+    //Label para Paises
+    'pais_selecionar' => 'Selecionar País',
+    'pais_cadastrar' => 'Cadastrar País',
+    'pais_editar' => 'Editar País',
+    'pais_nome_global' => 'Nome Global',
+    'pais_nome_nacional' => 'Nome PT-BR',
+    'pais_sigla' => 'Sigla',
+    'pais_bacen' => 'Código do banco Central',
+    
+
     
   );

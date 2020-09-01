@@ -14,7 +14,7 @@ class ExperienciasProfissionais extends Migration
     public function up()
     {
         Schema::create('EXPERIENCIASPROFISSIONAIS', function (Blueprint $table) {
-            $table->bigIncrements('idexperienciaprof');
+            $table->bigIncrements('idexperienciaprof')->unsigned();
             $table->bigInteger('idusuario')->unsigned();
             $table->string('expscargo', 100);
             $table->decimal('expssalario',4,2);
