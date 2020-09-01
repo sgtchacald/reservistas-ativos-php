@@ -232,8 +232,8 @@ class UsuarioController extends Controller{
                 'usuPostoGrad'          => 'required',
                 'usuNomeGuerra'         => 'required',
                 'usuNomeUltBtl'         => 'required',
-                'usuResumo'             => 'required',
-                'usuLinkedinUrl'        => 'required'
+                'usuResumo'             => 'required'
+                //'usuLinkedinUrl'        => 'required'
             ];
     
             $messages = ['required' => 'Campo obrigatório.'];

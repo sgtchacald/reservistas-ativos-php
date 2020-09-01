@@ -361,7 +361,7 @@
 											<label>Resumo:</label> 
 											<textarea 
 												name="usuResumo" 
-												id="usuResumo" 
+												id="textarea" 
 												class="form-control @error('usuResumo') is-invalid @enderror" 
 												placeholder="Descreva de forma resumida suas habilidades, interesses profissionais e o que deseja para seu futuro profissional" 
 												rows="10"
@@ -372,6 +372,7 @@
 													<strong>{{ $message }}</strong>
 												</span>
 											@enderror
+											<span id="chars">1024</span> caracteres restantes.
 										</div>
 									</div>	
 								</div>
@@ -383,7 +384,7 @@
             				<div class="tab-pane fade" id="tabs-d-social" role="tabpanel" aria-labelledby="tabs-d-social-tab">
         						<div class="row">
             						<div class="col-sm-6">
-                    					<div class="form-group required">
+                    					<div class="form-group">
                         					<label>Linked In:</label> 
 											<input type="url" name="usuLinkedinUrl" id="usuLinkedinUrl" class="form-control @error('usuLinkedinUrl') is-invalid @enderror addUrl" placeholder="Digite sua URL do perfil do Linked In" value="{{old('usuLinkedinUrl', $usuario[0]->usulinkedinurl)}}">
 											
