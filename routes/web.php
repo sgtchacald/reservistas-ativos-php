@@ -19,11 +19,18 @@ route::group(['middleware' => ['auth'],'namespace'  => 'Admin'],function(){
     Route::put ('admin/nivelEstudo/excluir/{id}', 'NivelEstudoController@destroy')->name('nivel.estudo.excluir');
     //Países
     Route::get ('admin/localizacao/paises', 'PaisController@index')->name('paises.selecionar');
-    Route::get ('admin/localizacao/paises/cadastrar', 'PaisController@create')->name('pais.cadastrar');
-    Route::post('admin/localizacao/paises/insert', 'PaisController@store')->name('pais.insert');
-    Route::get ('admin/localizacao/paises/editar/{id}', 'PaisController@edit')->name('pais.editar');
-    Route::put ('admin/localizacao/paises/update', 'PaisController@update')->name('pais.update');
-    Route::put ('admin/localizacao/paises/excluir/{id}', 'PaisController@destroy')->name('pais.excluir');    
+    Route::get ('admin/localizacao/pais/cadastrar', 'PaisController@create')->name('pais.cadastrar');
+    Route::post('admin/localizacao/pais/insert', 'PaisController@store')->name('pais.insert');
+    Route::get ('admin/localizacao/pais/editar/{id}', 'PaisController@edit')->name('pais.editar');
+    Route::put ('admin/localizacao/pais/update', 'PaisController@update')->name('pais.update');
+    Route::put ('admin/localizacao/pais/excluir/{id}', 'PaisController@destroy')->name('pais.excluir');
+     //Estados
+     Route::get ('admin/localizacao/estados', 'EstadoController@index')->name('estados.selecionar');
+     Route::get ('admin/localizacao/estado/cadastrar', 'EstadoController@create')->name('estado.cadastrar');
+     Route::post('admin/localizacao/estado/insert', 'EstadoController@store')->name('estado.insert');
+     Route::get ('admin/localizacao/estado/editar/{id}', 'EstadoController@edit')->name('estado.editar');
+     Route::put ('admin/localizacao/estado/update', 'EstadoController@update')->name('estado.update');
+     Route::put ('admin/localizacao/estado/excluir/{id}', 'EstadoController@destroy')->name('estado.excluir');        
 
 });
     

@@ -249,6 +249,11 @@ return [
             'url'  => 'admin/localizacao/paises',
             'icon' => 'fas fa-map-marked-alt',
         ],
+        [
+            'text' => 'Estados',
+            'url'  => 'admin/localizacao/estados',
+            'icon' => 'fas fa-map-marked-alt',
+        ],
     ],
 
     /*
