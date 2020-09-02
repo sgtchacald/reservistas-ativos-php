@@ -17,9 +17,9 @@ class Estados extends Migration
             $table->bigIncrements('idestado')->unsigned();
             $table->string('estnome', 75);
             $table->string('estuf', 2);
-            $table->integer('estidibge')->unsigned();
-            $table->integer('estpais')->unsigned();
-            $table->string('estddd', 50);
+            $table->integer('estidibge')->unsigned()->nullable();;
+            $table->integer('estpais')->unsigned()->nullable();;
+            $table->string('estddd', 50)->nullable();
             $table->char('estindstatus', 1);
             //Informações Segurança 
             $table->timestamp('dtcadastro')->nullable();

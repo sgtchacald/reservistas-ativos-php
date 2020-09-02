@@ -39,4 +39,21 @@
     'pais_nome_nacional_placeholder' => 'Digite o Nome traduzido em PT_BR. Ex. Brasil',
     'pais_sigla_placeholder' => 'Digite a sigla',
     'pais_bacen_placeholder' => 'Digite o código do banco central',
+    //Labels para Estados
+    'estado_selecionar' => 'Selecionar Estado',
+    'estado_cadastrar' => 'Cadastrar Estado',
+    'estado_editar' => 'Editar Estado',
+    'estado_uf' => 'UF',
+    'estado_id_ibge' => 'Código IBGE',
+    'estado_pais' => 'País',
+    'estado_ddd' => 'DDD',
+    'estado_uf_placeholder' => 'Digite a sigla para UF',
+    'estado_id_ibge_placeholder' => 'Digite o Código IBGE',
+    'estado_pais_placeholder' => 'Selecione o País',
+    'estado_ddd_placeholder' => 'Digite o(s) código(s) para DDD separados por vírgula',
+    
+    
+    
+    
+    
   );
