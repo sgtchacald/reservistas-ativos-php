@@ -84,7 +84,8 @@
 				</div>
         	
         	<div class="card-footer">
-              <button type="submit" class="btn btn-primary">Salvar</button>
+			  <button type="submit" class="btn btn-primary">Salvar</button>
+			  <a href="{{ url()->previous() }}" class="btn btn-secondary">Voltar</a>
             </div>
         </div>
 	</form>		
