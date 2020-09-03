@@ -14,7 +14,7 @@ return [
     'sign_in'                     => 'Entrar',
     'log_out'                     => 'Sair',
     'toggle_navigation'           => 'Trocar navegação',
-    'login_message'               => 'Bem vindo veterano!',
+    'login_message'               => 'SEJA BEM VINDO VETERANO!',
     'login_message_linha_abaixo'  => 'Faça login para continuar.',
     'register_message'            => 'Registrar um novo membro',
     'password_reset_message'      => 'Recuperar senha',
