@@ -34,3 +34,17 @@
 .ocultar {
   display: none !important;
 }
+
+/*
+  pagina de login
+*/
+
+.login-page {
+  background: url("../images/login.png") !important;
+  background-repeat: no-repeat  !important;
+  opacity: 0.8 !important;
+}
+
+.login-logo {
+  display: none !important;
+}
