@@ -31,6 +31,13 @@ route::group(['middleware' => ['auth'],'namespace'  => 'Admin'],function(){
      Route::get ('admin/localizacao/estado/editar/{id}', 'EstadoController@edit')->name('estado.editar');
      Route::put ('admin/localizacao/estado/update', 'EstadoController@update')->name('estado.update');
      Route::put ('admin/localizacao/estado/excluir/{id}', 'EstadoController@destroy')->name('estado.excluir');        
+     //Cidades
+     Route::get ('admin/localizacao/cidades', 'CidadeController@index')->name('cidades.selecionar');
+     Route::get ('admin/localizacao/cidade/cadastrar', 'CidadeController@create')->name('cidade.cadastrar');
+     Route::post('admin/localizacao/cidade/insert', 'CidadeController@store')->name('cidade.insert');
+     Route::get ('admin/localizacao/cidade/editar/{id}', 'CidadeController@edit')->name('cidade.editar');
+     Route::put ('admin/localizacao/cidade/update', 'CidadeController@update')->name('cidade.update');
+     Route::put ('admin/localizacao/cidade/excluir/{id}', 'CidadeController@destroy')->name('cidade.excluir');        
 
 });
     
