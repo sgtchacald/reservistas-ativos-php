@@ -51,6 +51,16 @@
     'estado_id_ibge_placeholder' => 'Digite o Código IBGE',
     'estado_pais_placeholder' => 'Selecione o País',
     'estado_ddd_placeholder' => 'Digite o(s) código(s) para DDD separados por vírgula',
+    //Labels para Estados
+    'cidade_selecionar' => 'Selecionar Cidade',
+    'cidade_cadastrar' => 'Cadastrar Cidade',
+    'cidade_editar' => 'Editar Cidade',
+    'cidade_uf' => 'UF',
+    'cidade_id_ibge' => 'Código IBGE',
+    'cidade_ddd' => 'DDD',
+    'cidade_uf_placeholder' => 'Selecione o Estado Desejado',
+    'cidade_id_ibge_placeholder' => 'Digite o Código IBGE',
+    'cidade_ddd_placeholder' => 'Digite o DDD',
     
     
     

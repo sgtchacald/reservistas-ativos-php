@@ -254,6 +254,11 @@ return [
             'url'  => 'admin/localizacao/estados',
             'icon' => 'fas fa-map-marked-alt',
         ],
+        [
+            'text' => 'Cidades',
+            'url'  => 'admin/localizacao/cidades',
+            'icon' => 'fas fa-map-marked-alt',
+        ],
     ],
 
     /*
