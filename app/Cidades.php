@@ -39,15 +39,14 @@ class Cidades extends Authenticatable{
 
     public function getCidadesByStatus($indStatus){
         return DB::table($this->table)
-                    ->select('*')
-                    ->where($this->indStatus,'=', $indStatus)
-                    ->orderBy($this->id,'asc')
-                    ->get();
+                ->select('*')
+                ->where($this->indStatus,'=', $indStatus)
+                ->orderBy($this->id,'asc');
     }
 
     public function getCidadeById($id){
         return DB::table($this->table)
                 ->where($this->id,'=', $id)
                 ->get();
-    }    
+    }
 }

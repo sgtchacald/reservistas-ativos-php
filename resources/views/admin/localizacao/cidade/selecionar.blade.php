@@ -33,41 +33,17 @@
 	</div>
 
 	<div class="card-body">
-		<table id="tableSelecionar" class="dataTableInit table table-bordered table-hover">
-			<thead>
+		<table id="tableSelecionar" class="table table-bordered table-hover">
+			<thead class="">
 				<tr>
+					{{--<th class="colunaId">{{Config::get('label.id')}}</th>--}}
 					<th class="colunaAcao">{{Config::get('label.acoes')}}</th>
-					<th class="colunaId">{{Config::get('label.id')}}</th>
-					<th class="">{{Config::get('label.cidade_uf')}}</th>
 					<th class="">{{Config::get('label.nome')}}</th>
-					<th class="">{{Config::get('label.status')}}</th>
+					<th class="">{{Config::get('label.cidade_uf')}}</th>
+					{{--<th class="">{{Config::get('label.status')}}</th>--}}
+					
 				</tr>
 			</thead>
-			<tbody>
-				@foreach($cidades as $cidade)
-       				<tr>
-    					<td>
-							<table>
-								<tr align="center">
-									<a href="{{route('cidade.editar', $cidade->idcidade)}}" data-toggle="tooltip" data-placement="bottom" title="Editar" style="margin-right: 10%"><i class="fas fa-edit"></i></a>
-									
-									<form class="excluirRegistro" action="{{route('cidade.excluir', $cidade->idcidade)}}" method="POST">
-										@csrf
-										@method('PUT')
-										<button type="submit" class="retiraEstilos" data-toggle="tooltip" data-placement="bottom" title="Excluir"><i class="far fa-trash-alt"></i></button>
-									</form>
-									
-								</tr>
-							</table>	
-    					</td>
-    						
-    					<td>{{$cidade->idcidade}}</td>
-						<td>{{$cidade->ciduf}}</td>
-						<td>{{$cidade->cidnome}}</td>
-						<td>{{(\App\Dominios\IndStatus::getDominio())[$cidade->cidindstatus]}}</td>
-    				</tr>
-				@endforeach
-			</tbody>
 		</table>
 	</div>
 	
@@ -76,7 +52,28 @@
 @stop 
 
 @section('js')
-	<script> 
-		$(function(){}); 
+	<script>
+		$(function(){
+			$("#tableSelecionar").DataTable({
+				"processing":true,
+				"serverSide": true,
+                "ajax": "{{ route('cidades.show') }}",
+                "columns": [
+					{"data": 'btn'},
+					//{"data": 'idcidade'},
+					{"data": 'cidnome'},
+					{"data": 'ciduf'}
+				],
+				"paging": true,
+				"lengthChange": true,
+				"pageLength": 5,
+				"searching": true,
+				"ordering": true,
+				"info": true,
+				"autoWidth": false,
+				"responsive": true,
+				"language": {"url": "http://cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"}
+			});
+		});
 	</script>
 @stop
