@@ -23,7 +23,6 @@ class CidadeController extends Controller{
     }
     
     public function show(){
-
         return datatables($this->cidades->getCidadesByStatus('A'))
                 ->addColumn('btn', 'admin.localizacao.cidade.actions')
                 ->rawColumns(['btn'])
