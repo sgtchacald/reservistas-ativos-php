@@ -9,6 +9,7 @@ use App\Http\Controllers\Utils\UtilsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Config;
+use DataTables;
 
 class CidadeController extends Controller{
 
@@ -18,12 +19,17 @@ class CidadeController extends Controller{
     }
     
     public function index(){
-        $cidades =   $this->cidades->getCidadesByStatus('A');
-        return view('admin.localizacao.cidade.selecionar')->with(compact('cidades'));
+        return view('admin.localizacao.cidade.selecionar');
     }
     
     public function show(){
+
+        return datatables($this->cidades->getCidadesByStatus('A'))
+                ->addColumn('btn', 'admin.localizacao.cidade.actions')
+                ->rawColumns(['btn'])
+                ->toJson();
     }
+
     
     public function create(){
        $estados =   $this->Estados->getEstadosByStatus('A');
