@@ -259,6 +259,11 @@ return [
             'url'  => 'admin/localizacao/cidades',
             'icon' => 'fas fa-map-marked-alt',
         ],
+        [
+            'text' => 'Logradouros',
+            'url'  => 'admin/localizacao/logradouros',
+            'icon' => 'fas fa-map-marked-alt',
+        ],
     ],
 
     /*

@@ -123,4 +123,8 @@ class CidadeController extends Controller{
            
             $request->validate($rules, $messages, $customAttributes);
     }
+
+    public function getCidadesByUf($uf){
+        return $this->cidades->getCidadesByUf($uf)->toJson();
+    }
 }

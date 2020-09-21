@@ -6,13 +6,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 
-class Cidades extends Authenticatable{
+class Logradouros extends Authenticatable{
     use Notifiable;
     
-    protected $primaryKey = 'idcidade';
-    protected $table = 'CIDADES';
-    protected $id = 'idcidade';
-    protected $indStatus = 'cidindstatus';
+    protected $primaryKey = 'idlogradouro';
+    protected $table = 'LOGRADOUROS';
+    protected $id = 'idlogradouro';
+    protected $indStatus = 'logindstatus';
     
     const CREATED_AT = 'dtcadastro';
     const UPDATED_AT = 'dtedicao';
@@ -23,11 +23,18 @@ class Cidades extends Authenticatable{
      * @var array
      */
     protected $fillable = [
-        'cidnome',
-        'ciduf',
-        'cididibge',
-        'cidddd',
-        'cidindstatus',
+        'logcep',
+        'logtipo',
+        'lognome',
+        'idcidade',
+        'uf',
+        'logcomplemento',
+        'lognomesemnr',
+        'lognomecid',
+        'idibgecidade',
+        'lognomebairro',
+        'logindstatus',
+        'logindorigemcad',
         //Informações Segurança 
         'dtcadastro',
         'dtedicao',
@@ -37,23 +44,16 @@ class Cidades extends Authenticatable{
         'usuexcluiu'
     ];    
 
-    public function getCidadesByStatus($indStatus){
+    public function getLogradourosByStatus($indStatus){
         return DB::table($this->table)
                 ->select('*')
                 ->where($this->indStatus,'=', $indStatus)
                 ->orderBy($this->id,'asc');
     }
 
-    public function getCidadeById($id){
+    public function getLogradouroById($id){
         return DB::table($this->table)
                 ->where($this->id,'=', $id)
-                ->get();
-    }
-
-    public function getCidadesByUf($cidUf){
-        return DB::table($this->table)
-                ->where('ciduf','=', $cidUf)
-                ->where('cidindstatus','=', 'A')
                 ->get();
     }
 }

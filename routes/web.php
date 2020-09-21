@@ -38,7 +38,16 @@ route::group(['middleware' => ['auth'],'namespace'  => 'Admin'],function(){
      Route::post('admin/localizacao/cidade/insert', 'CidadeController@store')->name('cidade.insert');
      Route::get ('admin/localizacao/cidade/editar/{id}', 'CidadeController@edit')->name('cidade.editar');
      Route::put ('admin/localizacao/cidade/update', 'CidadeController@update')->name('cidade.update');
-     Route::get ('admin/localizacao/cidade/excluir/{id}', 'CidadeController@destroy')->name('cidade.excluir');        
+     Route::get ('admin/localizacao/cidade/excluir/{id}', 'CidadeController@destroy')->name('cidade.excluir');
+     //Logradouros
+     Route::get ('admin/localizacao/logradouros', 'LogradouroController@index')->name('logradouros.selecionar');
+     Route::get ('admin/localizacao/logradouros/show', 'LogradouroController@show')->name('logradouros.show');
+     Route::get ('admin/localizacao/logradouro/cadastrar', 'LogradouroController@create')->name('logradouro.cadastrar');
+     Route::post('admin/localizacao/logradouro/insert', 'LogradouroController@store')->name('logradouro.insert');
+     Route::get ('admin/localizacao/logradouro/editar/{id}', 'LogradouroController@edit')->name('logradouro.editar');
+     Route::put ('admin/localizacao/logradouro/update', 'LogradouroController@update')->name('logradouro.update');
+     Route::get ('admin/localizacao/logradouro/excluir/{id}', 'LogradouroController@destroy')->name('logradouro.excluir');                
+     Route::get ('admin/localizacao/logradouro/getcidadesbyuf/{uf}', 'CidadeController@getCidadesByUf')->name('logradouro.getcidadesbyuf');
 
 });
     
