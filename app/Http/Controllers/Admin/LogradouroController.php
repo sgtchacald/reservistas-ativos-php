@@ -120,35 +120,29 @@ class LogradouroController extends Controller{
 
     public function validaCampos(Request $request, $tipoPersistencia){
             $rules = [
-                'logcep'           => 'required|max:60',
-                'logtipo'          => 'required|max:60',
-                'lognome'          => 'required|max:60',
-                'idcidade'         => 'required|integer',
-                'ciduf'            => 'required|max:2',
-                'logcomplemento'   => 'required|max:100',
-                'lognomesemnr'     => 'required|max:100',
-                'lognomecid'       => 'required|max:100',
-                'idibgecidade'     => 'required|integer',
-                'lognomebairro'    => 'required|max:100',
-                'logindstatus'     => 'required|max:1',
-                'logindorigemcad'  => 'required|max:1',
+                'logCep'           => 'required|max:60',
+                'logTipo'          => 'required|max:60',
+                'logNome'          => 'required|max:60',
+                'logNomeSemNr'     => 'required|max:100',
+                'logComplemento'   => 'required|max:100',
+                'estUf'            => 'required|max:2',
+                'idCidade'         => 'required',                
+                'logNomeBairro'    => 'required|max:100',
+                'logIndStatus'     => 'required|max:1',
             ];
     
             $messages = ['required' => ':attribute é obrigatório.'];
 
             $customAttributes = [
-                'logcep'           => Config::get('label.logradouro_cep'),
-                'logtipo'          => Config::get('label.logradouro_tipo'),
-                'lognome'          => Config::get('label.logradouro_nome'),
-                'idcidade'         => Config::get('label.logradouro_cidade'),
-                'ciduf'            => Config::get('label.logradouro_uf'),
-                'logcomplemento'   => Config::get('label.logradouro_complemento'),
-                'lognomesemnr'     => Config::get('label.logradouro_nome_sem_numero'),
-                'lognomecid'       => Config::get('label.logradouro_id_ibge_cidade'),
-                'idibgecidade'     => Config::get('label.logradouro_cidade'),
-                'lognomebairro'    => Config::get('label.logradouro_bairro'),
+                'logCep'           => Config::get('label.logradouro_cep'),
+                'logTipo'          => Config::get('label.logradouro_tipo'),
+                'logNome'          => Config::get('label.logradouro_nome'),
+                'logNomeSemNr'     => Config::get('label.logradouro_nome_sem_numero'),
+                'logComplemento'   => Config::get('label.logradouro_complemento'),
+                'estUf'            => Config::get('label.logradouro_uf'),
+                'idCidade'         => Config::get('label.logradouro_cidade'),
+                'logNomeBairro'    => Config::get('label.logradouro_bairro'),
                 'logindstatus'     => Config::get('label.status'),
-                'logindorigemcad'  => Config::get('label.logradouro_origem_registro')
             ];
            
             $request->validate($rules, $messages, $customAttributes);
