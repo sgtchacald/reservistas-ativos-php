@@ -63,10 +63,11 @@
 								</span>
 							@enderror
 						</div>
-						
 					</div>
-						
-					<div class="col-sm-4">
+                </div>
+
+				<div class="row">
+					<div class="col-sm-2">
 						<div class="form-group required">
 							<label>{{Config::get('label.logradouro_tipo')}}</label> 
 							<select name="logTipo" id="logTipo" class="form-control @error('logTipo') is-invalid @enderror" >
@@ -85,9 +86,7 @@
 							@enderror
 						</div>
 					</div>
-                </div>
 
-				<div class="row">
 					<div class="col-sm-4">
 						<div class="form-group required">
 							<label>{{Config::get('label.logradouro_nome')}}:</label> 
@@ -106,18 +105,19 @@
 						</div>
 					</div>
 
-					<div class="col-sm-4">
+					<div class="col-sm-2">
 						<div class="form-group required">
-							<label>{{Config::get('label.logradouro_nome_sem_numero')}}:</label> 
+							<label>{{Config::get('label.logradouro_nr')}}:</label> 
 							<input 	type="text" 
-									name="logNomeSemNr" 
-									id="logNomeSemNr" 
-									class="form-control @error('logNomeSemNr') is-invalid @enderror" 
-									placeholder="{{Config::get('label.logradouro_nome_sem_numero_placeholder')}}" 
-									maxlength="100"
-									value="{{old('logNomeSemNr')}}">
-
-							@error('logNomeSemNr')
+									name="logNr" 
+									id="logNr" 
+									class="form-control @error('logNr') is-invalid @enderror" 
+									placeholder="{{Config::get('label.logradouro_nr_placeholder')}}" 
+									maxlength="10"
+									data-inputmask="'mask': '9', 'repeat': 10, 'greedy' : false" 
+									data-mask=""
+									value="{{old('logNr')}}">
+							@error('logNr')
 								<span class="invalid-feedback" role="alert">
 									<strong>{{ $message }}</strong>
 								</span>
@@ -131,10 +131,10 @@
 							<input 	type="text" 
 									name="logComplemento" 
 									id="logComplemento" 
-									class="form-control @error('logNome') is-invalid @enderror" 
+									class="form-control @error('logComplemento') is-invalid @enderror" 
 									placeholder="{{Config::get('label.logradouro_complemento_placeholder')}}" 
 									maxlength="100"
-									value="{{old('logNome')}}">
+									value="{{old('logComplemento')}}">
 
 							@error('logComplemento')
 								<span class="invalid-feedback" role="alert">
@@ -148,7 +148,7 @@
 				<div class="row">
 					<div class="col-sm-4">
 						<div class="form-group required">
-							<label>{{Config::get('label.cidade_uf')}}:</label> 
+							<label>{{Config::get('label.logradouro_uf')}}:</label> 
 							<select name="estUf" id="estUf" class="form-control @error('estUf') is-invalid @enderror">
 								<option value="">Selecione</option> 
 								@foreach ($estados as $estado)
@@ -171,7 +171,6 @@
 							<label>{{Config::get('label.logradouro_cidade')}}:</label> 
 							<select name="idCidade" id="idCidade" class="form-control @error('idCidade') is-invalid @enderror">
 								<option value="">Selecione</option>
-								<option>{{ old('idCidade') }}</option> 
 							</select>
 							
 							@error('idCidade')
@@ -213,22 +212,52 @@
 @section('js')
     <script> 
         $(document).ready(function(){
-			$('select[name=idCidade]').attr('disabled', 'disabled');
 			$('select[name=estUf]').change(function () {
-				var uf = $(this).val();
+				if(uf!=0){
+					var uf = $(this).val();
 				
-				$.getJSON('/admin/localizacao/logradouro/getcidadesbyuf/' + uf, function (cidades) {
+					$.getJSON('/admin/localizacao/logradouro/getcidadesbyuf/' + uf, function (cidades) {
+						$('select[name=idCidade]').empty();
+						$('select[name=idCidade]').append('<option value="">Selecione</option>');
+						$('select[name=idCidade]').removeAttr('disabled');
+						
+						//console.log(cidades);
+						$.each(cidades, function (key, value) {
+							$('select[name=idCidade]').append('<option value=' + value.idcidade + '>' + value.cidnome + '</option>');
+						});
+					});
+				}else{
+					$('select[name=idCidade]').attr('disabled', 'disabled');
+				}
+			});			
+
+			var oldCidade = {{session()->get('oldCidade')  ?? '0'}};
+			var olUf = "{{old('estUf') ?? '0'}}";
+
+			console.log("oldUfSelecionada: " + olUf);
+			console.log("oldCidadeSelecionada: " + oldCidade);			
+				
+			if(olUf!=0){
+				$.getJSON('/admin/localizacao/logradouro/getcidadesbyuf/' + olUf, function (cidades) {
 					$('select[name=idCidade]').empty();
-					$('select[name=idCidade]').append('<option>Selecione</option>');
+					$('select[name=idCidade]').append('<option value="">Selecione</option>');
 					$('select[name=idCidade]').removeAttr('disabled');
 					
 					//console.log(cidades);
 					$.each(cidades, function (key, value) {
 						$('select[name=idCidade]').append('<option value=' + value.idcidade + '>' + value.cidnome + '</option>');
 					});
-				});
-        	});
 
+					$('select[name=idCidade]').val(oldCidade);
+
+					
+				});
+			}else{
+				$('#idCidade option:first').attr('selected','selected');
+				$('#idCidade').attr('disabled', 'disabled');
+			}
+			
         });     
 	</script>
+	{{session()->forget('oldCidade')}}
 @stop

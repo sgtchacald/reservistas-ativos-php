@@ -119,11 +119,19 @@ class LogradouroController extends Controller{
     }
 
     public function validaCampos(Request $request, $tipoPersistencia){
+            if (!empty($request->input('idCidade'))){
+                session()->put('oldCidade', $request->input('idCidade'));
+            }else{
+                session()->put('oldCidade', "0");
+            }
+                
+            
+
             $rules = [
                 'logCep'           => 'required|max:60',
                 'logTipo'          => 'required|max:60',
                 'logNome'          => 'required|max:60',
-                'logNomeSemNr'     => 'required|max:100',
+                'logNr'            => 'required|max:10',
                 'logComplemento'   => 'required|max:100',
                 'estUf'            => 'required|max:2',
                 'idCidade'         => 'required',                
@@ -137,7 +145,7 @@ class LogradouroController extends Controller{
                 'logCep'           => Config::get('label.logradouro_cep'),
                 'logTipo'          => Config::get('label.logradouro_tipo'),
                 'logNome'          => Config::get('label.logradouro_nome'),
-                'logNomeSemNr'     => Config::get('label.logradouro_nome_sem_numero'),
+                'logNr'            => Config::get('label.logradouro_nr'),
                 'logComplemento'   => Config::get('label.logradouro_complemento'),
                 'estUf'            => Config::get('label.logradouro_uf'),
                 'idCidade'         => Config::get('label.logradouro_cidade'),
