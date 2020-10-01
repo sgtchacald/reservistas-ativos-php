@@ -25,6 +25,7 @@
     	<div class="card-body">
     			@csrf
 				{{--@include('utils.erro')--}}
+				
 
 				<div class="row ocultar">
 					<div class="col-sm-1">
@@ -64,7 +65,15 @@
 							@enderror
 						</div>
 					</div>
-                </div>
+
+					<div class="col-sm-4" style="margin-top: 31px;">
+							<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modaAtualizarCep"> 
+								Clique se não encontrar o CEP &nbsp;&nbsp;
+								<i class="fas fa-search-minus"></i>
+							</button>
+							@include('admin.localizacao.logradouro.modalAtualizarCEP')
+					</div>
+               	</div>
 
 				<div class="row">
 					<div class="col-sm-2">
@@ -209,55 +218,3 @@
 	</form>		
 @stop 
 
-@section('js')
-    <script> 
-        $(document).ready(function(){
-			$('select[name=estUf]').change(function () {
-				if(uf!=0){
-					var uf = $(this).val();
-				
-					$.getJSON('/admin/localizacao/logradouro/getcidadesbyuf/' + uf, function (cidades) {
-						$('select[name=idCidade]').empty();
-						$('select[name=idCidade]').append('<option value="">Selecione</option>');
-						$('select[name=idCidade]').removeAttr('disabled');
-						
-						//console.log(cidades);
-						$.each(cidades, function (key, value) {
-							$('select[name=idCidade]').append('<option value=' + value.idcidade + '>' + value.cidnome + '</option>');
-						});
-					});
-				}else{
-					$('select[name=idCidade]').attr('disabled', 'disabled');
-				}
-			});			
-
-			var oldCidade = {{session()->get('oldCidade')  ?? '0'}};
-			var olUf = "{{old('estUf') ?? '0'}}";
-
-			console.log("oldUfSelecionada: " + olUf);
-			console.log("oldCidadeSelecionada: " + oldCidade);			
-				
-			if(olUf!=0){
-				$.getJSON('/admin/localizacao/logradouro/getcidadesbyuf/' + olUf, function (cidades) {
-					$('select[name=idCidade]').empty();
-					$('select[name=idCidade]').append('<option value="">Selecione</option>');
-					$('select[name=idCidade]').removeAttr('disabled');
-					
-					//console.log(cidades);
-					$.each(cidades, function (key, value) {
-						$('select[name=idCidade]').append('<option value=' + value.idcidade + '>' + value.cidnome + '</option>');
-					});
-
-					$('select[name=idCidade]').val(oldCidade);
-
-					
-				});
-			}else{
-				$('#idCidade option:first').attr('selected','selected');
-				$('#idCidade').attr('disabled', 'disabled');
-			}
-			
-        });     
-	</script>
-	{{session()->forget('oldCidade')}}
-@stop
