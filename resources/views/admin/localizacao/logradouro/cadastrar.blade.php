@@ -25,8 +25,6 @@
     	<div class="card-body">
     			@csrf
 				{{--@include('utils.erro')--}}
-				
-
 				<div class="row ocultar">
 					<div class="col-sm-1">
 						<div class="form-group required">
@@ -38,6 +36,19 @@
 									placeholder="{{Config::get('label.id_placeholder')}}" 
 									maxlength="100"
 									value="{{old('idLogradouro')}}">
+						</div>
+					</div>
+
+					<div class="col-sm-1">
+						<div class="form-group required">
+							<label>{{Config::get('label.logradouro_origem_registro')}}:</label> 
+							<input 	type="text" 
+									name="logIndOrigemCad" 
+									id="logIndOrigemCad" 
+									class="form-control @error('logIndOrigemCad') is-invalid @enderror" 
+									placeholder="{{Config::get('label.logradouro_origem_registro_placeholder')}}" 
+									maxlength="1"
+									value="{{old('logIndOrigemCad')}}">
 						</div>
 					</div>
 
@@ -66,11 +77,11 @@
 						</div>
 					</div>
 
-					<div class="col-sm-4" style="margin-top: 31px;">
-							<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modaAtualizarCep"> 
-								Clique se não encontrar o CEP &nbsp;&nbsp;
+					<div class="col-sm-4" style="margin-top: 35px;">
+							<p data-toggle="modal" data-target="#modaAtualizarCep"> 
 								<i class="fas fa-search-minus"></i>
-							</button>
+								<b>[CLIQUE AQUI]</b> se não encontrar seu CEP
+							</p>
 							@include('admin.localizacao.logradouro.modalAtualizarCEP')
 					</div>
                	</div>
@@ -178,11 +189,11 @@
 					<div class="col-sm-4">
 						<div class="form-group required">
 							<label>{{Config::get('label.logradouro_cidade')}}:</label> 
-							<select name="idCidade" id="idCidade" class="form-control @error('idCidade') is-invalid @enderror">
-								<option value="">Selecione</option>
+							<select name="cidIdIbge" id="cidIdIbge" class="form-control @error('cidIdIbge') is-invalid @enderror">
+								{{--<option value="">Selecione</option>--}}
 							</select>
 							
-							@error('idCidade')
+							@error('cidIdIbge')
 								<span class="invalid-feedback" role="alert">
 									<strong>{{ $message }}</strong>
 								</span>
@@ -218,3 +229,140 @@
 	</form>		
 @stop 
 
+@section('js')
+	<script> 
+		$(document).ready(function(){
+			$('select[name=estUf]').change(function () {
+				if(uf!=0){
+					var uf = $(this).val();
+				
+					$.getJSON('/admin/localizacao/logradouro/getcidadesbyuf/' + uf, function (cidades) {
+						$('select[name=cidIdIbge]').empty();
+						$('select[name=cidIdIbge]').append('<option value="">Selecione</option>');
+						$('select[name=cidIdIbge]').removeAttr('disabled');
+						
+						//console.log(cidades);
+						$.each(cidades, function (key, value) {
+							$('select[name=cidIdIbge]').append('<option value=' + value.cididibge + '>' + value.cidnome + '</option>');
+						});
+
+						
+					});
+				}else{
+					$('select[name=cidIdIbge]').attr('disabled', 'disabled');
+				}
+			});
+
+			var oldCidade = "{{session()->get('oldCidade') ?? '0'}}";
+			var oldUf = "{{old('estUf') ?? '0'}}";	
+					
+			if(oldUf!=0){
+				$.getJSON('/admin/localizacao/logradouro/getcidadesbyuf/' + oldUf, function (cidades) {
+					$('select[name=cidIdIbge]').empty();
+					$('select[name=cidIdIbge]').append('<option value="">Selecione</option>');
+					$('select[name=cidIdIbge]').removeAttr('disabled');
+					
+					//console.log(cidades);
+					$.each(cidades, function (key, value) {
+						$('select[name=cidIdIbge]').append('<option value=' + value.cididibge + '>' + value.cidnome + '</option>');
+					});
+
+					$('select[name=cidIdIbge]').val(oldCidade).change();
+					
+					if(oldCidade == 0){
+						var opt = $('select[name=cidIdIbge] option').filter(function(el) { 
+							return $(this).text().trim() === "Selecione"; 
+						});
+						opt.attr('selected', true);
+					}
+				});
+			}else{
+				$('#cidIdIbge option:first').attr('selected','selected');
+				$('#cidIdIbge').attr('disabled', 'disabled');
+			}
+
+			function limpa_formulário_cep() {
+				// Limpa valores do formulário de cep.
+				$("#logNome").val("");
+				$("#logNomeBairro").val("");
+				$("#estUf").val("");
+				$("#cidIdIbge").val("");
+				$("#logTipo").val("");
+			}
+			
+			//Quando o campo cep perde o foco.
+			$("#logCep").blur(function() {
+
+				//Nova variável "cep" somente com dígitos.
+				var cep = $(this).val().replace(/\D/g, '');
+
+				//Verifica se campo cep possui valor informado.
+				if (cep != "") {
+					//Expressão regular para validar o CEP.
+					var validacep = /^[0-9]{8}$/;
+					//Valida o formato do CEP.
+					if(validacep.test(cep)) {
+						//Consulta o webservice viacep.com.br/
+						$.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+
+							if (!("erro" in dados)) {
+								var logTipo = (dados.logradouro).split(' ')[0];
+								
+								if(logTipo!=""){
+									var optLogTipo = $('#logTipo option').filter(function(el) { 
+										return $(this).text().trim() === logTipo; 
+									});
+									optLogTipo.attr('selected', true);
+								}
+
+								$("#logNome").val(dados.logradouro);
+								$("#logNomeBairro").val(dados.bairro);
+								$('#estUf').val(dados.uf).trigger('change');		
+								$("#cidIdIbge").val(dados.ibge).trigger('change');
+								$("#logIndOrigemCad").val("W");
+
+								$.ajax({
+									url: '{{route("logradouro.utils")}}',
+									type: 'POST',
+									data: {
+										"_token" : $('meta[name="csrf-token"]').attr('content'),
+										"dadosIbge": dados.ibge
+									}
+								});								
+								
+								console.log("Carregamento 1: "+"{{session()->get('sDadosIbge', 0)}}");
+							}else {
+								limpa_formulário_cep();
+								alert("CEP não encontrado.");
+							}
+						});
+					}else {
+						limpa_formulário_cep();
+						alert("Formato de CEP inválido.");
+					}
+				}else {			
+					limpa_formulário_cep();
+				}
+			});
+
+			/*//Atualiza o CEP
+			//atribui elemento com ID "viacep-embed" no documento.
+			var elemento_pai = document.getElementById("viacep-embed");
+			//cria um novo elemento "iframe".
+			var iframe = document.createElement('iframe');
+			//insere o novo elemento "iframe" como filho do elemento "viacep-embed".
+			elemento_pai.appendChild(iframe);
+			//define atributos do "iframe".
+			iframe.setAttribute('src', 'https://viacep.com.br/embed/');
+			iframe.setAttribute('id', 'viacep-iframe');
+			iframe.setAttribute('scrolling', 'no');
+			iframe.style.width = '310px';
+			iframe.style.height = '190px';       
+			iframe.style.border = '1px dotted #888';
+			iframe.style.background = '#fcfcfc';*/
+			
+		});
+	</script>
+	{{session()->forget('oldCidade')}}
+	{{session()->forget('sDadosIbge')}}
+@stop

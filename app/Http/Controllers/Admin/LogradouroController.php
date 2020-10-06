@@ -7,10 +7,14 @@ use App\Cidades;
 use App\Logradouros;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Utils\UtilsController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Config;
 use DataTables;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
+
+
+
 
 class LogradouroController extends Controller{
 
@@ -47,7 +51,7 @@ class LogradouroController extends Controller{
             'logtipo'          => $request->input('logTipo'),
             'lognome'          => $request->input('logNome'),
             'idcidade'         => $request->input('idCidade'),
-            'ciduf'            => $request->input('cidUf'),
+            'ciduf'            => $request->input('estUf'),
             'logcomplemento'   => $request->input('logComplemento'),
             'lognomesemnr'     => $request->input('logNomeSemNr'),
             'lognomecid'       => $request->input('logNomeCid'),
@@ -119,14 +123,12 @@ class LogradouroController extends Controller{
     }
 
     public function validaCampos(Request $request, $tipoPersistencia){
-            if (!empty($request->input('idCidade'))){
-                session()->put('oldCidade', $request->input('idCidade'));
+            if (!empty($request->input('cidIdIbge'))){
+                session()->put('oldCidade', $request->input('cidIdIbge'));
             }else{
                 session()->put('oldCidade', "0");
             }
-                
             
-
             $rules = [
                 'logCep'           => 'required|max:60',
                 'logTipo'          => 'required|max:60',
@@ -134,7 +136,7 @@ class LogradouroController extends Controller{
                 'logNr'            => 'required|max:10',
                 'logComplemento'   => 'required|max:100',
                 'estUf'            => 'required|max:2',
-                'idCidade'         => 'required',                
+                'cidIdIbge'         => 'required',                
                 'logNomeBairro'    => 'required|max:100',
                 'logIndStatus'     => 'required|max:1',
             ];
@@ -148,7 +150,7 @@ class LogradouroController extends Controller{
                 'logNr'            => Config::get('label.logradouro_nr'),
                 'logComplemento'   => Config::get('label.logradouro_complemento'),
                 'estUf'            => Config::get('label.logradouro_uf'),
-                'idCidade'         => Config::get('label.logradouro_cidade'),
+                'cidIdIbge'         => Config::get('label.logradouro_cidade'),
                 'logNomeBairro'    => Config::get('label.logradouro_bairro'),
                 'logindstatus'     => Config::get('label.status'),
             ];
@@ -159,4 +161,12 @@ class LogradouroController extends Controller{
     public function getCidadesByUf($cidUf){
         return $this->cidades->getCidadesByUf($cidUf)->toJson();
     }
+
+    public function logradouroUtils(Request $request){
+        if($request->input('dadosIbge')!=""){
+            session()->put('sDadosIbge', $request->input('dadosIbge'));
+        }
+    }
+
+
 }

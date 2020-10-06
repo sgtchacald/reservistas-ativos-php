@@ -48,6 +48,7 @@ route::group(['middleware' => ['auth'],'namespace'  => 'Admin'],function(){
      Route::put ('admin/localizacao/logradouro/update', 'LogradouroController@update')->name('logradouro.update');
      Route::get ('admin/localizacao/logradouro/excluir/{id}', 'LogradouroController@destroy')->name('logradouro.excluir');                
      Route::get ('admin/localizacao/logradouro/getcidadesbyuf/{uf}', 'CidadeController@getCidadesByUf')->name('logradouro.getcidadesbyuf');
+     Route::post ('admin/localizacao/logradouro/utils', 'LogradouroController@logradouroUtils')->name('logradouro.utils');
 
 });
     
