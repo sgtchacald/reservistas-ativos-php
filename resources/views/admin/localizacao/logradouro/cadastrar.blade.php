@@ -57,7 +57,7 @@
 
     			
                 <div class="row">
-					<div class="col-sm-4">
+					<div class="col-sm-2">
 						<div class="form-group required">
 							<label>{{Config::get('label.logradouro_cep')}}:</label> 
 							<input 	type="text" 
@@ -77,11 +77,10 @@
 						</div>
 					</div>
 
-					<div class="col-sm-4" style="margin-top: 35px;">
-							<p data-toggle="modal" data-target="#modaAtualizarCep"> 
-								<i class="fas fa-search-minus"></i>
-								<b>[CLIQUE AQUI]</b> se não encontrar seu CEP
-							</p>
+					<div class="col-sm-10" style="margin-top: 35px;">
+							<i class="fas fa-exclamation-triangle"></i>
+							<b>DICA IMPORTANTE: </b> Digite o <b>CEP</b> e pressione <b>TAB</b> ou preencha normalmente os próximos campos.
+							
 							@include('admin.localizacao.logradouro.modalAtualizarCEP')
 					</div>
                	</div>
@@ -269,7 +268,7 @@
 									$('select[name=cidIdIbge]').append('<option value=' + value.cididibge + '>' + value.cidnome + '</option>');
 								});
 								getValorCidadeIbge();
-								$('#cidIdIbge').fadeIn(4000);
+								$('#cidIdIbge').fadeIn();
 								$('.loading').hide();
 							});
 						}else{
