@@ -55,6 +55,19 @@
 					<div class="col-sm-10"></div>
 				</div>
 
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="alert alert-warning alert-dismissible desaparecer" role="alert">
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+							
+							<b><i class="icon fas fa-exclamation-triangle"></i> DICA IMPORTANTE: </b>
+							Digite o <b>CEP</b> e logo após pressione <b>TAB</b> ou preencha normalmente os campos <b>[NÚMERO] e [COMPLEMENTO]</b>. <br>
+							Todos os demais campos serão preenchidos automaticamente.
+							
+							@include('admin.localizacao.logradouro.modalAtualizarCEP')
+						</div>
+					</div>
+				</div>
     			
                 <div class="row">
 					<div class="col-sm-2">
@@ -75,14 +88,7 @@
 								</span>
 							@enderror
 						</div>
-					</div>
-
-					<div class="col-sm-10" style="margin-top: 35px;">
-							<i class="fas fa-exclamation-triangle"></i>
-							<b>DICA IMPORTANTE: </b> Digite o <b>CEP</b> e pressione <b>TAB</b> ou preencha normalmente os próximos campos.
-							
-							@include('admin.localizacao.logradouro.modalAtualizarCEP')
-					</div>
+					</div>					
                	</div>
 
 				<div class="row">
