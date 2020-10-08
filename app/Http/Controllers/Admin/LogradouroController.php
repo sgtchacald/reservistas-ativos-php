@@ -162,9 +162,10 @@ class LogradouroController extends Controller{
         return $this->cidades->getCidadesByUf($cidUf)->toJson();
     }
 
-    public function logradouroUtils(Request $request){
+    public function setDadosIbge(Request $request){
         if($request->input('dadosIbge')!=""){
             session()->put('sDadosIbge', $request->input('dadosIbge'));
+            echo "Valor Setado Pelo PHP: ".$request->input('dadosIbge');
         }
     }
 
