@@ -188,18 +188,24 @@
 					</div>
 
 					<div class="col-sm-4">
-						<div class="form-group required">
-							<label>{{Config::get('label.logradouro_cidade')}}:</label> 
-							<select name="cidIdIbge" id="cidIdIbge" class="form-control @error('cidIdIbge') is-invalid @enderror readyOnly" readonly>
-								{{--<option value="">Selecione</option>--}}
-							</select>
-							
-							@error('cidIdIbge')
-								<span class="invalid-feedback" role="alert">
-									<strong>{{ $message }}</strong>
-								</span>
-							@enderror
-						</div>
+
+							<div class="form-group required">
+								<label>{{Config::get('label.logradouro_cidade')}}:</label> 
+								<select name="cidIdIbge" id="cidIdIbge" class="form-control @error('cidIdIbge') is-invalid @enderror readyOnly" readonly>
+									{{--<option value="">Selecione</option>--}}
+								</select>
+								
+								@error('cidIdIbge')
+									<span class="invalid-feedback" role="alert">
+										<strong>{{ $message }}</strong>
+									</span>
+								@enderror
+
+								<div class="loading">
+									<strong>Carregando...</strong>
+									<div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+								</div>
+							</div>
 					</div>
 
 					<div class="col-sm-4">
@@ -234,10 +240,12 @@
 @section('js')
 	<script>
 		$(document).ready(function(){
+			$('.loading').hide();
+
 			atualizaCep();
 
 			gerenciaCombosLogradouro();
-			
+
 			fazIntegracaoViaCepPreencheCamposLogradouro();
 			
 			function gerenciaCombosLogradouro(){
@@ -260,8 +268,9 @@
 								$.each(cidades, function (key, value) {
 									$('select[name=cidIdIbge]').append('<option value=' + value.cididibge + '>' + value.cidnome + '</option>');
 								});
-
 								getValorCidadeIbge();
+								$('#cidIdIbge').fadeIn(4000);
+								$('.loading').hide();
 							});
 						}else{
 							$('select[name=cidIdIbge]').attr('readyonly', true);
@@ -325,9 +334,9 @@
 							var validacep = /^[0-9]{8}$/;
 							//Valida o formato do CEP.
 							if(validacep.test(cep)) {
-								//loading();
-
 								//Consulta o webservice viacep.com.br/
+								$('#cidIdIbge').hide();
+								$('.loading').show();
 								$.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
 									if (!("erro" in dados)) {
 										var logTipo = (dados.logradouro).split(' ')[0];
@@ -343,8 +352,8 @@
 										$("#logNomeBairro").val(dados.bairro);
 										$('#estUf').val(dados.uf).trigger('change');		
 										$("#logIndOrigemCad").val("W");
-										
 										setValorCidadeIbge(dados.ibge);
+									
 									}else {
 										limpaFormCep();
 										$('#modaAtualizarCep').modal('show');
@@ -373,7 +382,7 @@
 						url:'{{route("logradouro.setDadosIbge")}}',
 						data: {'dadosIbge': dados}
 					});
-				}, 60);
+				}, 500);
 			}
 
 			function getValorCidadeIbge(){
@@ -381,7 +390,7 @@
 					$.get( '{{route("logradouro.getdadosibge")}}', function( data ) {
 						$("#cidIdIbge").val(data).trigger('change');
 					});
-				}, 60);
+				}, 500);
 			}
 
 			function atualizaCep(){
@@ -400,6 +409,8 @@
                 iframe.style.border = '1px dotted #888';
                 iframe.style.background = '#fcfcfc';
 			}
+
+
 		
 		});
 	</script>
