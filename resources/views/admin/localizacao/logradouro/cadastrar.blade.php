@@ -373,7 +373,7 @@
 						url:'{{route("logradouro.setDadosIbge")}}',
 						data: {'dadosIbge': dados}
 					});
-				}, 50);
+				}, 60);
 			}
 
 			function getValorCidadeIbge(){
@@ -381,7 +381,7 @@
 					$.get( '{{route("logradouro.getdadosibge")}}', function( data ) {
 						$("#cidIdIbge").val(data).trigger('change');
 					});
-				}, 20);
+				}, 60);
 			}
 
 			function atualizaCep(){
