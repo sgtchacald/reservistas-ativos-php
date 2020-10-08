@@ -272,7 +272,7 @@
 					var oldUf = "{{old('estUf') ?? '0'}}";	
 
 					if(oldUf!=0){
-						$.getJSON('/admin/localizacao/logradouro/getcidadesbyuf/' + oldUf, function (cidades) {
+						$.getJSON('admin/localizacao/logradouro/getcidadesbyuf/' + oldUf, function (cidades) {
 							$('select[name=cidIdIbge]').empty();
 							$('select[name=cidIdIbge]').html("");
 							$('select[name=cidIdIbge]').append('<option value="">Selecione</option>');
