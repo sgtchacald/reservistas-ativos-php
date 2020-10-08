@@ -306,6 +306,7 @@
 
 			function limpaFormCep() {
 				// Limpa valores do formulário de cep.
+				$("#logCep").val("");
 				$("#logNome").val("");
 				$("#logNomeBairro").val("");
 				$("#estUf").val("");
@@ -363,7 +364,6 @@
 								alert("Formato de CEP inválido.");
 							}
 						}else {			
-							limpaFormCep();
 							$('select[name=cidIdIbge]').empty();
 							$('select[name=cidIdIbge]').html("");
 							$('select[name=cidIdIbge]').append('<option value="">Selecione</option>');
