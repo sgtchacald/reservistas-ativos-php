@@ -56,4 +56,11 @@ class Cidades extends Authenticatable{
                 ->where('cidindstatus','=', 'A')
                 ->get();
     }
+
+    public function getCidadeByIdIbge($cidIdIbge){
+        return DB::table($this->table)
+                ->where('cididibge','=', $cidIdIbge)
+                ->get();
+    }
+    
 }

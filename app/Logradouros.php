@@ -27,7 +27,7 @@ class Logradouros extends Authenticatable{
         'logtipo',
         'lognome',
         'idcidade',
-        'uf',
+        'ciduf',
         'logcomplemento',
         'lognomesemnr',
         'lognomecid',
@@ -56,4 +56,25 @@ class Logradouros extends Authenticatable{
                 ->where($this->id,'=', $id)
                 ->get();
     }
+
+    public function existeLogradouro($array){
+        
+        $existeRegistro = 
+            DB::table($this->table)
+                ->where('logcep',         '=', $array["logcep"])
+                ->where('lognome',        '=', $array["lognome"])
+                ->where('lognomesemnr',   '=', $array["lognomesemnr"])
+                ->where('idcidade',       '=', $array["idcidade"])
+                ->where('ciduf',          '=', $array["ciduf"])
+                ->where('logcomplemento', '=', $array["logcomplemento"])
+                ->where('lognomecid',     '=', $array["lognomecid"])
+                ->where('idibgecidade',   '=', $array["idibgecidade"])
+                ->where('lognomebairro',  '=', $array["lognomebairro"])
+                ->count();
+
+        return $existeRegistro > 0 ? true : false;
+        
+    }
+
+    
 }

@@ -45,31 +45,54 @@ class LogradouroController extends Controller{
     
     public function store(Request $request){
         $this->validaCampos($request, 'i');
+
+        $cidade =   $this->cidades->getCidadeByIdIbge($request->input('idIbgeCidade'));
+
+        $logNomeComNumero = $request->input('logNome') . ', ' .$request->input('logNr');
+        $logNomeSemNumero = $request->input('logNome');
         
-        $insert = Cidades::create([
+        $arrayDadosDigitados = array(
             'logcep'           => $request->input('logCep'),
-            'logtipo'          => $request->input('logTipo'),
-            'lognome'          => $request->input('logNome'),
-            'idcidade'         => $request->input('idCidade'),
+            'lognome'          => $logNomeComNumero,
+            'lognomesemnr'     => $logNomeSemNumero,
+            'idcidade'         => $cidade[0]->idcidade,
             'ciduf'            => $request->input('estUf'),
             'logcomplemento'   => $request->input('logComplemento'),
-            'lognomesemnr'     => $request->input('logNomeSemNr'),
-            'lognomecid'       => $request->input('logNomeCid'),
-            'idibgecidade'     => $request->input('idIbgeCidade'),
-            'lognomebairro'    => $request->input('logNomeBairro'),
-            'logindstatus'     => $request->input('logIndStatus'),
-            'logindorigemcad'  => $request->input('logIndOrigemCad'),
-            'usucriou'         => Auth::user()->getAuthIdentifier(),
-            'dtcadastro'       => date('Y-m-d H:i:s')
-        ]);
+            'lognomecid'       => $cidade[0]->cidnome,
+            'idibgecidade'     => $cidade[0]->cididibge,
+            'lognomebairro'    => $request->input('logNomeBairro')
+        );
         
-        if($insert){
-            $request->session()->flash('alert-success', Config::get('msg.cadastro_sucesso'));
+        $indExisteLogradouro = $this->logradouros->existeLogradouro($arrayDadosDigitados);
+
+        if($indExisteLogradouro){
+            $request->session()->flash('alert-info', Config::get('msg.existe_registro'));
         }else{
-            $request->session()->flash('alert-danger', Config::get('msg.cadastro_erro'));
+            $insert = Logradouros::create([
+                'logcep'           => $request->input('logCep'),
+                'logtipo'          => $request->input('logTipo'),
+                'lognome'          => $logNomeComNumero,
+                'lognomesemnr'     => $logNomeSemNumero,
+                'idcidade'         => $cidade[0]->idcidade,
+                'ciduf'            => $request->input('estUf'),
+                'logcomplemento'   => $request->input('logComplemento'),
+                'lognomecid'       => $cidade[0]->cidnome,
+                'idibgecidade'     => $cidade[0]->cididibge,
+                'lognomebairro'    => $request->input('logNomeBairro'),
+                'logindstatus'     => $request->input('logIndStatus'),
+                'logindorigemcad'  => $request->input('logIndOrigemCad'),
+                'usucriou'         => Auth::user()->getAuthIdentifier(),
+                'dtcadastro'       => date('Y-m-d H:i:s')
+            ]);
+            
+            if($insert){
+                $request->session()->flash('alert-success', Config::get('msg.cadastro_sucesso'));
+            }else{
+                $request->session()->flash('alert-danger', Config::get('msg.cadastro_erro'));
+            }
         }
 
-        return redirect()->route('cidades.selecionar');
+        return redirect()->route('logradouros.selecionar');
     }
     
     public function edit($id){
@@ -123,8 +146,8 @@ class LogradouroController extends Controller{
     }
 
     public function validaCampos(Request $request, $tipoPersistencia){
-            if (!empty($request->input('cidIdIbge'))){
-                session()->put('oldCidade', $request->input('cidIdIbge'));
+            if (!empty($request->input('idIbgeCidade'))){
+                session()->put('oldCidade', $request->input('idIbgeCidade'));
             }else{
                 session()->put('oldCidade', "0");
             }
@@ -134,9 +157,9 @@ class LogradouroController extends Controller{
                 'logTipo'          => 'required|max:60',
                 'logNome'          => 'required|max:60',
                 'logNr'            => 'required|max:10',
-                'logComplemento'   => 'required|max:100',
+                'logComplemento'   => 'max:100',
                 'estUf'            => 'required|max:2',
-                'cidIdIbge'         => 'required',                
+                'idIbgeCidade'     => 'required',                
                 'logNomeBairro'    => 'required|max:100',
                 'logIndStatus'     => 'required|max:1',
             ];
@@ -150,7 +173,7 @@ class LogradouroController extends Controller{
                 'logNr'            => Config::get('label.logradouro_nr'),
                 'logComplemento'   => Config::get('label.logradouro_complemento'),
                 'estUf'            => Config::get('label.logradouro_uf'),
-                'cidIdIbge'         => Config::get('label.logradouro_cidade'),
+                'idIbgeCidade'     => Config::get('label.logradouro_cidade'),
                 'logNomeBairro'    => Config::get('label.logradouro_bairro'),
                 'logindstatus'     => Config::get('label.status'),
             ];

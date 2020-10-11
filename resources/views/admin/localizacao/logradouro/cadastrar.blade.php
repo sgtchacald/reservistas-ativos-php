@@ -25,6 +25,7 @@
     	<div class="card-body">
     			@csrf
 				{{--@include('utils.erro')--}}
+				
 				<div class="row ocultar">
 					<div class="col-sm-1">
 						<div class="form-group required">
@@ -83,7 +84,7 @@
 									data-mask=""
 									value="{{old('logCep')}}">
 							@error('logCep')
-								<span class="invalid-feedback" role="alert">
+								<span class="invalid-feedback desaparecer" role="alert">
 									<strong>{{ $message }}</strong>
 								</span>
 							@enderror
@@ -105,7 +106,7 @@
 							</select>
 							
 							@error('logTipo')
-								<span class="invalid-feedback" role="alert">
+								<span class="invalid-feedback desaparecer" role="alert">
 									<strong>{{ $message }}</strong>
 								</span>
 							@enderror
@@ -124,7 +125,7 @@
 									value="{{old('logNome')}}"
 									readonly>
 							@error('logNome')
-								<span class="invalid-feedback" role="alert">
+								<span class="invalid-feedback desaparecer" role="alert">
 									<strong>{{ $message }}</strong>
 								</span>
 							@enderror
@@ -144,7 +145,7 @@
 									data-mask=""
 									value="{{old('logNr')}}">
 							@error('logNr')
-								<span class="invalid-feedback" role="alert">
+								<span class="invalid-feedback desaparecer" role="alert">
 									<strong>{{ $message }}</strong>
 								</span>
 							@enderror
@@ -163,7 +164,7 @@
 									value="{{old('logComplemento')}}">
 
 							@error('logComplemento')
-								<span class="invalid-feedback" role="alert">
+								<span class="invalid-feedback desaparecer" role="alert">
 									<strong>{{ $message }}</strong>
 								</span>
 							@enderror
@@ -185,7 +186,7 @@
 							</select>
 							
 							@error('estUf')
-								<span class="invalid-feedback" role="alert">
+								<span class="invalid-feedback desaparecer" role="alert">
 									<strong>{{ $message }}</strong>
 								</span>
 							@enderror
@@ -196,12 +197,12 @@
 
 							<div class="form-group required">
 								<label>{{Config::get('label.logradouro_cidade')}}:</label> 
-								<select name="cidIdIbge" id="cidIdIbge" class="form-control @error('cidIdIbge') is-invalid @enderror readyOnly" readonly>
+								<select name="idIbgeCidade" id="idIbgeCidade" class="form-control @error('idIbgeCidade') is-invalid @enderror readyOnly" readonly>
 									{{--<option value="">Selecione</option>--}}
 								</select>
 								
-								@error('cidIdIbge')
-									<span class="invalid-feedback" role="alert">
+								@error('idIbgeCidade')
+									<span class="invalid-feedback desaparecer" role="alert">
 										<strong>{{ $message }}</strong>
 									</span>
 								@enderror
@@ -225,6 +226,26 @@
 									value="{{old('logNomeBairro')}}"
 									readonly >
 							@error('logNomeBairro')
+								<span class="invalid-feedback desaparecer" role="alert">
+									<strong>{{ $message }}</strong>
+								</span>
+							@enderror
+						</div>
+					</div>
+
+					<div class="col-sm-3">
+						<div class="form-group required">
+							<label>{{Config::get('label.status')}}:</label> 
+							<select name="logIndStatus" id="logIndStatus" class="form-control @error('logIndStatus') is-invalid @enderror readyOnly" readonly>
+								<option value="">Selecione</option> 
+								@foreach ((\App\Dominios\IndStatus::getDominio()) as $key => $value)
+									<option @if(old('logIndStatus')==$key || $key == 'A') {{'selected="selected"'}} @endif value="{{$key}}">
+										{{$value}}
+									</option>
+								@endforeach
+							</select>
+							
+							@error('logIndStatus')
 								<span class="invalid-feedback" role="alert">
 									<strong>{{ $message }}</strong>
 								</span>
@@ -257,7 +278,7 @@
 				var oldCidade = "{{session()->get('oldCidade') ?? '0'}}";
 
 					if (oldCidade == "0" && $("#logCep").val() == ""){
-						$('select[name=cidIdIbge]').append('<option value="">Selecione</option>');
+						$('select[name=idIbgeCidade]').append('<option value="">Selecione</option>');
 					}
 
 					$('select[name=estUf]').change(function () {
@@ -265,20 +286,20 @@
 
 						if(uf!=0){
 							$.getJSON('/admin/localizacao/logradouro/getcidadesbyuf/' + uf, function (cidades) {
-								$('select[name=cidIdIbge]').empty();
-								$('select[name=cidIdIbge]').html("");
-								$('select[name=cidIdIbge]').append('<option value="">Selecione</option>');
-								//$('select[name=cidIdIbge]').removeAttr('disabled');
+								$('select[name=idIbgeCidade]').empty();
+								$('select[name=idIbgeCidade]').html("");
+								$('select[name=idIbgeCidade]').append('<option value="">Selecione</option>');
+								//$('select[name=idIbgeCidade]').removeAttr('disabled');
 								
 								$.each(cidades, function (key, value) {
-									$('select[name=cidIdIbge]').append('<option value=' + value.cididibge + '>' + value.cidnome + '</option>');
+									$('select[name=idIbgeCidade]').append('<option value=' + value.cididibge + '>' + value.cidnome + '</option>');
 								});
 								getValorCidadeIbge();
-								$('#cidIdIbge').fadeIn();
+								$('#idIbgeCidade').fadeIn();
 								$('.loading').hide();
 							});
 						}else{
-							$('select[name=cidIdIbge]').attr('readyonly', true);
+							$('select[name=idIbgeCidade]').attr('readyonly', true);
 						}
 					});
 
@@ -287,26 +308,26 @@
 
 					if(oldUf!=0){
 						$.getJSON('/admin/localizacao/logradouro/getcidadesbyuf/' + oldUf, function (cidades) {
-							$('select[name=cidIdIbge]').empty();
-							$('select[name=cidIdIbge]').html("");
-							$('select[name=cidIdIbge]').append('<option value="">Selecione</option>');
-							//$('select[name=cidIdIbge]').removeAttr('disabled');
+							$('select[name=idIbgeCidade]').empty();
+							$('select[name=idIbgeCidade]').html("");
+							$('select[name=idIbgeCidade]').append('<option value="">Selecione</option>');
+							//$('select[name=idIbgeCidade]').removeAttr('disabled');
 							
 							$.each(cidades, function (key, value) {
-								$('select[name=cidIdIbge]').append('<option value=' + value.cididibge + '>' + value.cidnome + '</option>');
+								$('select[name=idIbgeCidade]').append('<option value=' + value.cididibge + '>' + value.cidnome + '</option>');
 							});
 
-							$('select[name=cidIdIbge]').val(oldCidade).change();
+							$('select[name=idIbgeCidade]').val(oldCidade).change();
 							
 							if(oldCidade == 0){
-								var opt = $('select[name=cidIdIbge] option').filter(function(el) { 
+								var opt = $('select[name=idIbgeCidade] option').filter(function(el) { 
 									return $(this).text().trim() === "Selecione"; 
 								});
 								opt.attr('selected', true);
 							}  
 						});
 					}else{
-						$('#cidIdIbge option:first').attr('selected','selected');
+						$('#idIbgeCidade option:first').attr('selected','selected');
 					}
 			}
 
@@ -316,7 +337,7 @@
 				$("#logNome").val("");
 				$("#logNomeBairro").val("");
 				$("#estUf").val("");
-				$("#cidIdIbge").val("");
+				$("#idIbgeCidade").val("");
 				$("#logTipo").val("");
 			}
 
@@ -324,7 +345,7 @@
 				$("#logNome").val("...");
 				$("#logNomeBairro").val("...");
 				$("#estUf").val("...");
-				$("#cidIdIbge").val("...");
+				$("#idIbgeCidade").val("...");
 				$("#logTipo").val("...");
 			}
 
@@ -341,7 +362,7 @@
 							//Valida o formato do CEP.
 							if(validacep.test(cep)) {
 								//Consulta o webservice viacep.com.br/
-								$('#cidIdIbge').hide();
+								$('#idIbgeCidade').hide();
 								$('.loading').show();
 								$.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
 									if (!("erro" in dados)) {
@@ -369,10 +390,11 @@
 								limpaFormCep();
 								alert("Formato de CEP inválido.");
 							}
-						}else {			
-							$('select[name=cidIdIbge]').empty();
-							$('select[name=cidIdIbge]').html("");
-							$('select[name=cidIdIbge]').append('<option value="">Selecione</option>');
+						}else {	
+							limpaFormCep();		
+							$('select[name=idIbgeCidade]').empty();
+							$('select[name=idIbgeCidade]').html("");
+							$('select[name=idIbgeCidade]').append('<option value="">Selecione</option>');
 						}
 					});
 				});
@@ -387,15 +409,15 @@
 						url:'{{route("logradouro.setDadosIbge")}}',
 						data: {'dadosIbge': dados}
 					});
-				}, 500);
+				}, 100);
 			}
 
 			function getValorCidadeIbge(){
 				setTimeout(() =>{
 					$.get( '{{route("logradouro.getdadosibge")}}', function( data ) {
-						$("#cidIdIbge").val(data).trigger('change');
+						$("#idIbgeCidade").val(data).trigger('change');
 					});
-				}, 500);
+				}, 100);
 			}
 
 			function atualizaCep(){
@@ -415,8 +437,6 @@
                 iframe.style.background = '#fcfcfc';
 			}
 
-
-		
 		});
 	</script>
 	{{session()->forget('oldCidade')}} 	
