@@ -20,7 +20,7 @@ class Logradouros extends Migration
             $table->string('lognome', 60);
             $table->integer('idcidade');
             $table->string('ciduf', 2);
-            $table->string('logcomplemento', 100);
+            $table->string('logcomplemento', 100)->nullable();
             $table->string('lognomesemnr', 100);
             $table->string('lognomecid', 100);
             $table->integer('idibgecidade');
