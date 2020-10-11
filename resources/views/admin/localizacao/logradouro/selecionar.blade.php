@@ -39,9 +39,10 @@
 					{{--<th class="colunaId">{{Config::get('label.id')}}</th>--}}
 					<th class="colunaAcao">{{Config::get('label.acoes')}}</th>
 					<th class="">{{Config::get('label.logradouro_nome')}}</th>
+					<th class="">{{Config::get('label.logradouro_complemento')}}</th>
 					<th class="">{{Config::get('label.logradouro_cidade')}}</th>
 					<th class="">{{Config::get('label.logradouro_uf')}}</th>
-					{{--<th class="">{{Config::get('label.status')}}</th>--}}
+					<th class="">{{Config::get('label.logradouro_bairro')}}</th>
 				</tr>
 			</thead>
 		</table>
@@ -61,8 +62,10 @@
                 "columns": [
 					{"data": 'btn'},
 					{"data": 'lognome'},
-					{"data": 'idcidade'},
-					{"data": 'ciduf'}
+					{"data": 'logcomplemento'},
+					{"data": 'ciduf'},
+					{"data": 'lognomecid'},
+					{"data": 'lognomebairro'}
 				],
 				"paging": true,
 				"lengthChange": true,

@@ -96,7 +96,10 @@ class LogradouroController extends Controller{
     }
     
     public function edit($id){
-       return view('admin.localizacao.cidade.editar')->with(compact('cidade','estados'));
+        $estados =   $this->estados->getEstadosByStatus('A');
+        $cidades =   $this->cidades->getCidadesByStatus('A');
+ 
+        return view('admin.localizacao.logradouro.cadastrar')->with(compact('estados', 'cidades'));
     }
     
     public function update(Request $request){
@@ -130,7 +133,7 @@ class LogradouroController extends Controller{
     
     public function destroy(Request $request, $id){
        
-        $delete = Cidades::where(['idlogradouro' => $id])->update([
+        $delete = Logradouros::where(['idlogradouro' => $id])->update([
             'logindstatus' => 'I',
             'usuexcluiu' => Auth::user()->getAuthIdentifier(),
             'dtexclusao'=> date('Y-m-d H:i:s')
@@ -142,7 +145,7 @@ class LogradouroController extends Controller{
             $request->session()->flash('alert-danger', Config::get('msg.exclusao_erro'));
         }
 
-        return redirect()->route('cidades.selecionar');
+        return redirect()->route('logradouros.selecionar');
     }
 
     public function validaCampos(Request $request, $tipoPersistencia){
