@@ -244,6 +244,7 @@ return [
             'url'  => 'admin/niveisEstudo',
             'icon' => 'fa fa-graduation-cap',
         ],
+        ['header' => 'localizacao'],
         [
             'text' => 'Países',
             'url'  => 'admin/localizacao/paises',
