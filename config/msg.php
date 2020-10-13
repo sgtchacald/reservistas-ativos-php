@@ -7,5 +7,5 @@
     'edicao_erro' => 'Falha ao incluir registro.',
     'exclusao_sucesso' => 'Registro Excluído com sucesso.',
     'exclusao_erro' => 'Falha ao Excluído registro.',
-    'existe_registro' => 'Já existe um registro com essas características, não é necessário continuar este cadastro.',
+    'existe_registro' => 'Já existe um registro com essas características, não é necessário continuar esta operação.',
   );

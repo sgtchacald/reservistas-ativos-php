@@ -66,7 +66,12 @@ class LogradouroController extends Controller{
         $indExisteLogradouro = $this->logradouros->existeLogradouro($arrayDadosDigitados);
 
         if($indExisteLogradouro){
-            $request->session()->flash('alert-info', Config::get('msg.existe_registro'));
+            $logradouroExistente = $this->logradouros->buscaLogradouroDigitado($arrayDadosDigitados)[0];
+            if($logradouroExistente->logindstatus =="I"){
+                $this->ativaLogradouro($request, $logradouroExistente->idlogradouro);
+            }else{
+                $request->session()->flash('alert-info', Config::get('msg.existe_registro'));
+            }
         }else{
             $insert = Logradouros::create([
                 'logcep'           => $request->input('logCep'),
@@ -96,39 +101,53 @@ class LogradouroController extends Controller{
     }
     
     public function edit($id){
-        $estados =   $this->estados->getEstadosByStatus('A');
-        $cidades =   $this->cidades->getCidadesByStatus('A');
+        $logradouro = $this->logradouros->getLogradouroById($id);
+        $logTipo    = explode(" ", $logradouro[0]->lognome)[0];
+        $logNome    = explode(",", $logradouro[0]->lognome)[0];
+        $logNumero  = explode(",", $logradouro[0]->lognome)[1];
+        $estados    = $this->estados->getEstadosByStatus('A');
+        $cidades    = $this->cidades->getCidadesByStatus('A');
  
-        return view('admin.localizacao.logradouro.cadastrar')->with(compact('estados', 'cidades'));
+        return view('admin.localizacao.logradouro.editar')->with(compact('logradouro', 'logTipo','logNome', 'logNumero', 'estados', 'cidades'));
     }
     
     public function update(Request $request){
         $this->validaCampos($request, 'u');
-        
-        $update = Cidades::where(['idcidade' => $request->input('idCidade')])->update([
-            'logcep'           => $request->input('logCep'),
-            'logtipo'          => $request->input('logTipo'),
-            'lognome'          => $request->input('logNome'),
-            'idcidade'         => $request->input('idCidade'),
-            'ciduf'            => $request->input('cidUf'),
+
+        $logradouro = $this->logradouros->getLogradouroById($request->input('idLogradouro'));
+
+        $arrayDadosDigitados = array(
+            'logcep'           => $logradouro[0]->logcep,
+            'lognome'          => $request->input('logNome') . ', ' .$request->input('logNr'),
+            'lognomesemnr'     => $logradouro[0]->lognomesemnr,
+            'idcidade'         => $logradouro[0]->idcidade,
+            'ciduf'            => $logradouro[0]->ciduf,
             'logcomplemento'   => $request->input('logComplemento'),
-            'lognomesemnr'     => $request->input('logNomeSemNr'),
-            'lognomecid'       => $request->input('logNomeCid'),
-            'idibgecidade'     => $request->input('idIbgeCidade'),
-            'lognomebairro'    => $request->input('logNomeBairro'),
-            'logindstatus'     => $request->input('logIndStatus'),
-            'logindorigemcad'  => $request->input('logIndOrigemCad'),
-            'usueditou'        => Auth::user()->getAuthIdentifier(),
-            'dtedicao'         => date('Y-m-d H:i:s')
-        ]);
-        
-        if($update){
-            $request->session()->flash('alert-success', Config::get('msg.edicao_sucesso'));
+            'lognomecid'       => $logradouro[0]->lognomecid,
+            'idibgecidade'     => $logradouro[0]->idibgecidade,
+            'lognomebairro'    => $logradouro[0]->lognomebairro,
+        );
+
+        $indExisteLogradouro = $this->logradouros->existeLogradouro($arrayDadosDigitados);
+
+        if(!$indExisteLogradouro){
+            $update = Logradouros::where(['idlogradouro' => $request->input('idLogradouro')])->update([
+                'lognome'          => $request->input('logNome') . ', ' .$request->input('logNr'),
+                'logcomplemento'   => $request->input('logComplemento'),
+                'usueditou'        => Auth::user()->getAuthIdentifier(),
+                'dtedicao'         => date('Y-m-d H:i:s')
+            ]);
+            
+            if($update){
+                $request->session()->flash('alert-success', Config::get('msg.edicao_sucesso'));
+            }else{
+                $request->session()->flash('alert-danger', Config::get('msg.edicao_erro'));
+            }
         }else{
-            $request->session()->flash('alert-danger', Config::get('msg.edicao_erro'));
+            $request->session()->flash('alert-info', Config::get('msg.existe_registro'));
         }
 
-        return redirect()->route('cidades.selecionar');
+        return redirect()->route('logradouros.selecionar');
     }
     
     public function destroy(Request $request, $id){
@@ -148,7 +167,25 @@ class LogradouroController extends Controller{
         return redirect()->route('logradouros.selecionar');
     }
 
+    public function ativaLogradouro(Request $request, $id){
+       
+        $ativaLogradouro = Logradouros::where(['idlogradouro' => $id])->update([
+            'logindstatus' => 'A',
+            'usueditou' => Auth::user()->getAuthIdentifier(),
+            'dtedicao'=> date('Y-m-d H:i:s')
+        ]);
+
+        if($ativaLogradouro){
+            $request->session()->flash('alert-success', Config::get('msg.cadastro_sucesso'));
+        }else{            
+            $request->session()->flash('alert-danger', Config::get('msg.cadastro_erro'));
+        }
+
+        return redirect()->route('logradouros.selecionar');
+    }
+
     public function validaCampos(Request $request, $tipoPersistencia){
+
             if (!empty($request->input('idIbgeCidade'))){
                 session()->put('oldCidade', $request->input('idIbgeCidade'));
             }else{

@@ -76,5 +76,21 @@ class Logradouros extends Authenticatable{
         
     }
 
+    public function buscaLogradouroDigitado($array){
+        
+        return DB::table($this->table)
+                ->where('logcep',         '=', $array["logcep"])
+                ->where('lognome',        '=', $array["lognome"])
+                ->where('lognomesemnr',   '=', $array["lognomesemnr"])
+                ->where('idcidade',       '=', $array["idcidade"])
+                ->where('ciduf',          '=', $array["ciduf"])
+                ->where('logcomplemento', '=', $array["logcomplemento"])
+                ->where('lognomecid',     '=', $array["lognomecid"])
+                ->where('idibgecidade',   '=', $array["idibgecidade"])
+                ->where('lognomebairro',  '=', $array["lognomebairro"])
+                ->get();
+
+    }
+
     
 }
