@@ -38,6 +38,8 @@ class Usuarios extends Authenticatable{
         'usuindcelwhatsapp',
         'usuindmsg',
         'usuimagemurl',
+        //Informações Geográficas
+        'idlogradouro',
         //Informacoes militares
         'usutipoforca',
         'usuindoficial',

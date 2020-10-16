@@ -13,10 +13,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Exception;
+use App\Http\Controllers\Admin\LogradouroController;
+use App\Estados;
+use App\Cidades;
+use App\Logradouros;
+use Config;
+
 
 class UsuarioController extends Controller{
     public function __construct(){
         $this->usuarios = new Usuarios();
+        $this->estados = new Estados();
+        $this->cidades = new Cidades();
+        $this->logradouros = new Logradouros();
+        $this->logradouroController = new LogradouroController();
     }
     
     public function index(){
@@ -31,7 +41,10 @@ class UsuarioController extends Controller{
     }
     
     public function create(){
-       return view('admin.reservista.cadastrar');
+        $estados =   $this->estados->getEstadosByStatus('A');
+        $cidades =   $this->cidades->getCidadesByStatus('A');
+        
+        return view('admin.reservista.cadastrar')->with(compact('estados','cidades'));
     }
     
     public function store(Request $request){
@@ -41,6 +54,8 @@ class UsuarioController extends Controller{
         $indStatus = 'A';
 
         $this->validaCampos($request, 'i');
+
+        $logradouroUsuario = $this->logradouroController->insert($request);
         
         $insert = Usuarios::create([
             'usupermissao'        => $usuPermissao,
@@ -59,6 +74,7 @@ class UsuarioController extends Controller{
             'usuindmsg'           => SimNao::retornaSimNaoSeVazio($request->input('usuIndMsg')),
             'usuresumo'           => $request->input('usuResumo'),
             'usuimagemurl'        => NULL,
+            'idlogradouro'        => $logradouroUsuario,
             'usutipoforca'        => $request->input('usuTipoForca'),
             'usuindoficial'       => $request->input('usuIndOficial'),
             'usucertreservista'   => $request->input('usuCertReservista'),
@@ -82,6 +98,10 @@ class UsuarioController extends Controller{
             return view('admin.reservista.selecionar')->with(compact('usuario'));
         }else{
             $request->session()->flash('alert-success', 'Inclusão' .' efetuada com sucesso.');
+            
+            if($logradouroUsuario == ""){
+                $request->session()->flash('alert-warning', "Não foi possível inserir os dados de LOCALIZAÇÃO GEORÁFICA, verifique com a administração!");
+            }
             
             switch ($usuPermissao) {
                 case 'R':
@@ -199,8 +219,17 @@ class UsuarioController extends Controller{
     }
 
     public function validaCampos(Request $request, $tipoPersistencia){
+
         $emailUsuarioBanco = $tipoPersistencia == 'u' ? $this->usuarios->getEmailUsuario($request->input('idUsuario')) : '';
         $emailUsuarioTela  = $tipoPersistencia == 'u' ? $request->input('email') : '';
+
+        //Aba Localização Geográfica
+        if (!empty($request->input('idIbgeCidade'))){
+            session()->put('oldCidade', $request->input('idIbgeCidade'));
+        }else{
+            session()->put('oldCidade', "0");
+        }
+        
         
         try{
             $rules = [
@@ -232,13 +261,34 @@ class UsuarioController extends Controller{
                 'usuPostoGrad'          => 'required',
                 'usuNomeGuerra'         => 'required',
                 'usuNomeUltBtl'         => 'required',
-                'usuResumo'             => 'required'
+                'usuResumo'             => 'required',
                 //'usuLinkedinUrl'        => 'required'
+
+                //Aba Localização Geográfica
+                'logCep'           => 'required|max:60',
+                'logTipo'          => 'required|max:60',
+                'logNome'          => 'required|max:60',
+                'logNr'            => 'required|max:10',
+                'logComplemento'   => 'max:100',
+                'estUf'            => 'required|max:2',
+                'idIbgeCidade'     => 'required',                
+                'logNomeBairro'    => 'required|max:100',
+                'logIndStatus'     => 'required|max:1',
             ];
     
             $messages = ['required' => 'Campo obrigatório.'];
     
-            $customAttributes = [];
+            $customAttributes = [
+                'logCep'           => Config::get('label.logradouro_cep'),
+                'logTipo'          => Config::get('label.logradouro_tipo'),
+                'logNome'          => Config::get('label.logradouro_nome'),
+                'logNr'            => Config::get('label.logradouro_nr'),
+                'logComplemento'   => Config::get('label.logradouro_complemento'),
+                'estUf'            => Config::get('label.logradouro_uf'),
+                'idIbgeCidade'     => Config::get('label.logradouro_cidade'),
+                'logNomeBairro'    => Config::get('label.logradouro_bairro'),
+                'logindstatus'     => Config::get('label.status'),
+            ];
             
             $request->validate($rules, $messages, $customAttributes);
 
@@ -252,9 +302,10 @@ class UsuarioController extends Controller{
             if ($errors) {
                 $fields_tabs = [
                     ['usuPermissao', 'name', 'usuCPF', 'usuDtNascimento', 'usuEstadoCivil', 'usuGenero', 'usuIndPortDeficiente', 'email', 'usuTelCelular', 'usuIndViagem', 'usuIndMudarCidade'], // Tab 1
-                    ['usuTipoForca', 'usuIndOficial', 'usuCertReservista', 'usuPostoGrad', 'usuNomeGuerra', 'usuNomeUltBtl'], // Tab 2
-                    ['usuResumo'], // Tab 3
-                    ['usuLinkedinUrl'], //Tab 4
+                    [ 'logCep','logTipo','logNome','logNr','logComplemento','estUf','idIbgeCidade','logNomeBairro','logIndStatus'], // Tab 2
+                    ['usuTipoForca', 'usuIndOficial', 'usuCertReservista', 'usuPostoGrad', 'usuNomeGuerra', 'usuNomeUltBtl'], // Tab 3
+                    ['usuResumo'], // Tab 4
+                    ['usuLinkedinUrl'], //Tab 5
                 ];
                                
                 foreach ($fields_tabs as $tab => $fields) {

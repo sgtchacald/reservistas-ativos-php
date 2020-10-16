@@ -99,6 +99,66 @@ class LogradouroController extends Controller{
 
         return redirect()->route('logradouros.selecionar');
     }
+
+
+    public function insert(Request $request){
+        $cidade =   $this->cidades->getCidadeByIdIbge($request->input('idIbgeCidade'));
+
+        $logNomeComNumero = $request->input('logNome') . ', ' .$request->input('logNr');
+        $logNomeSemNumero = $request->input('logNome');
+        
+        $arrayDadosDigitados = array(
+            'logcep'           => $request->input('logCep'),
+            'lognome'          => $logNomeComNumero,
+            'lognomesemnr'     => $logNomeSemNumero,
+            'idcidade'         => $cidade[0]->idcidade,
+            'ciduf'            => $request->input('estUf'),
+            'logcomplemento'   => $request->input('logComplemento'),
+            'lognomecid'       => $cidade[0]->cidnome,
+            'idibgecidade'     => $cidade[0]->cididibge,
+            'lognomebairro'    => $request->input('logNomeBairro')
+        );
+        
+        $indExisteLogradouro = $this->logradouros->existeLogradouro($arrayDadosDigitados);
+
+        $retorno = null;
+
+        if($indExisteLogradouro){
+            $logradouroExistente = $this->logradouros->buscaLogradouroDigitado($arrayDadosDigitados)[0];
+            if($logradouroExistente->logindstatus =="I"){
+                $this->ativaLogradouro($request, $logradouroExistente->idlogradouro);
+            }
+
+            $retorno =  $logradouroExistente->idlogradouro;
+        }else{
+            $insert = Logradouros::create([
+                'logcep'           => $request->input('logCep'),
+                'logtipo'          => $request->input('logTipo'),
+                'lognome'          => $logNomeComNumero,
+                'lognomesemnr'     => $logNomeSemNumero,
+                'idcidade'         => $cidade[0]->idcidade,
+                'ciduf'            => $request->input('estUf'),
+                'logcomplemento'   => $request->input('logComplemento'),
+                'lognomecid'       => $cidade[0]->cidnome,
+                'idibgecidade'     => $cidade[0]->cididibge,
+                'lognomebairro'    => $request->input('logNomeBairro'),
+                'logindstatus'     => $request->input('logIndStatus'),
+                'logindorigemcad'  => $request->input('logIndOrigemCad'),
+                'usucriou'         => Auth::user()->getAuthIdentifier(),
+                'dtcadastro'       => date('Y-m-d H:i:s')
+            ]);
+            
+            if($insert){
+                $logradouroExistente = $this->logradouros->buscaLogradouroDigitado($arrayDadosDigitados)[0];
+                $retorno =  $logradouroExistente->idlogradouro;
+            }else{
+                $retorno = "";
+            }
+        }
+
+        return $retorno;
+
+    }
     
     public function edit($id){
         $logradouro = $this->logradouros->getLogradouroById($id);

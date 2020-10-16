@@ -1,3 +1,1 @@
-<div class="row">
-    Localização Geográfica
-</div>
+@include('admin.localizacao.logradouro.logradouroCamposFormCad')
