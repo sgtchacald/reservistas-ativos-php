@@ -50,7 +50,7 @@
 </div>
 
 <div class="row">
-    <div class="col-sm-2">
+    <div class="col-sm-3">
         <div class="form-group required">
             <label>Post/Grad:</label> 
             <select name="usuPostoGrad" id="usuPostoGrad" class="form-control @error('usuPostoGrad') is-invalid @enderror" >
@@ -85,7 +85,7 @@
 </div>
 
 <div class="row">
-    <div class="col-sm-9">
+    <div class="col-sm-10">
         <div class="form-group required">
             <label>Última Organização Militar que serviu:</label> 
             <input type="text" name="usuNomeUltBtl" id="usuNomeUltBtl" class="form-control @error('usuNomeUltBtl') is-invalid @enderror" placeholder="Digite o nome do último batalhão que serviu" value="{{old('usuNomeUltBtl', $usuario[0]->usunomeultbtl)}}">

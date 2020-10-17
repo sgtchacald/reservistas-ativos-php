@@ -121,12 +121,13 @@ class UsuarioController extends Controller{
     public function edit($idusuario){
         $usuario    = $this->usuarios->getUsuario($idusuario);
         $estados    = $this->estados->getEstadosByStatus('A');
-        $cidades    =  $this->cidades->getCidadesByStatus('A');
+        $cidades    = $this->cidades->getCidadesByStatus('A');
         $logradouro = $this->logradouros->getLogradouroById($usuario[0]->idlogradouro);
-        $logTipo    = explode(" ", $logradouro[0]->lognome)[0];
-        $logNome    = explode(",", $logradouro[0]->lognome)[0];
-        $logNumero  = explode(",", $logradouro[0]->lognome)[1];
 
+        $logTipo    = count($logradouro) > 0 ? explode(" ", $logradouro[0]->lognome)[0] : "";
+        $logNome    = count($logradouro) > 0 ? explode(",", $logradouro[0]->lognome)[0] : "";
+        $logNumero  = count($logradouro) > 0 ? explode(",", $logradouro[0]->lognome)[1] : "";
+        
         return view('admin.reservista.editar')->with(compact('usuario', 'estados', 'cidades', 'logradouro', 'logNome', 'logTipo', 'logNumero'));
     }
     

@@ -84,6 +84,8 @@
     <script> 
         $(document).ready(function(){
 			$( "#logCep" ).removeAttr("readonly");
+			$( ".logCep" ).removeClass("col-sm-3");
+			$( ".logCep" ).addClass("col-sm-7");
 			$( ".logIndStatus" ).addClass("ocultar");
 
             // validacao de campos
@@ -137,7 +139,7 @@
 			fazIntegracaoViaCepPreencheCamposLogradouro();
 
 			function gerenciaCombosLogradouro(){
-				$('select[name=idIbgeCidade]').append('<option value="{{$logradouro[0]->idibgecidade}}">{{$logradouro[0]->lognomecid}}</option>');
+				$('select[name=idIbgeCidade]').append('<option value="{{isset($logradouro[0])?$logradouro[0]->idibgecidade:''}}">{{isset($logradouro[0])?$logradouro[0]->lognomecid:'Selecione'}}</option>');
 				$('#idIbgeCidade').fadeIn();
 				$('.loading').hide();
 

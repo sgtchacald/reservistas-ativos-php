@@ -22,7 +22,7 @@
                     class="form-control @error('idLogradouro') is-invalid @enderror" 
                     placeholder="{{Config::get('label.id_placeholder')}}" 
                     maxlength="100"
-                    value="{{old('idLogradouro', $logradouro[0]->idlogradouro)}}" readonly>
+                    value="{{old('idLogradouro', isset($logradouro[0]) ? $logradouro[0]->idlogradouro : '')}}" readonly>
         </div>
     </div>
 
@@ -35,7 +35,7 @@
                     class="form-control @error('logIndOrigemCad') is-invalid @enderror" 
                     placeholder="{{Config::get('label.logradouro_origem_registro_placeholder')}}" 
                     maxlength="1"
-                    value="{{old('logIndOrigemCad', $logradouro[0]->logindorigemcad)}}">
+                    value="{{old('logIndOrigemCad', isset($logradouro[0]) ? $logradouro[0]->logindorigemcad  : '')}}">
         </div>
     </div>
 
@@ -44,7 +44,7 @@
 </div>
 
 <div class="row">
-    <div class="col-sm-6">
+    <div class="logCep col-sm-3">
         <div class="form-group required">
             <label>{{Config::get('label.logradouro_cep')}}:</label> 
             <input 	type="text" 
@@ -55,7 +55,7 @@
                     maxlength="8"
                     data-inputmask="'mask': '9', 'repeat': 8, 'greedy' : false" 
                     data-mask=""
-                    value="{{old('logCep', $logradouro[0]->logcep)}}"
+                    value="{{old('logCep', isset($logradouro[0]) ? $logradouro[0]->logcep : '')}}"
                     readonly>
             @error('logCep')
                 <span class="invalid-feedback desaparecer" role="alert">
@@ -135,7 +135,7 @@
                     class="form-control @error('logComplemento') is-invalid @enderror" 
                     placeholder="{{Config::get('label.logradouro_complemento_placeholder')}}" 
                     maxlength="100"
-                    value="{{old('logComplemento', $logradouro[0]->logcomplemento)}}">
+                    value="{{old('logComplemento', isset($logradouro[0]) ? $logradouro[0]->logcomplemento : '')}}">
 
             @error('logComplemento')
                 <span class="invalid-feedback desaparecer" role="alert">
@@ -153,7 +153,7 @@
             <select name="estUf" id="estUf" class="form-control @error('estUf') is-invalid @enderror readyOnly" readonly>
                 <option value="">Selecione</option> 
                 @foreach ($estados as $estado)
-                    <option @if(old('estUf', $logradouro[0]->ciduf)== $estado->estuf) {{'selected="selected"'}} @endif value="{{$estado->estuf}}">
+                    <option @if(old('estUf', isset($logradouro[0]) ? $logradouro[0]->ciduf : '')== $estado->estuf) {{'selected="selected"'}} @endif value="{{$estado->estuf}}">
                         {{$estado->estnome}}
                     </option>
                 @endforeach
@@ -197,7 +197,7 @@
                     class="form-control @error('logNomeBairro') is-invalid @enderror readyOnly" 
                     placeholder="{{Config::get('label.logradouro_bairro_placeholder')}}" 
                     maxlength="100"
-                    value="{{old('logNomeBairro', $logradouro[0]->lognomebairro)}}"
+                    value="{{old('logNomeBairro', isset($logradouro[0]) ? $logradouro[0]->lognomebairro : '')}}"
                     readonly >
             @error('logNomeBairro')
                 <span class="invalid-feedback desaparecer" role="alert">
@@ -213,7 +213,7 @@
             <select name="logIndStatus" id="logIndStatus" class="form-control @error('logIndStatus') is-invalid @enderror readyOnly" readonly>
                 <option value="">Selecione</option> 
                 @foreach ((\App\Dominios\IndStatus::getDominio()) as $key => $value)
-                    <option @if(old('logIndStatus', $logradouro[0]->logindstatus)==$key || $key == 'A') {{'selected="selected"'}} @endif value="{{$key}}">
+                    <option @if(old('logIndStatus', isset($logradouro[0]) ? $logradouro[0]->logindstatus : '')==$key || $key == 'A') {{'selected="selected"'}} @endif value="{{$key}}">
                         {{$value}}
                     </option>
                 @endforeach
