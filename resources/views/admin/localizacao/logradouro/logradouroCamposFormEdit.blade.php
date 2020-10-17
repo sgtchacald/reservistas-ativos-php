@@ -12,8 +12,8 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="col-sm-1">
+<div class="row ocultar">
+    <div class="col-sm-3">
         <div class="form-group required">
             <label>{{Config::get('label.id')}}:</label> 
             <input 	type="text" 
@@ -39,11 +39,12 @@
         </div>
     </div>
 
-    <div class="col-sm-10"></div>
+    <div class="col-sm-9">
+    </div> 
 </div>
 
 <div class="row">
-    <div class="col-sm-2">
+    <div class="col-sm-6">
         <div class="form-group required">
             <label>{{Config::get('label.logradouro_cep')}}:</label> 
             <input 	type="text" 
@@ -63,7 +64,7 @@
             @enderror
         </div>
     </div>					
-   </div>
+</div>
 
 <div class="row">
     <div class="col-sm-2">
@@ -206,7 +207,7 @@
         </div>
     </div>
 
-    <div class="col-sm-3">
+    <div class="col-sm-3 logIndStatus">
         <div class="form-group required">
             <label>{{Config::get('label.status')}}:</label> 
             <select name="logIndStatus" id="logIndStatus" class="form-control @error('logIndStatus') is-invalid @enderror readyOnly" readonly>

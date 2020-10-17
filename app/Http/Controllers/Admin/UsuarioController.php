@@ -55,7 +55,7 @@ class UsuarioController extends Controller{
 
         $this->validaCampos($request, 'i');
 
-        $logradouroUsuario = $this->logradouroController->insert($request);
+        $logradouroUsuario = $this->logradouroController->inserirLogradouro($request);
         
         $insert = Usuarios::create([
             'usupermissao'        => $usuPermissao,
@@ -119,8 +119,15 @@ class UsuarioController extends Controller{
     }
     
     public function edit($idusuario){
-        $usuario = $this->usuarios->getUsuario($idusuario);
-        return view('admin.reservista.editar')->with(compact('usuario'));
+        $usuario    = $this->usuarios->getUsuario($idusuario);
+        $estados    = $this->estados->getEstadosByStatus('A');
+        $cidades    =  $this->cidades->getCidadesByStatus('A');
+        $logradouro = $this->logradouros->getLogradouroById($usuario[0]->idlogradouro);
+        $logTipo    = explode(" ", $logradouro[0]->lognome)[0];
+        $logNome    = explode(",", $logradouro[0]->lognome)[0];
+        $logNumero  = explode(",", $logradouro[0]->lognome)[1];
+
+        return view('admin.reservista.editar')->with(compact('usuario', 'estados', 'cidades', 'logradouro', 'logNome', 'logTipo', 'logNumero'));
     }
     
     public function update(Request $request){
@@ -128,6 +135,8 @@ class UsuarioController extends Controller{
         $usuPermissao = $request->input('usuPermissao');
         
         $this->validaCampos($request, 'u');
+
+        $logradouroUsuario = $this->logradouroController->atualizarLogradouroUsuario($request);
         
         $update = Usuarios::where(['idusuario' => $request->input('idUsuario')])->update([
             'usupermissao'        => $usuPermissao,
@@ -146,6 +155,7 @@ class UsuarioController extends Controller{
             'usuindmsg'           => SimNao::retornaSimNaoSeVazio($request->input('usuIndMsg')),
             'usuresumo'           => $request->input('usuResumo'),
             'usuimagemurl'        => NULL,
+            'idlogradouro'        => $logradouroUsuario,
             'usutipoforca'        => $request->input('usuTipoForca'),
             'usuindoficial'       => $request->input('usuIndOficial'),
             'usucertreservista'   => $request->input('usuCertReservista'),
@@ -169,6 +179,10 @@ class UsuarioController extends Controller{
             return view('admin.reservista.selecionar')->with(compact('usuario'));
         }else{
             $request->session()->flash('alert-success', 'Edição' .' efetuada com sucesso.');
+
+            if($logradouroUsuario == ""){
+                $request->session()->flash('alert-warning', "Não foi possível inserir os dados de LOCALIZAÇÃO GEORÁFICA, verifique com a administração!");
+            }
             
             switch ($usuPermissao) {
                 case 'R':

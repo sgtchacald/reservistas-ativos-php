@@ -101,7 +101,7 @@ class LogradouroController extends Controller{
     }
 
 
-    public function insert(Request $request){
+    public function inserirLogradouro(Request $request){
         $cidade =   $this->cidades->getCidadeByIdIbge($request->input('idIbgeCidade'));
 
         $logNomeComNumero = $request->input('logNome') . ', ' .$request->input('logNr');
@@ -208,6 +208,11 @@ class LogradouroController extends Controller{
         }
 
         return redirect()->route('logradouros.selecionar');
+    }
+
+
+    public function atualizarLogradouroUsuario(Request $request){
+        return $this->inserirLogradouro($request);;
     }
     
     public function destroy(Request $request, $id){
