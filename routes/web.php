@@ -17,6 +17,13 @@ route::group(['middleware' => ['auth'],'namespace'  => 'Admin'],function(){
     Route::get ('admin/nivelEstudo/editar/{id}', 'NivelEstudoController@edit')->name('nivel.estudo.editar');
     Route::put ('admin/nivelEstudo/update', 'NivelEstudoController@update')->name('nivel.estudo.update');
     Route::put ('admin/nivelEstudo/excluir/{id}', 'NivelEstudoController@destroy')->name('nivel.estudo.excluir');
+    //Idiomas
+    Route::get ('admin/idiomas', 'IdiomaController@index')->name('idioma.selecionar');
+    Route::get ('admin/idioma/cadastrar', 'IdiomaController@create')->name('idioma.cadastrar');
+    Route::post('admin/idioma/insert', 'IdiomaController@store')->name('idioma.insert');
+    Route::get ('admin/idioma/editar/{id}', 'IdiomaController@edit')->name('idioma.editar');
+    Route::put ('admin/idioma/update', 'IdiomaController@update')->name('idioma.update');
+    Route::put ('admin/idioma/excluir/{id}', 'IdiomaController@destroy')->name('idioma.excluir');
     //Países
     Route::get ('admin/localizacao/paises', 'PaisController@index')->name('paises.selecionar');
     Route::get ('admin/localizacao/pais/cadastrar', 'PaisController@create')->name('pais.cadastrar');
@@ -24,37 +31,37 @@ route::group(['middleware' => ['auth'],'namespace'  => 'Admin'],function(){
     Route::get ('admin/localizacao/pais/editar/{id}', 'PaisController@edit')->name('pais.editar');
     Route::put ('admin/localizacao/pais/update', 'PaisController@update')->name('pais.update');
     Route::put ('admin/localizacao/pais/excluir/{id}', 'PaisController@destroy')->name('pais.excluir');
-     //Estados
-     Route::get ('admin/localizacao/estados', 'EstadoController@index')->name('estados.selecionar');
-     Route::get ('admin/localizacao/estado/cadastrar', 'EstadoController@create')->name('estado.cadastrar');
-     Route::post('admin/localizacao/estado/insert', 'EstadoController@store')->name('estado.insert');
-     Route::get ('admin/localizacao/estado/editar/{id}', 'EstadoController@edit')->name('estado.editar');
-     Route::put ('admin/localizacao/estado/update', 'EstadoController@update')->name('estado.update');
-     Route::put ('admin/localizacao/estado/excluir/{id}', 'EstadoController@destroy')->name('estado.excluir');        
-     //Cidades
-     Route::get ('admin/localizacao/cidades', 'CidadeController@index')->name('cidades.selecionar');
-     Route::get ('admin/localizacao/cidades/show', 'CidadeController@show')->name('cidades.show');
-     Route::get ('admin/localizacao/cidade/cadastrar', 'CidadeController@create')->name('cidade.cadastrar');
-     Route::post('admin/localizacao/cidade/insert', 'CidadeController@store')->name('cidade.insert');
-     Route::get ('admin/localizacao/cidade/editar/{id}', 'CidadeController@edit')->name('cidade.editar');
-     Route::put ('admin/localizacao/cidade/update', 'CidadeController@update')->name('cidade.update');
-     Route::get ('admin/localizacao/cidade/excluir/{id}', 'CidadeController@destroy')->name('cidade.excluir');
-     //Logradouros
-     Route::get ('admin/localizacao/logradouros', 'LogradouroController@index')->name('logradouros.selecionar');
-     Route::get ('admin/localizacao/logradouros/show', 'LogradouroController@show')->name('logradouros.show');
-     Route::get ('admin/localizacao/logradouro/cadastrar', 'LogradouroController@create')->name('logradouro.cadastrar');
-     Route::post('admin/localizacao/logradouro/insert', 'LogradouroController@store')->name('logradouro.insert');
-     Route::get ('admin/localizacao/logradouro/editar/{id}', 'LogradouroController@edit')->name('logradouro.editar');
-     Route::put ('admin/localizacao/logradouro/update', 'LogradouroController@update')->name('logradouro.update');
-     Route::get ('admin/localizacao/logradouro/excluir/{id}', 'LogradouroController@destroy')->name('logradouro.excluir');                
-     Route::get ('admin/localizacao/logradouro/getcidadesbyuf/{uf}', 'CidadeController@getCidadesByUf')->name('logradouro.getcidadesbyuf');
-     Route::post('admin/localizacao/logradouro/setdadosibge', 'LogradouroController@setDadosIbge')->name('logradouro.setDadosIbge');
+    //Estados
+    Route::get ('admin/localizacao/estados', 'EstadoController@index')->name('estados.selecionar');
+    Route::get ('admin/localizacao/estado/cadastrar', 'EstadoController@create')->name('estado.cadastrar');
+    Route::post('admin/localizacao/estado/insert', 'EstadoController@store')->name('estado.insert');
+    Route::get ('admin/localizacao/estado/editar/{id}', 'EstadoController@edit')->name('estado.editar');
+    Route::put ('admin/localizacao/estado/update', 'EstadoController@update')->name('estado.update');
+    Route::put ('admin/localizacao/estado/excluir/{id}', 'EstadoController@destroy')->name('estado.excluir');        
+    //Cidades
+    Route::get ('admin/localizacao/cidades', 'CidadeController@index')->name('cidades.selecionar');
+    Route::get ('admin/localizacao/cidades/show', 'CidadeController@show')->name('cidades.show');
+    Route::get ('admin/localizacao/cidade/cadastrar', 'CidadeController@create')->name('cidade.cadastrar');
+    Route::post('admin/localizacao/cidade/insert', 'CidadeController@store')->name('cidade.insert');
+    Route::get ('admin/localizacao/cidade/editar/{id}', 'CidadeController@edit')->name('cidade.editar');
+    Route::put ('admin/localizacao/cidade/update', 'CidadeController@update')->name('cidade.update');
+    Route::get ('admin/localizacao/cidade/excluir/{id}', 'CidadeController@destroy')->name('cidade.excluir');
+    //Logradouros
+    Route::get ('admin/localizacao/logradouros', 'LogradouroController@index')->name('logradouros.selecionar');
+    Route::get ('admin/localizacao/logradouros/show', 'LogradouroController@show')->name('logradouros.show');
+    Route::get ('admin/localizacao/logradouro/cadastrar', 'LogradouroController@create')->name('logradouro.cadastrar');
+    Route::post('admin/localizacao/logradouro/insert', 'LogradouroController@store')->name('logradouro.insert');
+    Route::get ('admin/localizacao/logradouro/editar/{id}', 'LogradouroController@edit')->name('logradouro.editar');
+    Route::put ('admin/localizacao/logradouro/update', 'LogradouroController@update')->name('logradouro.update');
+    Route::get ('admin/localizacao/logradouro/excluir/{id}', 'LogradouroController@destroy')->name('logradouro.excluir');                
+    Route::get ('admin/localizacao/logradouro/getcidadesbyuf/{uf}', 'CidadeController@getCidadesByUf')->name('logradouro.getcidadesbyuf');
+    Route::post('admin/localizacao/logradouro/setdadosibge', 'LogradouroController@setDadosIbge')->name('logradouro.setDadosIbge');
      
-     Route::get('admin/localizacao/logradouro/getdadosibge', function(){
-        $retornoSessao = Session::get('sDadosIbge');
-        Session::forget('sDadosIbge');
-        return $retornoSessao;
-     })->name('logradouro.getdadosibge');
+    Route::get('admin/localizacao/logradouro/getdadosibge', function(){
+      $retornoSessao = Session::get('sDadosIbge');
+      Session::forget('sDadosIbge');
+      return $retornoSessao;
+    })->name('logradouro.getdadosibge');
 
 });
     

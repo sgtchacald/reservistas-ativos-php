@@ -27,6 +27,10 @@
     'nivel_estudo_selecionar'                 => 'Selecionar Nível de Estudo',
     'nivel_estudo_cadastrar'                  => 'Cadastrar Nível de Estudo',
     'nivel_estudo_editar'                     => 'Editar Nível de Estudo',
+    //Labels Idiomas
+    'idioma_selecionar'                       => 'Selecionar Idioma',
+    'idioma_cadastrar'                        => 'Cadastrar Idioma',
+    'idioma_editar'                           => 'Editar Idioma',
     //Label para Paises
     'pais_selecionar'                         => 'Selecionar País',
     'pais_cadastrar'                          => 'Cadastrar País',

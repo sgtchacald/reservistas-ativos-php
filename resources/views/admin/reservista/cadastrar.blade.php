@@ -34,6 +34,7 @@
 							<a class="nav-link" id="tabs-d-locgeo-tab" 	  data-toggle="pill" href="#tabs-d-locgeo"    role="tab" aria-controls="tabs-d-locgeo"    aria-selected="false">Localização Geográfica</a> 
 							<a class="nav-link" id="tabs-d-militares-tab" data-toggle="pill" href="#tabs-d-militares" role="tab" aria-controls="tabs-d-militares" aria-selected="false">Dados Militares</a> 
 							<a class="nav-link" id="tabs-d-resumo-tab" 	  data-toggle="pill" href="#tabs-d-resumo" 	  role="tab" aria-controls="tabs-d-resumo"    aria-selected="false">Resumo Profissional</a>
+							<a class="nav-link" id="tabs-d-idiomas-tab"   data-toggle="pill" href="#tabs-d-idiomas"	  role="tab" aria-controls="tabs-d-idiomas"   aria-selected="false">Idiomas</a>
                 			<a class="nav-link" id="tabs-d-social-tab" 	  data-toggle="pill" href="#tabs-d-social" 	  role="tab" aria-controls="tabs-d-social"    aria-selected="false">Redes Sociais</a>
                 			<a class="nav-link" id="tabs-d-logs-tab"   	  data-toggle="pill" href="#vert-tabs-logs"   role="tab" aria-controls="vert-tabs-logs"   aria-selected="false">Logs</a>
                 		</div>
@@ -55,6 +56,10 @@
 
 							<div class="tab-pane fade" id="tabs-d-resumo" role="tabpanel" aria-labelledby="tabs-d-resumo-tab">
 								@include('admin.reservista.abaResumoProfissionalCad')
+							</div>
+
+							<div class="tab-pane fade" id="tabs-d-idiomas" role="tabpanel" aria-labelledby="tabs-d-idiomas-tab">
+								@include('admin.reservista.abaIdiomasCad')
 							</div>
             				
 							<div class="tab-pane fade" id="tabs-d-social" role="tabpanel" aria-labelledby="tabs-d-social-tab">
@@ -296,6 +301,19 @@
                 iframe.style.border = '1px dotted #888';
                 iframe.style.background = '#fcfcfc';
 			}
+
+			$('.select2bs4').select2({
+				placeholder: "Selecione um ou mais idiomas que você domina",
+				allowClear: true,
+				width: '100%',
+				theme: 'bootstrap4',
+				language: {
+					noResults: function () {
+						return 'Nenhum Resultado foi encontrado.';
+					},
+				}
+				
+			});
 			
         });     
 	</script>
