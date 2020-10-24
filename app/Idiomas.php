@@ -45,4 +45,12 @@ class Idiomas extends Authenticatable{
                 ->where('ididioma','=', $id)
                 ->get();
     }    
+
+    public function getIdiomasOrderBy($colunaOrderBy, $tipoOrderBy, $idIndStatus){
+        return DB::table($this->table)
+        ->select('*')
+        ->where('idindstatus','=', $idIndStatus)
+        ->orderBy($colunaOrderBy, $tipoOrderBy)
+        ->get();
+    }
 }

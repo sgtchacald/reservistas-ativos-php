@@ -12,11 +12,11 @@ use Config;
 
 class IdiomaController extends Controller{
     public function __construct(){
-        $this->ididioma = new Idiomas();
+        $this->idioma = new Idiomas();
     }
     
     public function index(){
-        $idiomas =   $this->ididioma->getIdiomas('A');
+        $idiomas =   $this->idioma->getIdiomas('A');
         return view('admin.idioma.selecionar')->with(compact('idiomas'));
     }
 
@@ -25,7 +25,6 @@ class IdiomaController extends Controller{
     }
     
     public function create(){
-      
        return view('admin.idioma.cadastrar');
     }
     
@@ -43,14 +42,14 @@ class IdiomaController extends Controller{
             $request->session()->flash('alert-success', Config::get('msg.cadastro_sucesso'));
             return redirect()->route('idioma.selecionar');
         }else{
-            $ididioma =  $this->ididioma->getIdiomas('A');
+            $ididioma =  $this->idioma->getIdiomas('A');
             $request->session()->flash('alert-danger', Config::get('msg.cadastro_erro'));
             return view('admin.idioma.selecionar')->with(compact('ididioma'));
         }
     }
     
     public function edit($id){
-        $idioma = $this->ididioma->getIdiomaById($id);
+        $idioma = $this->idioma->getIdiomaById($id);
         return view('admin.idioma.editar')->with(compact('idioma'));
     }
     
@@ -105,5 +104,9 @@ class IdiomaController extends Controller{
             ];
             
             $request->validate($rules, $messages, $customAttributes);
+    }
+
+    public function getIdiomasOrderBy(){
+        return $this->idioma->getIdiomasOrderBy('idnome', 'asc', 'A')->toJson();
     }
 }

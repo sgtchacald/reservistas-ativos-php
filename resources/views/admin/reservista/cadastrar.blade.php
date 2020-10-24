@@ -302,19 +302,61 @@
                 iframe.style.background = '#fcfcfc';
 			}
 
-			$('.select2bs4').select2({
+			/*$('.select2bs4').select2({
 				placeholder: "Selecione um ou mais idiomas que você domina",
 				allowClear: true,
 				width: '100%',
 				theme: 'bootstrap4',
-				language: {
-					noResults: function () {
-						return 'Nenhum Resultado foi encontrado.';
-					},
-				}
 				
-			});
-			
+				minimumInputLenghth:2,
+				ajax: {
+					url: "{{route('idioma.getidiomaorderby')}}",
+					dataType: 'json',
+					type:"GET",
+					delay: 250,
+					data: function(params){
+						return{
+    						search: params.term,
+    					};
+					},
+					processResults:function(data){
+						var newResults = [];
+
+    					$.each(data, function(index, item){
+    						newResults.push({
+    							id: item.ididioma,
+    							text: item.idnome
+    						});
+    					});
+    					
+						return{
+    						results: newResults
+    					}
+					},
+					cache: true
+				}	
+			});*/
+
+			$.getJSON("{{route('idioma.getidiomaorderby')}}").done(
+				function( data ) {
+					data = $.map(data, function(item) {
+						return { id: item.ididioma, text: item.idnome }; 
+					});
+
+					$(".select2bs4").select2({
+						placeholder: 'Selecione um ou mais idiomas que você domina',
+						allowClear: true,
+						minimumInputLength: 0,
+						multiple: true,
+						data: data,
+						language: {
+							noResults: function () {
+								return 'Nenhum Resultado foi encontrado.';
+							},
+						},
+					});
+				}
+			);
         });     
 	</script>
 	{{session()->forget('activeTab')}}

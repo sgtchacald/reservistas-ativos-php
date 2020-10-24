@@ -24,6 +24,7 @@ route::group(['middleware' => ['auth'],'namespace'  => 'Admin'],function(){
     Route::get ('admin/idioma/editar/{id}', 'IdiomaController@edit')->name('idioma.editar');
     Route::put ('admin/idioma/update', 'IdiomaController@update')->name('idioma.update');
     Route::put ('admin/idioma/excluir/{id}', 'IdiomaController@destroy')->name('idioma.excluir');
+    Route::get ('admin/idioma/getidiomaorderby', 'IdiomaController@getIdiomasOrderBy')->name('idioma.getidiomaorderby');
     //Países
     Route::get ('admin/localizacao/paises', 'PaisController@index')->name('paises.selecionar');
     Route::get ('admin/localizacao/pais/cadastrar', 'PaisController@create')->name('pais.cadastrar');
