@@ -27,6 +27,7 @@ class UsuarioController extends Controller{
         $this->cidades = new Cidades();
         $this->logradouros = new Logradouros();
         $this->logradouroController = new LogradouroController();
+        $this->idiomaControler = new IdiomaController();
     }
     
     public function index(){
@@ -41,18 +42,22 @@ class UsuarioController extends Controller{
     }
     
     public function create(){
-        $estados =   $this->estados->getEstadosByStatus('A');
-        $cidades =   $this->cidades->getCidadesByStatus('A');
+        $estados          = $this->estados->getEstadosByStatus('A');
+        $cidades          = $this->cidades->getCidadesByStatus('A');
+        $idiomaController = $this->idiomaControler;
         
-        return view('admin.reservista.cadastrar')->with(compact('estados','cidades'));
+        return view('admin.reservista.cadastrar')->with(compact('estados','cidades','idiomaController'));
     }
     
     public function store(Request $request){
+        
         $senhaAleatoria = UtilsController::geraSenhaAleatoria();
 
         $usuPermissao = $request->input('usuPermissao');
         $indStatus = 'A';
-
+        $idiomasUsuario = $request->input('idiomasUsuario');
+        $usuCPF = UtilsController::apenasNumeros($request->input('usuCPF'));
+        
         $this->validaCampos($request, 'i');
 
         $logradouroUsuario = $this->logradouroController->inserirLogradouro($request);
@@ -60,7 +65,7 @@ class UsuarioController extends Controller{
         $insert = Usuarios::create([
             'usupermissao'        => $usuPermissao,
             'name'                => $request->input('name'),
-            'usucpf'              => UtilsController::apenasNumeros($request->input('usuCPF')),
+            'usucpf'              => $usuCPF,
             'usudtnascimento'     => Carbon::parse($request->input('usuDtNascimento'))->format('Y-m-d H:i'),
             'usuestadocivil'      => $request->input('usuEstadoCivil'),
             'usugenero'           => $request->input('usuGenero'),
@@ -101,6 +106,10 @@ class UsuarioController extends Controller{
             
             if($logradouroUsuario == ""){
                 $request->session()->flash('alert-warning', "Não foi possível inserir os dados de LOCALIZAÇÃO GEORÁFICA, verifique com a administração!");
+            }
+
+            if($usuCPF != ""){
+                $this->insertIdiomasUsuario($idiomasUsuario, $this->usuarios->getIdUsuarioByCPF($usuCPF));
             }
             
             switch ($usuPermissao) {
@@ -277,6 +286,8 @@ class UsuarioController extends Controller{
                 'usuNomeGuerra'         => 'required',
                 'usuNomeUltBtl'         => 'required',
                 'usuResumo'             => 'required',
+                //Aba Idiomas
+                'idiomasUsuario'        => 'required',
                 //'usuLinkedinUrl'        => 'required'
 
                 //Aba Localização Geográfica
@@ -303,6 +314,7 @@ class UsuarioController extends Controller{
                 'idIbgeCidade'     => Config::get('label.logradouro_cidade'),
                 'logNomeBairro'    => Config::get('label.logradouro_bairro'),
                 'logindstatus'     => Config::get('label.status'),
+                'idiomasUsuario'   => Config::get('label.idiomas'),
             ];
             
             $request->validate($rules, $messages, $customAttributes);
@@ -317,10 +329,11 @@ class UsuarioController extends Controller{
             if ($errors) {
                 $fields_tabs = [
                     ['usuPermissao', 'name', 'usuCPF', 'usuDtNascimento', 'usuEstadoCivil', 'usuGenero', 'usuIndPortDeficiente', 'email', 'usuTelCelular', 'usuIndViagem', 'usuIndMudarCidade'], // Tab 1
-                    [ 'logCep','logTipo','logNome','logNr','logComplemento','estUf','idIbgeCidade','logNomeBairro','logIndStatus'], // Tab 2
+                    ['logCep','logTipo','logNome','logNr','logComplemento','estUf','idIbgeCidade','logNomeBairro','logIndStatus'], // Tab 2
                     ['usuTipoForca', 'usuIndOficial', 'usuCertReservista', 'usuPostoGrad', 'usuNomeGuerra', 'usuNomeUltBtl'], // Tab 3
                     ['usuResumo'], // Tab 4
-                    ['usuLinkedinUrl'], //Tab 5
+                    ['idiomasUsuario'], // Tab 5
+                    ['usuLinkedinUrl'], //Tab 6
                 ];
                                
                 foreach ($fields_tabs as $tab => $fields) {
@@ -341,5 +354,27 @@ class UsuarioController extends Controller{
 
             $request->validate($rules, $messages, $customAttributes);
         }
+    }
+
+    public function insertIdiomasUsuario($idiomasUsuario, $idUsuario){
+        
+        if(isset($idiomasUsuario)){
+            foreach ($idiomasUsuario as $idIdioma) {
+                $insert = Usuarios::create([
+                    'idusuario'  => $idUsuario,
+                    'ididioma'   => $idIdioma,
+                    'usucriou'   => Auth::user()->getAuthIdentifier(),
+                    'dtcadastro' => date('Y-m-d H:i:s')
+                ]);
+            }
+        }else{
+            $insert = Usuarios::create([
+                'idusuario'  => $idUsuario,
+                'ididioma'   => 157,
+                'usucriou'   => Auth::user()->getAuthIdentifier(),
+                'dtcadastro' => date('Y-m-d H:i:s')
+            ]);
+        }
+        
     }
 }

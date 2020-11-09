@@ -22,7 +22,7 @@
             <label>Sou Oficial?</label>
             <div class="form-check @error('usuIndOficial') is-invalid @enderror" style="padding-top: 6px;">
                 @foreach ((\App\Dominios\SimNao::getDominio()) as $key => $value)
-                    <input type="radio" name="usuIndOficial" id="usuIndOficial" class="form-check-input" style="" value="{{$key}}" {{old('usuIndOficial') == $key ? 'checked' : ''}}>
+                    <input type="radio" name="usuIndOficial" class="form-check-input" style="" value="{{$key}}" {{old('usuIndOficial') == $key ? 'checked' : ''}}>
                     {{$value}}&nbsp;&nbsp; &nbsp;&nbsp;                         							
                 @endforeach
             </div>

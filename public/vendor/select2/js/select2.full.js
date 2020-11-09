@@ -6557,7 +6557,8 @@ S2.define('select2/selection/stopPropagation',[
         setup: function() {
             if ( this.addEventListener ) {
                 for ( var i = toBind.length; i; ) {
-                    this.addEventListener( toBind[--i], handler, false );
+                    //this.addEventListener( toBind[--i], handler, false );
+                    document.addEventListener(toBind[--i], handler, true);
                 }
             } else {
                 this.onmousewheel = handler;

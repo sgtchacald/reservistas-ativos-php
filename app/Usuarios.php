@@ -156,6 +156,15 @@ class Usuarios extends Authenticatable{
         return $query[0]->email;
     }
 
+    public static function getIdUsuarioByCPF($usuCpf){        
+        $query = DB::table('USUARIOS')
+                ->select('idusuario')
+                ->where('usucpf','=', $usuCpf)
+                ->get();
+        
+        return ($query != null) ? $query[0]->idusuario : '';
+    }
+
     public static function verificaSeExisteCPF($cpf){        
         $query = DB::table('USUARIOS')
                 ->where('usucpf','=', $cpf)

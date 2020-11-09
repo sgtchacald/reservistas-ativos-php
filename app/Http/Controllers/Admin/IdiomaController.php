@@ -109,4 +109,8 @@ class IdiomaController extends Controller{
     public function getIdiomasOrderBy(){
         return $this->idioma->getIdiomasOrderBy('idnome', 'asc', 'A')->toJson();
     }
+
+    public function getIdiomaById($id){
+        return $this->idioma->getIdiomaById($id);
+    }
 }

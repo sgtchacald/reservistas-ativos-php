@@ -164,7 +164,7 @@
             <label>Disponível para viajar?</label>
             <div class="form-check @error('usuIndViagem') is-invalid @enderror">
                 @foreach ((\App\Dominios\SimNao::getDominio()) as $key => $value)
-                    <input type="radio" name="usuIndViagem" id="usuIndViagem" class="form-check-input" style="" value="{{$key}}" {{old('usuIndViagem') == $key ? 'checked' : ''}}>
+                    <input type="radio" name="usuIndViagem" class="form-check-input" style="" value="{{$key}}" {{old('usuIndViagem') == $key ? 'checked' : ''}}>
                     {{$value}}&nbsp;&nbsp; &nbsp;&nbsp;                         							
                 @endforeach
             </div>
@@ -182,7 +182,7 @@
             <label>Disponível para mudar de cidade?</label>
             <div class="form-check @error('usuIndMudarCidade') is-invalid @enderror">
                 @foreach ((\App\Dominios\SimNao::getDominio()) as $key => $value)
-                    <input type="radio" name="usuIndMudarCidade" id="usuIndMudarCidade" class="form-check-input @error('usuIndMudarCidade') is-invalid @enderror" style="" value="{{$key}}" {{old('usuIndMudarCidade') == $key ? 'checked' : ''}}>
+                    <input type="radio" name="usuIndMudarCidade" class="form-check-input @error('usuIndMudarCidade') is-invalid @enderror" style="" value="{{$key}}" {{old('usuIndMudarCidade') == $key ? 'checked' : ''}}>
                     {{$value}}&nbsp;&nbsp; &nbsp;&nbsp;                         							
                 @endforeach
             </div>
@@ -198,10 +198,10 @@
     <div class="col-sm-3">
         <div class="form-group clearfix">
             <div class="icheck-danger d-inline">
-                <input type="checkbox" name="usuIndCelWhatsapp" id="checkboxDanger3" class="initCheckboxSN" value="S" {{old('usuIndCelWhatsapp') == 'S' ? 'checked' : ''}}> 
-                <label for="checkboxDanger3">É meu whatsapp?</label><br>
-                <input type="checkbox" name="usuIndMsg" id="checkboxDanger3" class="initCheckboxSN" value="S" {{old('usuIndMsg') == 'S' ? 'checked' : ''}}> 
-                <label for="checkboxDanger3" style="color:#FF0000;">Receber MSG(s)?</label>
+                <input type="checkbox" name="usuIndCelWhatsapp" id="checkboxDangerWhats" class="initCheckboxSN" value="S" {{old('usuIndCelWhatsapp') == 'S' ? 'checked' : ''}}> 
+                <label for="checkboxDangerWhats">É meu whatsapp?</label><br>
+                <input type="checkbox" name="usuIndMsg" id="checkboxDangerMsg" class="initCheckboxSN" value="S" {{old('usuIndMsg') == 'S' ? 'checked' : ''}}> 
+                <label for="checkboxDangerMsg" style="color:#FF0000;">Receber MSG(s)?</label>
             </div>
         </div>
     </div>

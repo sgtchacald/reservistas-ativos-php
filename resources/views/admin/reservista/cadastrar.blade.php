@@ -123,7 +123,7 @@
 
 			$(arrayObjetos).each(function (key, value) {
 				if (key == tabActive){
-					console.log(value);
+					//console.log(value);
 					idTabActive = value;
 				}
 			});
@@ -302,52 +302,14 @@
                 iframe.style.background = '#fcfcfc';
 			}
 
-			/*$('.select2bs4').select2({
-				placeholder: "Selecione um ou mais idiomas que você domina",
-				allowClear: true,
-				width: '100%',
-				theme: 'bootstrap4',
-				
-				minimumInputLenghth:2,
-				ajax: {
-					url: "{{route('idioma.getidiomaorderby')}}",
-					dataType: 'json',
-					type:"GET",
-					delay: 250,
-					data: function(params){
-						return{
-    						search: params.term,
-    					};
-					},
-					processResults:function(data){
-						var newResults = [];
-
-    					$.each(data, function(index, item){
-    						newResults.push({
-    							id: item.ididioma,
-    							text: item.idnome
-    						});
-    					});
-    					
-						return{
-    						results: newResults
-    					}
-					},
-					cache: true
-				}	
-			});*/
-
-			$.getJSON("{{route('idioma.getidiomaorderby')}}").done(
+			$.getJSON('{{route("idioma.getidiomaorderby")}}').done(
 				function( data ) {
 					data = $.map(data, function(item) {
 						return { id: item.ididioma, text: item.idnome }; 
 					});
 
-					$(".select2bs4").select2({
-						placeholder: 'Selecione um ou mais idiomas que você domina',
-						allowClear: true,
-						minimumInputLength: 0,
-						multiple: true,
+					$("#idIdioma").select2({
+						placeholder: 'Selecione',
 						data: data,
 						language: {
 							noResults: function () {
@@ -357,8 +319,135 @@
 					});
 				}
 			);
-        });     
+
+			$("#idNivelIdioma").select2({
+				placeholder: 'Selecione',
+				language: {
+					noResults: function () {
+						return 'Nenhum Resultado foi encontrado.';
+					},
+				},
+			});
+
+			/*
+			* Iniciando as configurações do crud para a lista de idiomas selecionados
+			*/
+
+			localStorage.clear();
+
+			//"A"=Adicionar; "E"=Editar 
+			var operation = "A"; 
+
+			//Index of the selected list item 
+			var selected_index = -1; 
+
+			//Retrieve the stored data 
+			var tbIdiomasUsuarios = localStorage.getItem("idiomasUsuarios");
+
+			//Convertendo string em objeto json 
+			tbIdiomasUsuarios = JSON.parse(tbIdiomasUsuarios); 
+			
+			if(tbIdiomasUsuarios == null){
+					tbIdiomasUsuarios = [];
+			}
+
+			validaConteudoListaIdiomasSelecionados();
+
+
+			function adicionar(){ 
+				var idiomaUsuario = JSON.stringify({ 
+					//ididiomausuario : $("#idIdiomaUsuario").val(), 
+					ididioma 		: $("#idIdioma").val(), 
+					nomeTxtIdioma	: $("#idIdioma option:selected").text(),
+					idnivelidioma 	: $("#idNivelIdioma").val(),
+					txtNivelIdioma	: $("#idNivelIdioma option:selected").text(),
+					
+				});
+				tbIdiomasUsuarios.push(idiomaUsuario); 
+				localStorage.setItem("idiomasUsuarios", JSON.stringify(tbIdiomasUsuarios));
+				$('#idIdioma option:selected').prop('disabled', true);
+				$('#idIdioma').select2("val", "0");
+				$('#idNivelIdioma').select2("val", "0"); 
+
+				return true; 
+			}
+
+			function  editar(){
+
+			}
+
+			function  excluir(){
+				tbIdiomasUsuarios.splice(selected_index,1);
+				localStorage.setItem("idiomasUsuarios", JSON.stringify(tbIdiomasUsuarios));								
+			}
+
+			function  listar(){
+				$('#listaIdiomasSelecionados').append('<ul class="list-group list-group-flush">');
+					for(var i in tbIdiomasUsuarios){ 
+						var iu = JSON.parse(tbIdiomasUsuarios[i]);
+						
+						$('#listaIdiomasSelecionados').append(
+							'<li class="list-group-item">'
+							+'<a href="#" alt="excluir'+i+'" class="btnExcluir close">×</a>'
+							+'<b style="text-transform: uppercase;">'+iu.nomeTxtIdioma+'</b>'
+							+' Nível ' + iu.txtNivelIdioma
+							+'&nbsp;&nbsp;&nbsp;'
+							+'</li>'
+						);
+					}
+				$('#listaIdiomasSelecionados').append('</ul>');
+			}
+
+			function validaConteudoListaIdiomasSelecionados(){
+				if(tbIdiomasUsuarios == null || tbIdiomasUsuarios ==""){
+					$("#listaIdiomasSelecionados").append('<p style="color:red; ">Nenhum registro selecionado</p>');
+					$('#listaIdiomasSelecionados li').hide();
+				}else{
+					$('#listaIdiomasSelecionados').html('');
+				}
+			}
+
+			function liberaItemComboIdiomas(){
+				for(var i in tbIdiomasUsuarios){ 
+					var iu = JSON.parse(tbIdiomasUsuarios[i]);
+					if(i == selected_index){
+						$("#idIdioma > option[value='"+iu.ididioma+"']").removeAttr('disabled').removeProp('disabled');
+						console.log("Teste para buscar item excluido: "+iu.ididioma);
+					}
+				}
+			}
+
+			$("#adicionarIdioma").click(function(){
+				var varIdIdioma = $("#idIdioma").val();
+				var varIdNivelIdioma = $("#idNivelIdioma").val();
+				if(operation == "A"){
+					if(( varIdIdioma == null || varIdIdioma == "")|| ( varIdNivelIdioma == null || varIdNivelIdioma == "")){
+						$('.erroIdiomas').append(
+							'<div class="alert alert-danger alert-dismissible desaparecer">'
+								+ '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>'
+								+ '<i class="icon fas fa-ban"></i>'
+								+ '<span>Para adicionar um idioma, preencha os campos abaixo.</span>'
+							+'</div>');
+					}else{
+						adicionar();
+						validaConteudoListaIdiomasSelecionados();
+						listar();
+					}
+				}
+			});
+
+			$(document).on("click", ".btnExcluir", function(){
+				selected_index = parseInt($(this).attr("alt").replace("excluir", ""));
+				liberaItemComboIdiomas();
+				excluir();
+				validaConteudoListaIdiomasSelecionados();
+				listar();				
+			});
+		});
+		
+		
 	</script>
+
 	{{session()->forget('activeTab')}}
 	{{session()->forget('oldCidade')}} 	
 @stop
