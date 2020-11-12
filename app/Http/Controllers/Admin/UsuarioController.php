@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Exception;
 use App\Http\Controllers\Admin\LogradouroController;
+use App\Http\Controllers\Admin\IdiomasUsuarioController;
 use App\Estados;
 use App\Cidades;
 use App\Logradouros;
@@ -27,9 +28,10 @@ class UsuarioController extends Controller{
         $this->cidades = new Cidades();
         $this->logradouros = new Logradouros();
         $this->logradouroController = new LogradouroController();
-        $this->idiomaControler = new IdiomaController();
+        $this->idiomaController = new IdiomaController();
+        $this->idiomasUsuarioController = new IdiomasUsuarioController();
     }
-    
+
     public function index(){
     }
 
@@ -37,31 +39,31 @@ class UsuarioController extends Controller{
         $usuarios =   $this->usuarios->getUsuarios('R','A');
         return view('admin.reservista.selecionar')->with(compact('usuarios'));
     }
-    
+
     public function show(){
     }
-    
+
     public function create(){
         $estados          = $this->estados->getEstadosByStatus('A');
         $cidades          = $this->cidades->getCidadesByStatus('A');
-        $idiomaController = $this->idiomaControler;
-        
+        $idiomaController = $this->idiomaController;
+
         return view('admin.reservista.cadastrar')->with(compact('estados','cidades','idiomaController'));
     }
-    
+
     public function store(Request $request){
-        
+
         $senhaAleatoria = UtilsController::geraSenhaAleatoria();
 
         $usuPermissao = $request->input('usuPermissao');
         $indStatus = 'A';
         $idiomasUsuario = $request->input('idiomasUsuario');
         $usuCPF = UtilsController::apenasNumeros($request->input('usuCPF'));
-        
+
         $this->validaCampos($request, 'i');
 
         $logradouroUsuario = $this->logradouroController->inserirLogradouro($request);
-        
+
         $insert = Usuarios::create([
             'usupermissao'        => $usuPermissao,
             'name'                => $request->input('name'),
@@ -97,21 +99,28 @@ class UsuarioController extends Controller{
             'usucriou'            => Auth::user()->getAuthIdentifier(),
             'dtcadastro'          => date('Y-m-d H:i:s')
         ]);
-        
+
         if(!$insert){
             $request->session()->flash('alert-danger', "Erro Inesperado, verifique o log de registros.");
             return view('admin.reservista.selecionar')->with(compact('usuario'));
         }else{
+
             $request->session()->flash('alert-success', 'Inclusão' .' efetuada com sucesso.');
-            
+
+            //Endereço do usuário
             if($logradouroUsuario == ""){
                 $request->session()->flash('alert-warning', "Não foi possível inserir os dados de LOCALIZAÇÃO GEORÁFICA, verifique com a administração!");
             }
 
-            if($usuCPF != ""){
-                $this->insertIdiomasUsuario($idiomasUsuario, $this->usuarios->getIdUsuarioByCPF($usuCPF));
+            //idiomas do usuario
+            $idiomasUsuario = json_decode($request->input('jsonIdiomas', true));
+            $idUsuario = $this->usuarios->getIdUsuarioByCPF($usuCPF);
+            if(isset($usuCPF)){
+                if(!$this->idiomasUsuarioController->store($idiomasUsuario, $idUsuario)){
+                    $request->session()->flash('alert-warning', "Não foi possível inserir os dados de IDIOMAS, verifique com a administração!");
+                }
             }
-            
+
             switch ($usuPermissao) {
                 case 'R':
                     $rota = 'reservistas.selecionar';
@@ -122,11 +131,11 @@ class UsuarioController extends Controller{
                 case 'A':
                     $rota = 'administrador.selecionar';
                     break;
-            } 
+            }
             return redirect()->route($rota, ['permissaoUsuario' => $usuPermissao,'indStatus' => 'A']);
         }
     }
-    
+
     public function edit($idusuario){
         $usuario    = $this->usuarios->getUsuario($idusuario);
         $estados    = $this->estados->getEstadosByStatus('A');
@@ -136,18 +145,18 @@ class UsuarioController extends Controller{
         $logTipo    = count($logradouro) > 0 ? explode(" ", $logradouro[0]->lognome)[0] : "";
         $logNome    = count($logradouro) > 0 ? explode(",", $logradouro[0]->lognome)[0] : "";
         $logNumero  = count($logradouro) > 0 ? explode(",", $logradouro[0]->lognome)[1] : "";
-        
+
         return view('admin.reservista.editar')->with(compact('usuario', 'estados', 'cidades', 'logradouro', 'logNome', 'logTipo', 'logNumero'));
     }
-    
+
     public function update(Request $request){
         $usuario = $this->usuarios->getUsuario($request->input('idUsuario'));
         $usuPermissao = $request->input('usuPermissao');
-        
+
         $this->validaCampos($request, 'u');
 
         $logradouroUsuario = $this->logradouroController->atualizarLogradouroUsuario($request);
-        
+
         $update = Usuarios::where(['idusuario' => $request->input('idUsuario')])->update([
             'usupermissao'        => $usuPermissao,
             'name'                => $request->input('name'),
@@ -193,7 +202,7 @@ class UsuarioController extends Controller{
             if($logradouroUsuario == ""){
                 $request->session()->flash('alert-warning', "Não foi possível inserir os dados de LOCALIZAÇÃO GEORÁFICA, verifique com a administração!");
             }
-            
+
             switch ($usuPermissao) {
                 case 'R':
                     $rota = 'reservistas.selecionar';
@@ -204,16 +213,16 @@ class UsuarioController extends Controller{
                 case 'A':
                     $rota = 'administrador.selecionar';
                     break;
-            }  
+            }
 
             return redirect()->route($rota, ['permissaoUsuario' => $usuPermissao,'indStatus' => 'A']);
         }
-                   
+
     }
-    
+
     public function destroy(Request $request, $idusuario){
         $usuPermissao = $request->input('usuPermissao');
-       
+
         $varOperacao = Usuarios::where(['idusuario' => $idusuario])
         ->update([
             'usuindstatus'=>'I',
@@ -226,7 +235,7 @@ class UsuarioController extends Controller{
             return view('admin.reservista.selecionar')->with(compact('usuario'));
         }else{
             $request->session()->flash('alert-success', 'Exclusão' .' efetuada com sucesso.');
-            
+
             switch ($usuPermissao) {
                 case 'R':
                     $rota = 'reservistas.selecionar';
@@ -237,7 +246,7 @@ class UsuarioController extends Controller{
                 case 'A':
                     $rota = 'administrador.selecionar';
                     break;
-            }  
+            }
             return redirect()->route($rota, ['permissaoUsuario' => $usuPermissao,'indStatus' => 'A']);
         }
     }
@@ -253,8 +262,8 @@ class UsuarioController extends Controller{
         }else{
             session()->put('oldCidade', "0");
         }
-        
-        
+
+
         try{
             $rules = [
                 'usuPermissao'          => 'required',
@@ -264,16 +273,16 @@ class UsuarioController extends Controller{
                 'usuEstadoCivil'        => 'required',
                 'usuGenero'             => 'required',
                 'usuIndPortDeficiente'  => 'required',
-                
-                'email'                 => 
+
+                'email'                 =>
                     (
                      ($tipoPersistencia == 'i')
-                     || 
-                     ($tipoPersistencia == 'u' && ($emailUsuarioTela != $emailUsuarioBanco)) 
+                     ||
+                     ($tipoPersistencia == 'u' && ($emailUsuarioTela != $emailUsuarioBanco))
                     )
-                    ? 'required|unique:USUARIOS|email' 
+                    ? 'required|unique:USUARIOS|email'
                     : 'required',
-                
+
                 'usuTelCelular'         => 'required',
                 //'usuTelFixo'            => 'required',
                 'usuIndViagem'          => 'required',
@@ -287,7 +296,7 @@ class UsuarioController extends Controller{
                 'usuNomeUltBtl'         => 'required',
                 'usuResumo'             => 'required',
                 //Aba Idiomas
-                'idiomasUsuario'        => 'required',
+                //'idiomasUsuario'        => 'required',
                 //'usuLinkedinUrl'        => 'required'
 
                 //Aba Localização Geográfica
@@ -297,13 +306,13 @@ class UsuarioController extends Controller{
                 'logNr'            => 'required|max:10',
                 'logComplemento'   => 'max:100',
                 'estUf'            => 'required|max:2',
-                'idIbgeCidade'     => 'required',                
+                'idIbgeCidade'     => 'required',
                 'logNomeBairro'    => 'required|max:100',
                 'logIndStatus'     => 'required|max:1',
             ];
-    
+
             $messages = ['required' => 'Campo obrigatório.'];
-    
+
             $customAttributes = [
                 'logCep'           => Config::get('label.logradouro_cep'),
                 'logTipo'          => Config::get('label.logradouro_tipo'),
@@ -316,16 +325,16 @@ class UsuarioController extends Controller{
                 'logindstatus'     => Config::get('label.status'),
                 'idiomasUsuario'   => Config::get('label.idiomas'),
             ];
-            
+
             $request->validate($rules, $messages, $customAttributes);
 
         }catch (Exception $exception) {
 
             $activeTab = 0;
-            $indSai = false;  
-  
+            $indSai = false;
+
             $errors = $exception->errors();
-                    
+
             if ($errors) {
                 $fields_tabs = [
                     ['usuPermissao', 'name', 'usuCPF', 'usuDtNascimento', 'usuEstadoCivil', 'usuGenero', 'usuIndPortDeficiente', 'email', 'usuTelCelular', 'usuIndViagem', 'usuIndMudarCidade'], // Tab 1
@@ -335,7 +344,7 @@ class UsuarioController extends Controller{
                     ['idiomasUsuario'], // Tab 5
                     ['usuLinkedinUrl'], //Tab 6
                 ];
-                               
+
                 foreach ($fields_tabs as $tab => $fields) {
                     foreach ($fields as $field) {
                         if(array_key_exists($field, $errors)){
@@ -354,27 +363,5 @@ class UsuarioController extends Controller{
 
             $request->validate($rules, $messages, $customAttributes);
         }
-    }
-
-    public function insertIdiomasUsuario($idiomasUsuario, $idUsuario){
-        
-        if(isset($idiomasUsuario)){
-            foreach ($idiomasUsuario as $idIdioma) {
-                $insert = Usuarios::create([
-                    'idusuario'  => $idUsuario,
-                    'ididioma'   => $idIdioma,
-                    'usucriou'   => Auth::user()->getAuthIdentifier(),
-                    'dtcadastro' => date('Y-m-d H:i:s')
-                ]);
-            }
-        }else{
-            $insert = Usuarios::create([
-                'idusuario'  => $idUsuario,
-                'ididioma'   => 157,
-                'usucriou'   => Auth::user()->getAuthIdentifier(),
-                'dtcadastro' => date('Y-m-d H:i:s')
-            ]);
-        }
-        
     }
 }

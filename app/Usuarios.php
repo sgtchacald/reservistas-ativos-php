@@ -8,10 +8,10 @@ use Illuminate\Support\Facades\DB;
 
 class Usuarios extends Authenticatable{
     use Notifiable;
-    
+
     protected $primaryKey = 'idusuario';
     protected $table = 'USUARIOS';
-    
+
     const CREATED_AT = 'dtcadastro';
     const UPDATED_AT = 'dtedicao';
 
@@ -48,7 +48,7 @@ class Usuarios extends Authenticatable{
         'usunomeguerra',
         'usunomeultbtl',
         //Informações Sociais
-        'usuresumo',   
+        'usuresumo',
         //Informações Sociais
         'usulinkedinurl',
         'usufacebookurl',
@@ -58,9 +58,9 @@ class Usuarios extends Authenticatable{
         'usublogsiteurl',
         //Informações Segurança Usuário
         'usudtverificacaoemail',
-        'password',            
+        'password',
         'usuindstatus',
-        //Informações Segurança 
+        //Informações Segurança
         'dtcadastro',
         'dtedicao',
         'dtexclusao',
@@ -98,17 +98,17 @@ class Usuarios extends Authenticatable{
     public function adminlte_desc(){
 
         foreach ($this->getUsuarioLogado() as $usuarioLogado) {
-            $descricaoUsuarioLogado = 
+            $descricaoUsuarioLogado =
                 (\App\Dominios\TipoForca::getDominio())[$usuarioLogado->usutipoforca]
                 . " - "
                 . $usuarioLogado->usunomeultbtl
                 . " - "
                 . (\App\Dominios\PostoGraduacao::getDominio())[$usuarioLogado->usupostograd];
         }
-        
+
         return $descricaoUsuarioLogado;
     }
-    
+
     public function adminlte_profile_url(){
         return 'profile/username';
     }
@@ -136,40 +136,40 @@ class Usuarios extends Authenticatable{
         return DB::table('USUARIOS')
                 ->where('idUsuario', '=', auth()->user()->idusuario)
                 ->get();
-    } 
+    }
 
-    public static function getNomeUsuario($idUsuario){        
+    public static function getNomeUsuario($idUsuario){
         $query = DB::table('USUARIOS')
                 ->select('name')
                 ->where('idusuario','=', $idUsuario)
                 ->get();
-        
+
         return $query[0]->name;
     }
 
-    public static function getEmailUsuario($idUsuario){        
+    public static function getEmailUsuario($idUsuario){
         $query = DB::table('USUARIOS')
                 ->select('email')
                 ->where('idusuario','=', $idUsuario)
                 ->get();
-        
+
         return $query[0]->email;
     }
 
-    public static function getIdUsuarioByCPF($usuCpf){        
+    public static function getIdUsuarioByCPF($usuCpf){
         $query = DB::table('USUARIOS')
                 ->select('idusuario')
                 ->where('usucpf','=', $usuCpf)
                 ->get();
-        
+
         return ($query != null) ? $query[0]->idusuario : '';
     }
 
-    public static function verificaSeExisteCPF($cpf){        
+    public static function verificaSeExisteCPF($cpf){
         $query = DB::table('USUARIOS')
                 ->where('usucpf','=', $cpf)
                 ->count();
         return  $query > 0 ? false : true;
     }
-    
+
 }

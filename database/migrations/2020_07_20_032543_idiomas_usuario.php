@@ -16,9 +16,10 @@ class IdiomasUsuario extends Migration
         Schema::create('IDIOMASUSUARIO', function (Blueprint $table) {
             $table->bigIncrements('ididiomausuario')->unsigned();
             $table->bigInteger('idusuario')->unsigned();
-            $table->char('idusunivel', 1);
+            $table->bigInteger('ididioma')->unsigned();
+            $table->char('idusunivelidioma', 1);
             $table->char('idusuindstatus', 1);
-            //Informações Segurança 
+            //Informações Segurança
             $table->timestamp('dtcadastro')->nullable();
             $table->timestamp('dtedicao')->nullable();
             $table->timestamp('dtexclusao')->nullable();
@@ -26,6 +27,7 @@ class IdiomasUsuario extends Migration
             $table->bigInteger('usueditou')->nullable();
             $table->bigInteger('usuexcluiu')->nullable();
             $table->foreign('idusuario')->references('idusuario')->on('USUARIOS');
+            $table->foreign('ididioma')->references('ididioma')->on('IDIOMAS');
         });
     }
 

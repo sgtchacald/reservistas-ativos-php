@@ -1,4 +1,4 @@
-@extends('adminlte::page') 
+@extends('adminlte::page')
 @section('title', 'Cadastrar Reservista')
 
 @section('content_header')
@@ -13,43 +13,43 @@
 		</div>
 	</div>
 </div>
-@stop 
+@stop
 
 @section('content')
 <div class="card card-primary">
 	<div class="card-header">
 		<h3 class="card-title">Cadastrar Reservista</h3>
 	</div>
-	
+
 	<form name="cadastrarUsuarioReservista" id="cadastrarUsuarioReservista" method="post" action="{{route('reservista.insert')}}">
     	<div class="card-body">
     			@csrf
-    			
+
 				{{--@include('utils.erro')--}}
-    			
+
                 <div class="row">
                 	<div class="col-5 col-sm-3">
                 		<div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
                 			<a class="nav-link" id="tabs-d-pessoais-tab"  data-toggle="pill" href="#tabs-d-pessoais"  role="tab" aria-controls="tabs-d-pessoais"  aria-selected="false">Dados Pessoais</a>
-							<a class="nav-link" id="tabs-d-locgeo-tab" 	  data-toggle="pill" href="#tabs-d-locgeo"    role="tab" aria-controls="tabs-d-locgeo"    aria-selected="false">Localização Geográfica</a> 
-							<a class="nav-link" id="tabs-d-militares-tab" data-toggle="pill" href="#tabs-d-militares" role="tab" aria-controls="tabs-d-militares" aria-selected="false">Dados Militares</a> 
+							<a class="nav-link" id="tabs-d-locgeo-tab" 	  data-toggle="pill" href="#tabs-d-locgeo"    role="tab" aria-controls="tabs-d-locgeo"    aria-selected="false">Localização Geográfica</a>
+							<a class="nav-link" id="tabs-d-militares-tab" data-toggle="pill" href="#tabs-d-militares" role="tab" aria-controls="tabs-d-militares" aria-selected="false">Dados Militares</a>
 							<a class="nav-link" id="tabs-d-resumo-tab" 	  data-toggle="pill" href="#tabs-d-resumo" 	  role="tab" aria-controls="tabs-d-resumo"    aria-selected="false">Resumo Profissional</a>
 							<a class="nav-link" id="tabs-d-idiomas-tab"   data-toggle="pill" href="#tabs-d-idiomas"	  role="tab" aria-controls="tabs-d-idiomas"   aria-selected="false">Idiomas</a>
                 			<a class="nav-link" id="tabs-d-social-tab" 	  data-toggle="pill" href="#tabs-d-social" 	  role="tab" aria-controls="tabs-d-social"    aria-selected="false">Redes Sociais</a>
                 			<a class="nav-link" id="tabs-d-logs-tab"   	  data-toggle="pill" href="#vert-tabs-logs"   role="tab" aria-controls="vert-tabs-logs"   aria-selected="false">Logs</a>
                 		</div>
                 	</div>
-    
+
             		<div class="col-7 col-sm-9">
-            			<div class="tab-content" id="vert-tabs-tabContent"> 
+            			<div class="tab-content" id="vert-tabs-tabContent">
             				<div class="tab-pane fade" id="tabs-d-pessoais" role="tabpanel" aria-labelledby="tabs-d-pessoais-tab">
-								@include('admin.reservista.abaDadosPessoaisCad') 
+								@include('admin.reservista.abaDadosPessoaisCad')
 							</div>
 
 							<div class="tab-pane fade" id="tabs-d-locgeo" role="tabpanel" aria-labelledby="tabs-d-locgeo-tab">
 								@include('admin.reservista.abaLocalizacaoGeograficaCad')
 							</div>
-            				
+
 							<div class="tab-pane fade" id="tabs-d-militares" role="tabpanel" aria-labelledby="tabs-d-militares-tab">
 								@include('admin.reservista.abaDadosMilitaresCad')
 							</div>
@@ -61,33 +61,33 @@
 							<div class="tab-pane fade" id="tabs-d-idiomas" role="tabpanel" aria-labelledby="tabs-d-idiomas-tab">
 								@include('admin.reservista.abaIdiomasCad')
 							</div>
-            				
+
 							<div class="tab-pane fade" id="tabs-d-social" role="tabpanel" aria-labelledby="tabs-d-social-tab">
 								@include('admin.reservista.abaRedesSociaisCad')
 							</div>
-            				
+
 							<div class="tab-pane fade" id="vert-tabs-logs" role="tabpanel" aria-labelledby="tabs-d-logs-tab">
 								@include('admin.reservista.abaLogsCad')
 							</div>
 
-							<!-- exemplo de aba 
+							<!-- exemplo de aba
 								<div class="tab-pane fade" id="tabs-d-militares" role="tabpanel" aria-labelledby="tabs-d-militares-tab">
 								</div>
 							-->
 					</div>
 				</div>
         	</div>
-        	
+
         	<div class="card-footer">
-			  <button type="submit" class="btn btn-primary">Salvar</button>
+			  <button id="enviarFormReservista" type="submit" class="btn btn-primary">Salvar</button>
 			  <a href="{{ url()->previous() }}" class="btn btn-secondary">Voltar</a>
             </div>
         </div>
-	</form>		
-@stop 
+	</form>
+@stop
 
 @section('js')
-    <script> 
+    <script>
         $(document).ready(function(){
             // validacao de campos
     		$("#cadastrarUsuarioReservista").validate({
@@ -98,7 +98,7 @@
     			messages: {
 					//colocar as mensagens aqui
     			},
-				
+
 				errorElement: 'span',
                 errorPlacement: function (error, element) {
                   error.addClass('invalid-feedback');
@@ -111,7 +111,7 @@
                   $(element).removeClass('is-invalid');
                 }
     		});
-			
+
 			arrayObjetos = [];
 
 			$("#vert-tabs-tab").find('a').each(function(){
@@ -138,7 +138,7 @@
 			gerenciaCombosLogradouro();
 
 			fazIntegracaoViaCepPreencheCamposLogradouro();
-			
+
 			function gerenciaCombosLogradouro(){
 				var oldCidade = "{{session()->get('oldCidade') ?? '0'}}";
 
@@ -147,15 +147,17 @@
 					}
 
 					$('select[name=estUf]').change(function () {
-						var uf = $(this).val();
+                        var uf = $(this).val();
+                        var urlCidadesByUf = '{{route("logradouro.getcidadesbyuf", ":uf") }}';
+                        urlCidadesByUf = urlCidadesByUf.replace(':uf', uf);
 
 						if(uf!=0){
-							$.getJSON('/admin/localizacao/logradouro/getcidadesbyuf/' + uf, function (cidades) {
+							$.getJSON(urlCidadesByUf, function (cidades) {
 								$('select[name=idIbgeCidade]').empty();
 								$('select[name=idIbgeCidade]').html("");
 								$('select[name=idIbgeCidade]').append('<option value="">Selecione</option>');
 								//$('select[name=idIbgeCidade]').removeAttr('disabled');
-								
+
 								$.each(cidades, function (key, value) {
 									$('select[name=idIbgeCidade]').append('<option value=' + value.cididibge + '>' + value.cidnome + '</option>');
 								});
@@ -169,27 +171,29 @@
 					});
 
 					oldCidade = "{{session()->get('oldCidade') ?? '0'}}";
-					var oldUf = "{{old('estUf') ?? '0'}}";	
+                    var oldUf = "{{old('estUf') ?? '0'}}";
+                    var oldUrlCidadesByUf = '{{route("logradouro.getcidadesbyuf", ":uf") }}';
+                    oldUrlCidadesByUf = oldUrlCidadesByUf.replace(':uf', oldUf);
 
 					if(oldUf!=0){
-						$.getJSON('/admin/localizacao/logradouro/getcidadesbyuf/' + oldUf, function (cidades) {
+						$.getJSON(oldUrlCidadesByUf, function (cidades) {
 							$('select[name=idIbgeCidade]').empty();
 							$('select[name=idIbgeCidade]').html("");
 							$('select[name=idIbgeCidade]').append('<option value="">Selecione</option>');
 							//$('select[name=idIbgeCidade]').removeAttr('disabled');
-							
+
 							$.each(cidades, function (key, value) {
 								$('select[name=idIbgeCidade]').append('<option value=' + value.cididibge + '>' + value.cidnome + '</option>');
 							});
 
 							$('select[name=idIbgeCidade]').val(oldCidade).change();
-							
+
 							if(oldCidade == 0){
-								var opt = $('select[name=idIbgeCidade] option').filter(function(el) { 
-									return $(this).text().trim() === "Selecione"; 
+								var opt = $('select[name=idIbgeCidade] option').filter(function(el) {
+									return $(this).text().trim() === "Selecione";
 								});
 								opt.attr('selected', true);
-							}  
+							}
 						});
 					}else{
 						$('#idIbgeCidade option:first').attr('selected','selected');
@@ -206,7 +210,7 @@
 				$("#logTipo").val("");
 			}
 
-			function loading() {				
+			function loading() {
 				$("#logNome").val("...");
 				$("#logNomeBairro").val("...");
 				$("#estUf").val("...");
@@ -232,20 +236,20 @@
 								$.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
 									if (!("erro" in dados)) {
 										var logTipo = (dados.logradouro).split(' ')[0];
-										
+
 										if(logTipo!=""){
-											var optLogTipo = $('#logTipo option').filter(function(el) { 
-												return $(this).text().trim() === logTipo; 
+											var optLogTipo = $('#logTipo option').filter(function(el) {
+												return $(this).text().trim() === logTipo;
 											});
 											optLogTipo.attr('selected', true);
 										}
 
 										$("#logNome").val(dados.logradouro);
 										$("#logNomeBairro").val(dados.bairro);
-										$('#estUf').val(dados.uf).trigger('change');		
+										$('#estUf').val(dados.uf).trigger('change');
 										$("#logIndOrigemCad").val("W");
 										setValorCidadeIbge(dados.ibge);
-									
+
 									}else {
 										limpaFormCep();
 										$('#modaAtualizarCep').modal('show');
@@ -255,15 +259,15 @@
 								limpaFormCep();
 								alert("Formato de CEP inválido.");
 							}
-						}else {	
-							limpaFormCep();		
+						}else {
+							limpaFormCep();
 							$('select[name=idIbgeCidade]').empty();
 							$('select[name=idIbgeCidade]').html("");
 							$('select[name=idIbgeCidade]').append('<option value="">Selecione</option>');
 						}
 					});
 				});
-			}				
+			}
 
 			function setValorCidadeIbge(dados){
 				setTimeout(() =>{
@@ -297,7 +301,7 @@
                 iframe.setAttribute('id', 'viacep-iframe');
                 iframe.setAttribute('scrolling', 'no');
                 iframe.style.width = '210px';
-                iframe.style.height = '190px';       
+                iframe.style.height = '190px';
                 iframe.style.border = '1px dotted #888';
                 iframe.style.background = '#fcfcfc';
 			}
@@ -305,7 +309,7 @@
 			$.getJSON('{{route("idioma.getidiomaorderby")}}').done(
 				function( data ) {
 					data = $.map(data, function(item) {
-						return { id: item.ididioma, text: item.idnome }; 
+						return { id: item.ididioma, text: item.idnome };
 					});
 
 					$("#idIdioma").select2({
@@ -333,62 +337,64 @@
 			* Iniciando as configurações do crud para a lista de idiomas selecionados
 			*/
 
-			localStorage.clear();
 
-			//"A"=Adicionar; "E"=Editar 
-			var operation = "A"; 
+			if($("#jsonIdiomas").val() == ""){
+                localStorage.clear();
+            }
 
-			//Index of the selected list item 
-			var selected_index = -1; 
+			//"A"=Adicionar; "E"=Editar
+			var operation = "A";
 
-			//Retrieve the stored data 
+			//Index of the selected list item
+			var selected_index = -1;
+
+			//Retrieve the stored data
 			var tbIdiomasUsuarios = localStorage.getItem("idiomasUsuarios");
 
-			//Convertendo string em objeto json 
-			tbIdiomasUsuarios = JSON.parse(tbIdiomasUsuarios); 
-			
+			//Convertendo string em objeto json
+			tbIdiomasUsuarios = JSON.parse(tbIdiomasUsuarios);
+
 			if(tbIdiomasUsuarios == null){
-					tbIdiomasUsuarios = [];
+				tbIdiomasUsuarios = [];
 			}
 
 			validaConteudoListaIdiomasSelecionados();
+            listar();
 
 
-			function adicionar(){ 
-				var idiomaUsuario = JSON.stringify({ 
-					//ididiomausuario : $("#idIdiomaUsuario").val(), 
-					ididioma 		: $("#idIdioma").val(), 
-					nomeTxtIdioma	: $("#idIdioma option:selected").text(),
-					idnivelidioma 	: $("#idNivelIdioma").val(),
-					txtNivelIdioma	: $("#idNivelIdioma option:selected").text(),
-					
+			function adicionar(){
+				var idiomaUsuario = JSON.stringify({
+					//ididiomausuario : $("#idIdiomaUsuario").val(),
+					ididioma 		: $.trim($("#idIdioma").val()),
+					nomeTxtIdioma	: $.trim($("#idIdioma option:selected").text()),
+					idnivelidioma 	: $.trim($("#idNivelIdioma").val()),
+					txtNivelIdioma	: $.trim($("#idNivelIdioma option:selected").text()),
 				});
-				tbIdiomasUsuarios.push(idiomaUsuario); 
+				tbIdiomasUsuarios.push(idiomaUsuario);
 				localStorage.setItem("idiomasUsuarios", JSON.stringify(tbIdiomasUsuarios));
 				$('#idIdioma option:selected').prop('disabled', true);
 				$('#idIdioma').select2("val", "0");
-				$('#idNivelIdioma').select2("val", "0"); 
+				$('#idNivelIdioma').select2("val", "0");
 
-				return true; 
+				return true;
 			}
 
 			function  editar(){
-
 			}
 
 			function  excluir(){
 				tbIdiomasUsuarios.splice(selected_index,1);
-				localStorage.setItem("idiomasUsuarios", JSON.stringify(tbIdiomasUsuarios));								
+				localStorage.setItem("idiomasUsuarios", JSON.stringify(tbIdiomasUsuarios));
 			}
 
 			function  listar(){
 				$('#listaIdiomasSelecionados').append('<ul class="list-group list-group-flush">');
-					for(var i in tbIdiomasUsuarios){ 
+					for(var i in tbIdiomasUsuarios){
 						var iu = JSON.parse(tbIdiomasUsuarios[i]);
-						
+
 						$('#listaIdiomasSelecionados').append(
 							'<li class="list-group-item">'
-							+'<a href="#" alt="excluir'+i+'" class="btnExcluir close">×</a>'
+							+'<a href="#" alt="excluir'+i+'" title="Excluir Item" class="btnExcluir close">×</a>'
 							+'<b style="text-transform: uppercase;">'+iu.nomeTxtIdioma+'</b>'
 							+' Nível ' + iu.txtNivelIdioma
 							+'&nbsp;&nbsp;&nbsp;'
@@ -408,7 +414,7 @@
 			}
 
 			function liberaItemComboIdiomas(){
-				for(var i in tbIdiomasUsuarios){ 
+				for(var i in tbIdiomasUsuarios){
 					var iu = JSON.parse(tbIdiomasUsuarios[i]);
 					if(i == selected_index){
 						$("#idIdioma > option[value='"+iu.ididioma+"']").removeAttr('disabled').removeProp('disabled');
@@ -441,13 +447,23 @@
 				liberaItemComboIdiomas();
 				excluir();
 				validaConteudoListaIdiomasSelecionados();
-				listar();				
+				listar();
 			});
-		});
-		
-		
+
+            $("#enviarFormReservista").click(function(){
+                $("#jsonIdiomas").val(localStorage.getItem("idiomasUsuarios"));
+                validaConteudoListaIdiomasSelecionados();
+                listar();
+                $('#idIdioma').select2("val", "0");
+				$('#idNivelIdioma').select2("val", "0");
+			});
+
+
+        });
+
+
 	</script>
 
 	{{session()->forget('activeTab')}}
-	{{session()->forget('oldCidade')}} 	
+	{{session()->forget('oldCidade')}}
 @stop
