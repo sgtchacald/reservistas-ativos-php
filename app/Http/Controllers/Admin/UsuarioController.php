@@ -146,7 +146,9 @@ class UsuarioController extends Controller{
         $logNome    = count($logradouro) > 0 ? explode(",", $logradouro[0]->lognome)[0] : "";
         $logNumero  = count($logradouro) > 0 ? explode(",", $logradouro[0]->lognome)[1] : "";
 
-        return view('admin.reservista.editar')->with(compact('usuario', 'estados', 'cidades', 'logradouro', 'logNome', 'logTipo', 'logNumero'));
+        $idiomasUsuario = $this->idiomasUsuarioController->getIdiomasUsuarioByIdUsuario($idusuario);
+
+        return view('admin.reservista.editar')->with(compact('usuario', 'estados', 'cidades', 'logradouro', 'logNome', 'logTipo', 'logNumero', 'idiomasUsuario'));
     }
 
     public function update(Request $request){

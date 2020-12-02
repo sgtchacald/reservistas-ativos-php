@@ -70,7 +70,20 @@
     </div>
 
     <div class="card-body">
-        <div id="listaIdiomasSelecionados">
+        <div class="col-sm-9">
+            <div id="listaIdiomasSelecionados">
+                <table  class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th style="width: 50%">Idioma</th>
+                            <th style="width: 45%">Nível</th>
+                            <th style="width: 5%">Exc</th>
+                        </tr>
+                    </thead>
+                    <tbody class="tbListaIdiomasSelecionados">
+                    </tbody>
+                </table>
+            </div>
         </div>
         <input name="jsonIdiomas" id="jsonIdiomas" type="hidden" value="{{ old('jsonIdiomas', '') }}">
     </div>

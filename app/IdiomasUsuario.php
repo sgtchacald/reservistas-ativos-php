@@ -34,16 +34,17 @@ class IdiomasUsuario extends Authenticatable{
         'usuexcluiu'
     ];
 
-    public function getIdiomasUsuario(){
-        return DB::table($this->table)
-            ->select('*')
-            ->orderBy('ididiomausuario','asc')
-            ->get();
-    }
-
     public function getIdiomaUsuarioById($id){
         return DB::table($this->table)
             ->where('ididiomausuario','=', $id)
+            ->get();
+    }
+
+    public function getIdiomasUsuarioByIdUsuario($idUsuario){
+        return DB::table($this->table)
+            ->join('IDIOMAS', 'IDIOMAS.ididioma', '=', 'IDIOMASUSUARIO.ididioma')
+            ->select('IDIOMAS.ididioma', 'IDIOMAS.idnome', 'IDIOMASUSUARIO.idusunivelidioma')
+            ->where('idusuario','=', $idUsuario)
             ->get();
     }
 }

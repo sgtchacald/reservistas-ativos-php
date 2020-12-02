@@ -15,10 +15,10 @@ $(document).ready(function(){
         "language": {"url": "http://cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"}
       });
 
-    //ativando máscaras de entrada 
+    //ativando máscaras de entrada
     $('[data-mask]').inputmask();
 
-    /*//ativando campos data 
+    /*//ativando campos data
     $('.initData').daterangepicker({
         singleDatePicker: true,
         autoUpdateInput: false,
@@ -56,7 +56,7 @@ $(document).ready(function(){
     //Faz o elemento que estiver com [class="desaparecer"] após 5 segundos
     setTimeout(function() {
    		$('.desaparecer').fadeOut('fast');
-    }, 15000);
+    }, 5000);
 
     //console.log(maxLength);
     $('textarea').keyup(function() {
@@ -64,5 +64,5 @@ $(document).ready(function(){
     var length = document.getElementById("textarea").maxLength-length;
     $('#chars').text(length);
     });
-    
-});     
+
+});

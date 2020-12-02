@@ -33,4 +33,26 @@ class IdiomasUsuarioController extends Controller{
         return ($insert) ? true : false;
     }
 
+    public function destroy($ididiomausuario){
+        $delete = IdiomasUsuario::where(['ididiomausuario' => $ididiomausuario])->delete();
+        return ($delete) ? true : false;
+    }
+
+    public function getIdiomasUsuarioByIdUsuario($idUsuario){
+        $idiomasUsuario = $this->idiomasUsuario->getIdiomasUsuarioByIdUsuario($idUsuario);
+
+        foreach($idiomasUsuario as $idiomaUsuario){
+
+            $idiomaUsuario->nomeTxtIdioma = $idiomaUsuario->idnome;
+            $idiomaUsuario->idnivelidioma = $idiomaUsuario->idusunivelidioma;
+            $idiomaUsuario->txtNivelIdioma = \App\Dominios\NivelIdioma::getDominio()[$idiomaUsuario->idusunivelidioma];
+
+            unset($idiomaUsuario->idnome);
+            unset($idiomaUsuario->idusunivelidioma);
+
+            json_encode($idiomaUsuario);
+        }
+
+        return json_encode($idiomasUsuario);
+    }
 }
