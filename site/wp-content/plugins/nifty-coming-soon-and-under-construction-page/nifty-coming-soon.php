@@ -3,7 +3,7 @@
 Plugin Name: Nifty Coming Soon & Maintenance page
 Plugin URI:  https://wordpress.org/plugins/nifty-coming-soon-and-under-construction-page/
 Description: Easy to set up Coming Soon, Maintenance and Under Construction page. It features Responsive design, Countdown timer, Animations, Live Preview, Background Slider, Subscription form and more.
-Version:     1.60
+Version:     1.62
 Author:      WebFactory Ltd
 Author URI:  https://webfactoryltd.com/
 License:     GPLv3
@@ -14,9 +14,6 @@ Requires PHP: 5.2
 
 
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
-
-require_once dirname(__FILE__) . '/wp301/wp301.php';
-new wf_wp301(__FILE__, 'toplevel_page_niftycs-options');
 
 // Display status of the coming soon page in the admin bar
 add_action('admin_bar_menu', 'nifty_cs_custom_menu', 1000);
@@ -335,6 +332,17 @@ function nifty_plugins_api_result($res, $action, $args) {
 }
 
 add_filter('install_plugins_table_api_args_featured', 'nifty_featured_plugins_tab');
+
+// add settings link to plugins page
+function nifty_plugin_action_links($links)
+{
+    $settings_link = '<a href="' . admin_url('admin.php?page=niftycs-options') . '" title="Nifty Coming Soon & Maintenance page">Settings</a>';
+    array_unshift($links, $settings_link);
+    
+    return $links;
+} // nifty_plugin_action_links
+
+add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'nifty_plugin_action_links');
 
 // remove options on deactivate
 function nifty_deactivate() {

@@ -12,7 +12,7 @@ jQuery('.bxslider').bxSlider({
 // Preloader //
 
 jQuery(document).ready(function($) {
-$(window).load(function(){
+$(window).on('load', function(){
 	$('#preloader').fadeOut('fast',function(){$(this).remove();});
 });
 

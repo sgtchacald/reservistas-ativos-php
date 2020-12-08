@@ -4,7 +4,7 @@ Tags: coming soon, coming soon page, launch page, maintenance mode, maintenance 
 Tested up to: 5.6
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Stable tag: 1.60
+Stable tag: 1.62
 Requires PHP: 5.2
 
 Nifty Coming Soon & Maintenance Page creates awesome Coming Soon & Maintenance Pages with premium features for free.
@@ -84,6 +84,10 @@ As from the update of 1.0.9, the plugin offers the way to Live Preview you're Co
 4. Design and layout settings preview
 
 == Changelog ==
+
+= 1.62 =
+* 2020/12/08
+* fixes for WP v5.6
 
 = 1.60 =
 * 2020/10/17
