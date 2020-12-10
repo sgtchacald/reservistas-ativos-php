@@ -74,7 +74,7 @@ function mesmerize_print_header_title()
         }
     } else {
         if ($title == "") {
-            $title = get_bloginfo('description');
+            $title =  get_bloginfo('site_title');
         }
     }
 
