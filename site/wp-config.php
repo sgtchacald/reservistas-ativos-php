@@ -34,7 +34,8 @@ define( 'DB_PASSWORD', 'd12345678d' );
 define( 'DB_HOST', 'localhost' );
 
 /** Charset do banco de dados a ser usado na criação das tabelas. */
-define( 'DB_CHARSET', 'utf8mb4' );
+//define( 'DB_CHARSET', 'utf8mb4' );
+define('DB_CHARSET', 'utf8');
 
 /** O tipo de Collate do banco de dados. Não altere isso se tiver dúvidas. */
 define( 'DB_COLLATE', '' );
