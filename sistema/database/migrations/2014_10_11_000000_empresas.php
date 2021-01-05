@@ -11,20 +11,20 @@ class Empresas extends Migration
      *
      * @return void
      */
-    
+
     protected $primaryKey = 'empseqempresa';
-    
+
     public function up()
     {
         Schema::create('EMPRESAS', function (Blueprint $table) {
             $table->bigIncrements('idempresa')->unsigned();
-            $table->string('empcnpj', 14)->unique()->sise;
+            $table->string('empcnpj', 14)->unique();
             $table->string('empnome', 255);
             $table->string('empemail', 250)->unique();
             $table->string('empurlsite', 512);
             $table->string('empurllogotipo', 512);
             $table->char('empindstatus', 1);
-            //Informações Segurança 
+            //Informações Segurança
             $table->timestamp('dtcadastro')->nullable();
             $table->timestamp('dtedicao')->nullable();
             $table->timestamp('dtexclusao')->nullable();
