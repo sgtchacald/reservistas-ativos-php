@@ -6,9 +6,9 @@
   margin-right: 30px;
 }
 
-.required::before { 
+.required::before {
   content:" *";
-  font-size: 16px; 
+  font-size: 16px;
   font-weight: bold;
   color: red;
 }
@@ -44,11 +44,18 @@
 */
 
 .login-page {
-  background: url("../images/login.png") !important;
-  background-repeat: no-repeat  !important;
-  opacity: 0.8 !important;
-}
-
-.login-logo {
-  display: none !important;
+  background: url("../images/background.png") !important;
+  background-repeat: no-repeat !important;
+  background-size:100% !important;
+  bottom: 0 !important;
+  color: black !important;
+  left: 0 !important;
+  overflow: auto !important;
+  padding: 3em !important;
+  position: absolute !important;
+  right: 0 !important;
+  text-align: center !important;
+  top: 0 !important;
+  background-size: cover !important;
+  opacity: 0.7 !important;
 }

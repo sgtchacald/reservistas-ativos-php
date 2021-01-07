@@ -45,9 +45,9 @@ return [
     |
     */
 
-    'logo' => '<b>Reservista Ativo</b>',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
-    'logo_img_class' => 'brand-image img-circle elevation-3',
+    'logo' => 'Reservistas Ativos',
+    'logo_img' => '/images/logotipo-reservistas-ativos.png',
+    'logo_img_class' => 'brand-image elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
     'logo_img_alt' => 'Reservista Ativo',
@@ -305,7 +305,7 @@ return [
     | https://github.com/jeroennoten/Laravel-AdminLTE/#613-plugins
     |
     */
-    
+
     'plugins' => [
         [
             'name' => 'Datatables',
@@ -402,7 +402,7 @@ return [
                 ],
             ],
         ],
-        
+
         [
             'name' => 'Ionicons',
             'active' => true,
@@ -414,7 +414,7 @@ return [
                 ],
             ],
         ],
-        
+
         [
             'name' => 'FontsGoogle',
             'active' => false,
@@ -426,7 +426,7 @@ return [
                 ],
             ],
         ],
-        
+
         [
             'name' => 'InputMasks',
             'active' => true,
@@ -438,7 +438,7 @@ return [
                 ],
             ],
         ],
-        
+
         [
             'name' => 'DateRangePicker',
             'active' => true,
@@ -470,7 +470,7 @@ return [
                 ],
             ],
         ],
-        
+
         [
             'name' => 'JqueryValidation',
             'active' => true,
@@ -511,6 +511,6 @@ return [
             ],
         ],
 
-        
+
     ],
 ];

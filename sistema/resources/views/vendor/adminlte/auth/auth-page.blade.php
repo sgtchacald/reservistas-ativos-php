@@ -17,27 +17,25 @@
 
 @section('body')
     <div class="{{ $auth_type ?? 'login' }}-box">
-
-        {{-- Logo --}}
-        <div class="{{ $auth_type ?? 'login' }}-logo">
-            <a href="{{ $dashboard_url }}">
-                <img src="{{ asset(config('adminlte.logo_img')) }}" height="50">
-                {!! config('adminlte.logo', '<b>Admin</b>LTE') !!}
-            </a>
-        </div>
-
         {{-- Card Box --}}
         <div class="card {{ config('adminlte.classes_auth_card', 'card-outline card-primary') }}">
 
             {{-- Card Header --}}
             @hasSection('auth_header')
                 <div class="card-header {{ config('adminlte.classes_auth_header', '') }}">
-                    <h4 class="float-none text-center">
+                    {{-- Logo --}}
+                    <div class="{{ $auth_type ?? 'login' }}-logo">
+                        <a href="{{ $dashboard_url }}">
+                            <img src="{{ asset(config('adminlte.logo_img')) }}" height="100">
+                        </a>
+                    </div>
+
+                     {{--<h4 class="float-none text-center">
                         @yield('auth_header')
-                    </h4>
+                    </h4> --}}
 
                     <h1 class="card-title float-none text-center">
-                        Faça login para continuar.
+                        Juntos somos mais fortes.
                     </h1>
                 </div>
             @endif
