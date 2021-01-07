@@ -38,6 +38,11 @@ class IdiomasUsuarioController extends Controller{
         return ($delete) ? true : false;
     }
 
+    public function destroyIdiomasUsuario($idUsuario){
+        $delete = IdiomasUsuario::where(['idusuario' => $idUsuario])->delete();
+        return ($delete) ? true : false;
+    }
+
     public function getIdiomasUsuarioByIdUsuario($idUsuario){
         $idiomasUsuario = $this->idiomasUsuario->getIdiomasUsuarioByIdUsuario($idUsuario);
 

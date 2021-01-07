@@ -205,6 +205,16 @@ class UsuarioController extends Controller{
                 $request->session()->flash('alert-warning', "Não foi possível inserir os dados de LOCALIZAÇÃO GEORÁFICA, verifique com a administração!");
             }
 
+            //idiomas do usuario
+            $idiomasUsuario = json_decode($request->input('jsonIdiomas', true));
+            $idUsuario = $request->input('idUsuario');
+
+            $this->idiomasUsuarioController->destroyIdiomasUsuario($idUsuario);
+
+            if(!$this->idiomasUsuarioController->store($idiomasUsuario, $idUsuario)){
+                $request->session()->flash('alert-warning', "Não foi possível editar os dados de IDIOMAS, verifique com a administração!");
+            }
+
             switch ($usuPermissao) {
                 case 'R':
                     $rota = 'reservistas.selecionar';
