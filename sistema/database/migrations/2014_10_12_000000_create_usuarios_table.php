@@ -11,9 +11,9 @@ class CreateUsuariosTable extends Migration
      *
      * @return void
      */
-    
+
     public $incrementing = false;
-    
+
     public function up()
     {
         Schema::create('USUARIOS', function (Blueprint $table) {
@@ -42,6 +42,8 @@ class CreateUsuariosTable extends Migration
             $table->string('usupostograd', 4);
             $table->string('usunomeguerra', 100);
             $table->string('usunomeultbtl', 100);
+            //Informacoes Geográficas
+            $table->bigInteger('idlogradouro')->unsigned()->nullable();
             //Resumo
             $table->string('usuresumo', 1024);
             //Informações Sociais
@@ -56,7 +58,7 @@ class CreateUsuariosTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->char('usuindstatus', 1);
-            //Informações Segurança 
+            //Informações Segurança
             $table->timestamp('dtcadastro')->nullable();
             $table->timestamp('dtedicao')->nullable();
             $table->timestamp('dtexclusao')->nullable();
@@ -65,9 +67,10 @@ class CreateUsuariosTable extends Migration
             $table->bigInteger('usuexcluiu')->nullable();
             //chave estrangeira se for representante de empresa
             $table->foreign('idempresa')->references('idempresa')->on('EMPRESAS');
+            $table->foreign('idlogradouro')->references('idlogradouro')->on('LOGRADOUROS');
         });
     }
-    
+
     /**
      * Reverse the migrations.
      *

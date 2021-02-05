@@ -13,16 +13,16 @@ class CursosUsuario extends Migration
      */
     public function up()
     {
-        Schema::create('CURSOSUSUARIO', function (Blueprint $table) {
-            $table->bigIncrements('idcursousuario')->unsigned();
+        Schema::create('CURSOS_QUALIFICACOES_USUARIO', function (Blueprint $table) {
+            $table->bigIncrements('idcursoqualiusuario')->unsigned();
             $table->bigInteger('idusuario')->unsigned();
-            $table->string('csunome', 100);
-            $table->string('csuinstituicaoensino', 100);
-            $table->date('csudtinicio');
-            $table->date('csudtfim');
-            $table->string('csuurlcertificado', 512);
-            $table->char('csuindstatus', 1);
-            //Informações Segurança 
+            $table->string('cqunome', 100);
+            $table->string('cqunivel', 1);
+            $table->string('cquinstituicaoensino', 100);
+            $table->integer('cquqtdhoras');
+            $table->string('cquurlcertificado', 2048);
+            $table->string('cqutipocursoqualificacao', 1);
+            //Informações Segurança
             $table->timestamp('dtcadastro')->nullable();
             $table->timestamp('dtedicao')->nullable();
             $table->timestamp('dtexclusao')->nullable();

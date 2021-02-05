@@ -13,11 +13,11 @@ class NiveisHierarquicos extends Migration
      */
     public function up()
     {
-        Schema::create('NIVEISHIERARQUICOS', function (Blueprint $table) {
+        Schema::create('NIVEIS_HIERARQUICOS', function (Blueprint $table) {
             $table->bigIncrements('idnivelhierarquico')->unsigned();
             $table->string('nihnome', 100);
             $table->char('nihindstatus', 1);
-            //Informações Segurança 
+            //Informações Segurança
             $table->timestamp('dtcadastro')->nullable();
             $table->timestamp('dtedicao')->nullable();
             $table->timestamp('dtexclusao')->nullable();

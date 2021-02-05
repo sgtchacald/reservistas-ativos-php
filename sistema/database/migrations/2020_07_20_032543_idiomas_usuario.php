@@ -13,7 +13,7 @@ class IdiomasUsuario extends Migration
      */
     public function up()
     {
-        Schema::create('IDIOMASUSUARIO', function (Blueprint $table) {
+        Schema::create('IDIOMAS_USUARIO', function (Blueprint $table) {
             $table->bigIncrements('ididiomausuario')->unsigned();
             $table->bigInteger('idusuario')->unsigned();
             $table->bigInteger('ididioma')->unsigned();

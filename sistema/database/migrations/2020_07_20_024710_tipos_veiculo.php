@@ -13,11 +13,11 @@ class TiposVeiculo extends Migration
      */
     public function up()
     {
-        Schema::create('TIPOSVEICULO', function (Blueprint $table) {
+        Schema::create('TIPOS_VEICULO', function (Blueprint $table) {
             $table->bigIncrements('idtipoveiculo')->unsigned();
             $table->string('tvenome', 100);
             $table->char('tveindstatus', 1);
-            //Informações Segurança 
+            //Informações Segurança
             $table->timestamp('dtcadastro')->nullable();
             $table->timestamp('dtedicao')->nullable();
             $table->timestamp('dtexclusao')->nullable();

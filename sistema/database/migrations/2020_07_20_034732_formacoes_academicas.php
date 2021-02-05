@@ -13,7 +13,7 @@ class FormacoesAcademicas extends Migration
      */
     public function up()
     {
-        Schema::create('FORMACOESACADEMICAS', function (Blueprint $table) {
+        Schema::create('FORMACOES_ACADEMICAS_USUARIO', function (Blueprint $table) {
             $table->bigIncrements('idformacaoacad')->unsigned();
             $table->bigInteger('idusuario')->unsigned();
             $table->string('foanomeinstituicao', 100);
@@ -26,7 +26,7 @@ class FormacoesAcademicas extends Migration
             $table->date('foadtfim');
             $table->string('foaindsituacao', 1);
             $table->char('foaindstatus', 1);
-            //Informações Segurança 
+            //Informações Segurança
             $table->timestamp('dtcadastro')->nullable();
             $table->timestamp('dtedicao')->nullable();
             $table->timestamp('dtexclusao')->nullable();
