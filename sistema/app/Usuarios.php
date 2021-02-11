@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 class Usuarios extends Authenticatable{
     use Notifiable;
 
-    protected $primaryKey = 'idusuario';
+    protected $primaryKey = 'id';
     protected $table = 'USUARIOS';
 
     const CREATED_AT = 'dtcadastro';
@@ -22,44 +22,45 @@ class Usuarios extends Authenticatable{
      */
     protected $fillable = [
         'idempresa',
-        'usupermissao',
+        'tipopermissao',
         //Informacoes Civis
-        'usucpf',
         'name',
-        'usudtnascimento',
-        'usuestadocivil',
-        'usugenero',
-        'usuindportdeficiente',
+        'cpf',
+        'dtnascimento',
+        'estadocivil',
+        'genero',
+        'indportadordeficiencia',
         'email',
-        'usutelcelular',
-        'usutelfixo',
-        'usuindviagem',
-        'usuindmudarcidade',
-        'usuindcelwhatsapp',
-        'usuindmsg',
-        'usuimagemurl',
+        'telefonecelular',
+        'telefonefixo',
+        'indviagem',
+        'indmudarcidade',
+        'indcelwhatsapp',
+        'indrecebermsg',
+        'urlfotoanexo',
+        //Informacoes militares
+        'tipoforca',
+        'indoficial',
+        'nrcertificado',
+        'urlcertificadoanexo',
+        'postograduacao',
+        'nomeguerra',
+        'nomeultimobtl',
         //Informações Geográficas
         'idlogradouro',
-        //Informacoes militares
-        'usutipoforca',
-        'usuindoficial',
-        'usucertreservista',
-        'usupostograd',
-        'usunomeguerra',
-        'usunomeultbtl',
         //Informações Sociais
-        'usuresumo',
+        'resumoprofissional',
         //Informações Sociais
-        'usulinkedinurl',
-        'usufacebookurl',
-        'usuinstagramurl',
-        'usutwitterurl',
-        'usuyoutubeurl',
-        'usublogsiteurl',
+        'urllinkedin',
+        'urlfacebook',
+        'urlinstagram',
+        'urltwitter',
+        'urlyoutube',
+        'urlblogsite',
         //Informações Segurança Usuário
-        'usudtverificacaoemail',
+        'dtverificacaoemail',
         'password',
-        'usuindstatus',
+        'indstatus',
         //Informações Segurança
         'dtcadastro',
         'dtedicao',
@@ -75,7 +76,7 @@ class Usuarios extends Authenticatable{
      * @var array
      */
     protected $hidden = [
-        'ususenha', 'remember_token'
+        'password', 'remember_token'
     ];
 
     /**
@@ -99,11 +100,11 @@ class Usuarios extends Authenticatable{
 
         foreach ($this->getUsuarioLogado() as $usuarioLogado) {
             $descricaoUsuarioLogado =
-                (\App\Dominios\TipoForca::getDominio())[$usuarioLogado->usutipoforca]
+                (\App\Dominios\TipoForca::getDominio())[$usuarioLogado->tipoforca]
                 . " - "
-                . $usuarioLogado->usunomeultbtl
+                . $usuarioLogado->nomeultimobtl
                 . " - "
-                . (\App\Dominios\PostoGraduacao::getDominio())[$usuarioLogado->usupostograd];
+                . (\App\Dominios\PostoGraduacao::getDominio())[$usuarioLogado->postograduacao];
         }
 
         return $descricaoUsuarioLogado;
@@ -120,54 +121,54 @@ class Usuarios extends Authenticatable{
     public function getUsuarios($permissaoUsuario, $indStatus){
         return DB::table('USUARIOS')
                     ->select('*')
-                    ->where('usupermissao','=', $permissaoUsuario)
-                    ->where('usuindstatus','=', $indStatus)
-                    ->orderBy('idusuario','desc')
+                    ->where('tipopermissao','=', $permissaoUsuario)
+                    ->where('indstatus','=', $indStatus)
+                    ->orderBy('id','desc')
                     ->get();
     }
 
-    public function getUsuario($idUsuario){
+    public function getUsuario($id){
         return DB::table('USUARIOS')
-                ->where('idusuario','=', $idUsuario)
+                ->where('id','=', $id)
                 ->get();
     }
 
     public function getUsuarioLogado(){
         return DB::table('USUARIOS')
-                ->where('idUsuario', '=', auth()->user()->idusuario)
+                ->where('id', '=', auth()->user()->id)
                 ->get();
     }
 
-    public static function getNomeUsuario($idUsuario){
+    public static function getNomeUsuario($id){
         $query = DB::table('USUARIOS')
                 ->select('name')
-                ->where('idusuario','=', $idUsuario)
+                ->where('id','=', $id)
                 ->get();
 
         return $query[0]->name;
     }
 
-    public static function getEmailUsuario($idUsuario){
+    public static function getEmailUsuario($id){
         $query = DB::table('USUARIOS')
                 ->select('email')
-                ->where('idusuario','=', $idUsuario)
+                ->where('id','=', $id)
                 ->get();
 
         return $query[0]->email;
     }
 
-    public static function getIdUsuarioByCPF($usuCpf){
+    public static function getidByCPF($cpf){
         $query = DB::table('USUARIOS')
-                ->select('idusuario')
-                ->where('usucpf','=', $usuCpf)
+                ->select('id')
+                ->where('cpf','=', $cpf)
                 ->get();
 
-        return ($query != null) ? $query[0]->idusuario : '';
+        return ($query != null) ? $query[0]->id : '';
     }
 
     public static function verificaSeExisteCPF($cpf){
         $query = DB::table('USUARIOS')
-                ->where('usucpf','=', $cpf)
+                ->where('cpf','=', $cpf)
                 ->count();
         return  $query > 0 ? false : true;
     }

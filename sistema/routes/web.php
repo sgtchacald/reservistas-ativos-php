@@ -39,7 +39,7 @@ route::group(['middleware' => ['auth'],'namespace'  => 'Admin'],function(){
     Route::post('admin/localizacao/estado/insert', 'EstadoController@store')->name('estado.insert');
     Route::get ('admin/localizacao/estado/editar/{id}', 'EstadoController@edit')->name('estado.editar');
     Route::put ('admin/localizacao/estado/update', 'EstadoController@update')->name('estado.update');
-    Route::put ('admin/localizacao/estado/excluir/{id}', 'EstadoController@destroy')->name('estado.excluir');        
+    Route::put ('admin/localizacao/estado/excluir/{id}', 'EstadoController@destroy')->name('estado.excluir');
     //Cidades
     Route::get ('admin/localizacao/cidades', 'CidadeController@index')->name('cidades.selecionar');
     Route::get ('admin/localizacao/cidades/show', 'CidadeController@show')->name('cidades.show');
@@ -55,10 +55,10 @@ route::group(['middleware' => ['auth'],'namespace'  => 'Admin'],function(){
     Route::post('admin/localizacao/logradouro/insert', 'LogradouroController@store')->name('logradouro.insert');
     Route::get ('admin/localizacao/logradouro/editar/{id}', 'LogradouroController@edit')->name('logradouro.editar');
     Route::put ('admin/localizacao/logradouro/update', 'LogradouroController@update')->name('logradouro.update');
-    Route::get ('admin/localizacao/logradouro/excluir/{id}', 'LogradouroController@destroy')->name('logradouro.excluir');                
+    Route::get ('admin/localizacao/logradouro/excluir/{id}', 'LogradouroController@destroy')->name('logradouro.excluir');
     Route::get ('admin/localizacao/logradouro/getcidadesbyuf/{uf}', 'CidadeController@getCidadesByUf')->name('logradouro.getcidadesbyuf');
     Route::post('admin/localizacao/logradouro/setdadosibge', 'LogradouroController@setDadosIbge')->name('logradouro.setDadosIbge');
-     
+
     Route::get('admin/localizacao/logradouro/getdadosibge', function(){
       $retornoSessao = Session::get('sDadosIbge');
       Session::forget('sDadosIbge');
@@ -66,7 +66,7 @@ route::group(['middleware' => ['auth'],'namespace'  => 'Admin'],function(){
     })->name('logradouro.getdadosibge');
 
 });
-    
+
 Route::get('admin', 'Admin\AdminController@index')->name('admin');
 
 Route::get('/', 'Site\SiteController@index')->name('home');

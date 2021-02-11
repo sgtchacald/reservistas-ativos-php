@@ -1,5 +1,5 @@
-INSERT INTO ESTADOS (idEstado, estnome, estuf, estidibge, estpais, estddd, estindstatus, dtcadastro, dtedicao, dtexclusao, usucriou, usueditou, usuexcluiu) 
-VALUES  
+INSERT INTO ESTADOS (id, nome, uf, idibge, idpais, ddd, indstatus, dtcadastro, dtedicao, dtexclusao, usucriou, usueditou, usuexcluiu)
+VALUES
     (1,'Acre','AC',12,1,'68','A',NOW(),NULL,NULL,1,NULL,NULL),
     (2,'Alagoas','AL',27,1,'82','A',NOW(),NULL,NULL,1,NULL,NULL),
     (3,'Amazonas','AM',13,1,'97,92','A',NOW(),NULL,NULL,1,NULL,NULL),

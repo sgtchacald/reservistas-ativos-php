@@ -1,4 +1,4 @@
-INSERT INTO CIDADES (cidnome,ciduf,cididibge,cidddd,cidindstatus, dtcadastro, dtedicao, dtexclusao, usucriou, usueditou, usuexcluiu) VALUES
+INSERT INTO CIDADES (nome,uf,idibge,ddd,indstatus, dtcadastro, dtedicao, dtexclusao, usucriou, usueditou, usuexcluiu) VALUES
 ('Abacate da Pedreira (Macapá)','AP',1600550,'96','A',NOW(),NULL,NULL,1,NULL,NULL),
 ('Abadia (Jandaíra)','BA',2917904,'75','A',NOW(),NULL,NULL,1,NULL,NULL),
 ('Abadia de Goiás','GO',5200050,'62','A',NOW(),NULL,NULL,1,NULL,NULL),
