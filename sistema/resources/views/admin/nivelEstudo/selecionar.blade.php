@@ -1,6 +1,6 @@
 @inject('carbon', \Carbon\Carbon)
 
-@extends('adminlte::page') 
+@extends('adminlte::page')
 
 @section('title', 'Selecionar Reservista')
 
@@ -17,7 +17,7 @@
           </div>
         </div>
       </div><!-- /.container-fluid -->
-@stop 
+@stop
 
 @section('content')
 
@@ -27,7 +27,7 @@
 	<div class="card-header">
 		<h3 class="card-title">{{Config::get('label.nivel_estudo_selecionar')}}</h3>
 	</div>
-	
+
 	<div class="card-footer">
 		<a href="{{route('nivel.estudo.cadastrar')}}" class="btn btn-primary"><i class="far fa-file"></i>&nbsp;&nbsp; {{Config::get('label.btn_novo')}}</a>
 	</div>
@@ -48,33 +48,33 @@
     					<td>
 							<table>
 								<tr align="center">
-									<a href="{{route('nivel.estudo.editar', $nivelEstudo->idnivelestudo)}}" data-toggle="tooltip" data-placement="bottom" title="Editar" style="margin-right: 10%"><i class="fas fa-edit"></i></a>
-									
-									<form class="excluirRegistro" action="{{route('nivel.estudo.excluir', $nivelEstudo->idnivelestudo)}}" method="POST">
+									<a href="{{route('nivel.estudo.editar', $nivelEstudo->id)}}" data-toggle="tooltip" data-placement="bottom" title="Editar" style="margin-right: 10%"><i class="fas fa-edit"></i></a>
+
+									<form class="excluirRegistro" action="{{route('nivel.estudo.excluir', $nivelEstudo->id)}}" method="POST">
 										@csrf
 										@method('PUT')
 										<button type="submit" class="retiraEstilos" data-toggle="tooltip" data-placement="bottom" title="Excluir"><i class="far fa-trash-alt"></i></button>
 									</form>
-									
+
 								</tr>
-							</table>	
+							</table>
     					</td>
-    						
-    					<td>{{$nivelEstudo->idnivelestudo}}</td>
-						<td>{{$nivelEstudo->nienome}}</td>
-						<td>{{(\App\Dominios\IndStatus::getDominio())[$nivelEstudo->nieindstatus]}}</td>
+
+    					<td>{{$nivelEstudo->id}}</td>
+						<td>{{$nivelEstudo->nome}}</td>
+						<td>{{(\App\Dominios\IndStatus::getDominio())[$nivelEstudo->indstatus]}}</td>
     				</tr>
 				@endforeach
 			</tbody>
 		</table>
 	</div>
-	
+
 	<div class="card-footer"></div>
 </div>
-@stop 
+@stop
 
 @section('js')
-	<script> 
-		$(function(){}); 
+	<script>
+		$(function(){});
 	</script>
 @stop

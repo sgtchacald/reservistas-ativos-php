@@ -8,12 +8,12 @@ use Illuminate\Support\Facades\DB;
 
 class Paises extends Authenticatable{
     use Notifiable;
-    
-    protected $primaryKey = 'idpais';
+
+    protected $primaryKey = 'id';
     protected $table = 'PAISES';
-    protected $id = 'idpais';
-    protected $indStatus = 'pindStatus';
-    
+    protected $id = 'id';
+    protected $indStatus = 'indStatus';
+
     const CREATED_AT = 'dtcadastro';
     const UPDATED_AT = 'dtedicao';
 
@@ -23,19 +23,19 @@ class Paises extends Authenticatable{
      * @var array
      */
     protected $fillable = [
-        'pnome',
-        'pnomept',
-        'psigla',
-        'pbacen',
-        'pindstatus',
-        //Informações Segurança 
+        'nome',
+        'nomept',
+        'sigla',
+        'bacen',
+        'indstatus',
+        //Informações Segurança
         'dtcadastro',
         'dtedicao',
         'dtexclusao',
         'usucriou',
         'usueditou',
         'usuexcluiu'
-    ];    
+    ];
 
     public function getPaisesByStatus($indStatus){
         return DB::table($this->table)
@@ -49,5 +49,5 @@ class Paises extends Authenticatable{
         return DB::table($this->table)
                 ->where($this->id,'=', $id)
                 ->get();
-    }    
+    }
 }

@@ -1,6 +1,6 @@
 @inject('carbon', \Carbon\Carbon)
 
-@extends('adminlte::page') 
+@extends('adminlte::page')
 
 @section('title', 'Selecionar Reservista')
 
@@ -17,7 +17,7 @@
           </div>
         </div>
       </div><!-- /.container-fluid -->
-@stop 
+@stop
 
 @section('content')
 
@@ -27,7 +27,7 @@
 	<div class="card-header">
 		<h3 class="card-title">Seleção de Reservistas</h3>
 	</div>
-	
+
 	<div class="card-footer">
 		<a href="{{route('reservista.cadastrar')}}" class="btn btn-primary"><i class="far fa-file"></i>&nbsp;&nbsp; Cadastrar Novo Registro</a>
 	</div>
@@ -52,19 +52,19 @@
     					<td>
 							<table>
 								<tr align="center">
-									<a href="{{route('reservista.editar', $usuario->idusuario)}}" data-toggle="tooltip" data-placement="bottom" title="Editar" style="margin-right: 10%"><i class="fas fa-edit"></i></a>
-									
-									<form class="excluirRegistro" action="{{route('reservista.excluir', $usuario->idusuario)}}" method="POST">
+									<a href="{{route('reservista.editar', $usuario->id)}}" data-toggle="tooltip" data-placement="bottom" title="Editar" style="margin-right: 10%"><i class="fas fa-edit"></i></a>
+
+									<form class="excluirRegistro" action="{{route('reservista.excluir', $usuario->id)}}" method="POST">
 										@csrf
 										@method('PUT')
-									<input id="usuPermissao{{$usuario->idusuario}}" type="hidden" name="usuPermissao" value="R">
+									<input id="usuPermissao{{$usuario->id}}" type="hidden" name="usuPermissao" value="R">
 										<button type="submit" class="retiraEstilos" data-toggle="tooltip" data-placement="bottom" title="Excluir"><i class="far fa-trash-alt"></i></button>
 									</form>
-									
+
 								</tr>
-							</table>	
+							</table>
     					</td>
-    						
+
     					<td>{{(\App\Dominios\TipoForca::getDominio())[$usuario->usutipoforca]}}</td>
 						<td>{{$usuario->usunomeultbtl}}</td>
 						<td>{{(\App\Dominios\PostoGraduacao::getDominio())[$usuario->usupostograd]}}</td>
@@ -77,13 +77,13 @@
 			</tbody>
 		</table>
 	</div>
-	
+
 	<div class="card-footer"></div>
 </div>
-@stop 
+@stop
 
 @section('js')
-	<script> 
-		$(function(){}); 
+	<script>
+		$(function(){});
 	</script>
 @stop

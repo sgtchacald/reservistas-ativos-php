@@ -1,4 +1,4 @@
-@extends('adminlte::page') 
+@extends('adminlte::page')
 @section('title', Config::get('label.pais_editar'))
 
 @section('content_header')
@@ -13,14 +13,14 @@
 		</div>
 	</div>
 </div>
-@stop 
+@stop
 
 @section('content')
 <div class="card card-primary">
 	<div class="card-header">
 		<h3 class="card-title">{{Config::get('label.pais_editar')}}</h3>
 	</div>
-	
+
 	<form name="formEditar" id="formEditar" method="post" action="{{route('pais.update')}}">
     	<div class="card-body">
 				@csrf
@@ -30,32 +30,32 @@
 				<div class="row">
 					<div class="col-sm-1">
 						<div class="form-group required">
-							<label>{{Config::get('label.id')}}:</label> 
-							<input 	type="text" 
-									name="idPais" 
-									id="idPais" 
-									class="form-control @error('idPais') is-invalid @enderror " 
-									placeholder="{{Config::get('label.id_placeholder')}}" 
+							<label>{{Config::get('label.id')}}:</label>
+							<input 	type="text"
+									name="id"
+									id="id"
+									class="form-control @error('id') is-invalid @enderror "
+									placeholder="{{Config::get('label.id_placeholder')}}"
 									maxlength="100"
-									value="{{old('idPais', $pais[0]->idpais)}}" readonly>
+									value="{{old('id', $pais[0]->id)}}" readonly>
 						</div>
 					</div>
 
 					<div class="col-sm-11"></div>
 				</div>
 
-    			
+
                 <div class="row">
 					<div class="col-sm-6">
 						<div class="form-group required">
-							<label>{{Config::get('label.pais_nome_global')}}:</label> 
-							<input 	type="text" 
-									name="pNome" 
-									id="pNome" 
-									class="form-control @error('pNome') is-invalid @enderror" 
-									placeholder="{{Config::get('label.pais_nome_global_placeholder')}}" 
+							<label>{{Config::get('label.pais_nome_global')}}:</label>
+							<input 	type="text"
+									name="nome"
+									id="nome"
+									class="form-control @error('nome') is-invalid @enderror"
+									placeholder="{{Config::get('label.pais_nome_global_placeholder')}}"
 									maxlength="100"
-									value="{{old('pNome', $pais[0]->pnome)}}">
+									value="{{old('nome', $pais[0]->nome)}}">
 						</div>
 					</div>
 
@@ -63,14 +63,14 @@
 
 					<div class="col-sm-6">
 						<div class="form-group required">
-							<label>{{Config::get('label.pais_nome_nacional')}}:</label> 
-							<input 	type="text" 
-									name="pNomePt" 
-									id="pNomePt" 
-									class="form-control @error('pNomePt') is-invalid @enderror" 
-									placeholder="{{Config::get('label.pais_nome_nacional_placeholder')}}" 
+							<label>{{Config::get('label.pais_nome_nacional')}}:</label>
+							<input 	type="text"
+									name="nomePt"
+									id="nomePt"
+									class="form-control @error('nomePt') is-invalid @enderror"
+									placeholder="{{Config::get('label.pais_nome_nacional_placeholder')}}"
 									maxlength="100"
-									value="{{old('pNomePt', $pais[0]->pnomept)}}">
+									value="{{old('nomePt', $pais[0]->nomept)}}">
 						</div>
 					</div>
 
@@ -78,32 +78,32 @@
 
 					<div class="col-sm-2">
 						<div class="form-group required">
-							<label>{{Config::get('label.pais_sigla')}}:</label> 
-							<input 	type="text" 
-									name="pSigla" 
-									id="pSigla" 
-									class="form-control @error('pSigla') is-invalid @enderror" 
-									placeholder="{{Config::get('label.pais_sigla_placeholder')}}" 
+							<label>{{Config::get('label.pais_sigla')}}:</label>
+							<input 	type="text"
+									name="sigla"
+									id="sigla"
+									class="form-control @error('sigla') is-invalid @enderror"
+									placeholder="{{Config::get('label.pais_sigla_placeholder')}}"
 									size="2"
 									maxlength="2"
-									value="{{old('pSigla', $pais[0]->psigla)}}">
+									value="{{old('sigla', $pais[0]->sigla)}}">
 						</div>
 					</div>
-					
+
 					<div class="col-sm-10"></div>
 
 					<div class="col-sm-2">
 						<div class="form-group required">
-							<label>{{Config::get('label.pais_bacen')}}:</label> 
-							<input 	type="text" 
-									name="pBaCen" 
-									id="pBaCen" 
-									class="form-control @error('pBaCen') is-invalid @enderror" 
-									placeholder="{{Config::get('label.pais_bacen_placeholder')}}" 
+							<label>{{Config::get('label.pais_bacen')}}:</label>
+							<input 	type="text"
+									name="bacen"
+									id="bacen"
+									class="form-control @error('bacen') is-invalid @enderror"
+									placeholder="{{Config::get('label.pais_bacen_placeholder')}}"
 									maxlength="5"
-									data-inputmask="'mask': '9', 'repeat': 5, 'greedy' : false" 
+									data-inputmask="'mask': '9', 'repeat': 5, 'greedy' : false"
 									data-mask=""
-									value="{{old('pBaCen', $pais[0]->pbacen)}}">
+									value="{{old('bacen', $pais[0]->bacen)}}">
 						</div>
 					</div>
 
@@ -111,17 +111,17 @@
 
 					<div class="col-sm-2">
 						<div class="form-group required">
-							<label>{{Config::get('label.status')}}:</label> 
-							<select name="pIndStatus" id="pIndStatus" class="form-control @error('pIndStatus') is-invalid @enderror readyOnly" readonly>
-								<option value="">Selecione</option> 
+							<label>{{Config::get('label.status')}}:</label>
+							<select name="indStatus" id="indStatus" class="form-control @error('indStatus') is-invalid @enderror readyOnly" readonly>
+								<option value="">Selecione</option>
 								@foreach ((\App\Dominios\IndStatus::getDominio()) as $key => $value)
-									<option @if(old('pIndStatus', $pais[0]->pindstatus)==$key) {{'selected="selected"'}} @endif value="{{$key}}">
+									<option @if(old('indStatus', $pais[0]->indstatus)==$key) {{'selected="selected"'}} @endif value="{{$key}}">
 										{{$value}}
 									</option>
 								@endforeach
 							</select>
-							
-							@error('pIndStatus')
+
+							@error('indStatus')
 								<span class="invalid-feedback" role="alert">
 									<strong>{{ $message }}</strong>
 								</span>
@@ -130,24 +130,24 @@
 					</div>
 					<br><br><br><br><br>
 				</div>
-        	
+
         	<div class="card-footer">
 			  <button type="submit" class="btn btn-primary">Salvar</button>
 			  <a href="{{ url()->previous() }}" class="btn btn-secondary">Voltar</a>
             </div>
         </div>
-	</form>		
-@stop 
+	</form>
+@stop
 
 @section('js')
-    <script> 
+    <script>
         $(document).ready(function(){
 			//Validação do form caso status do registro seja INATIVO
-			if('{{$pais[0]->pindstatus}}' == 'I'){
+			if('{{$pais[0]->indstatus}}' == 'I'){
 				$("input").attr("disabled", true);
 				$("button").attr("disabled", true);
 			}
-			
-        });     
+
+        });
 	</script>
 @stop

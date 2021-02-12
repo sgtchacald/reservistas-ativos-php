@@ -14,34 +14,34 @@ class PaisController extends Controller{
     public function __construct(){
         $this->paises = new Paises();
     }
-    
+
     public function index(){
         $paises =   $this->paises->getPaisesByStatus('A');
         return view('admin.localizacao.pais.selecionar')->with(compact('paises'));
     }
 
-    
+
     public function show(){
     }
-    
+
     public function create(){
-      
+
        return view('admin.localizacao.pais.cadastrar');
     }
-    
+
     public function store(Request $request){
         $this->validaCampos($request, 'i');
-        
+
         $insert = Paises::create([
-            'pnome'        => $request->input('pNome'),
-            'pnomept'      => $request->input('pNomePt'),
-            'psigla'       => $request->input('pSigla'),
-            'pbacen'       => $request->input('pBaCen'),
-            'pindstatus'   => $request->input('pIndStatus'),
+            'nome'        => $request->input('nome'),
+            'nomept'      => $request->input('nomePt'),
+            'sigla'       => $request->input('sigla'),
+            'bacen'       => $request->input('bacen'),
+            'indstatus'   => $request->input('indStatus'),
             'usucriou'     => Auth::user()->getAuthIdentifier(),
             'dtcadastro'   => date('Y-m-d H:i:s')
         ]);
-        
+
         if($insert){
             $request->session()->flash('alert-success', Config::get('msg.cadastro_sucesso'));
         }else{
@@ -50,25 +50,25 @@ class PaisController extends Controller{
 
         return redirect()->route('paises.selecionar');
     }
-    
+
     public function edit($id){
         $pais = $this->paises->getPaisesById($id);
         return view('admin.localizacao.pais.editar')->with(compact('pais'));
     }
-    
+
     public function update(Request $request){
         $this->validaCampos($request, 'u');
-        
-        $update = Paises::where(['idpais' => $request->input('idPais')])->update([
-            'pnome'     => $request->input('pNome'),
-            'pnomept'   => $request->input('pNomePt'),
-            'psigla'    => $request->input('pSigla'),
-            'pbacen'    => $request->input('pBaCen'),
-            'pindstatus'=> $request->input('pIndStatus'),
+
+        $update = Paises::where(['id' => $request->input('id')])->update([
+            'nome'      => $request->input('nome'),
+            'nomept'    => $request->input('nomePt'),
+            'sigla'     => $request->input('sigla'),
+            'bacen'     => $request->input('bacen'),
+            'indstatus' => $request->input('indStatus'),
             'usueditou' => Auth::user()->getAuthIdentifier(),
             'dtedicao'  => date('Y-m-d H:i:s')
         ]);
-        
+
         if($update){
             $request->session()->flash('alert-success', Config::get('msg.edicao_sucesso'));
         }else{
@@ -77,18 +77,18 @@ class PaisController extends Controller{
 
         return redirect()->route('paises.selecionar');
     }
-    
+
     public function destroy(Request $request, $id){
-       
-        $delete = Paises::where(['idpais' => $id])->update([
-            'pindstatus'=>'I',
+
+        $delete = Paises::where(['id' => $id])->update([
+            'indstatus'=>'I',
             'usuexcluiu' => Auth::user()->getAuthIdentifier(),
             'dtexclusao'=> date('Y-m-d H:i:s')
         ]);
 
         if($delete){
             $request->session()->flash('alert-success', Config::get('msg.exclusao_sucesso'));
-        }else{            
+        }else{
             $request->session()->flash('alert-danger', Config::get('msg.exclusao_erro'));
         }
 
@@ -96,25 +96,25 @@ class PaisController extends Controller{
     }
 
     public function validaCampos(Request $request, $tipoPersistencia){
-        
+
             $rules = [
-                'pNome'       => 'required|max:100',
-                'pNomePt'       => 'required|max:100',
-                'pSigla'       => 'required|max:2',
-                'pBaCen'       => 'required|integer',
-                'pIndStatus'  => 'sometimes|required',
+                'nome'       => 'required|max:100',
+                'nomePt'       => 'required|max:100',
+                'sigla'       => 'required|max:2',
+                'bacen'       => 'required|integer',
+                'indStatus'  => 'sometimes|required',
             ];
-    
+
             $messages = ['required' => ':attribute é obrigatório.'];
 
             $customAttributes = [
-                'pNome' => Config::get('label.pais_nome_global'),
-                'pNomePt' => Config::get('label.pais_nome_nacional'),
-                'pSigla' => Config::get('label.pais_sigla'),
-                'pBaCen' => Config::get('label.pais_bacen'),
-                'pIndStatus' => Config::get('label.status'),
+                'nome' => Config::get('label.pais_nome_global'),
+                'nomePt' => Config::get('label.pais_nome_nacional'),
+                'sigla' => Config::get('label.pais_sigla'),
+                'bacen' => Config::get('label.pais_bacen'),
+                'indStatus' => Config::get('label.status'),
             ];
-            
+
             $request->validate($rules, $messages, $customAttributes);
     }
 }

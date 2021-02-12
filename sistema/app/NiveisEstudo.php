@@ -8,10 +8,10 @@ use Illuminate\Support\Facades\DB;
 
 class NiveisEstudo extends Authenticatable{
     use Notifiable;
-    
-    protected $primaryKey = 'idnivelestudo';
-    protected $table = 'NIVEISESTUDO';
-    
+
+    protected $primaryKey = 'id';
+    protected $table = 'NIVEIS_ESTUDO';
+
     const CREATED_AT = 'dtcadastro';
     const UPDATED_AT = 'dtedicao';
 
@@ -21,28 +21,28 @@ class NiveisEstudo extends Authenticatable{
      * @var array
      */
     protected $fillable = [
-        'nienome',
-        'nieindstatus',
-        //Informações Segurança 
+        'nome',
+        'indstatus',
+        //Informações Segurança
         'dtcadastro',
         'dtedicao',
         'dtexclusao',
         'usucriou',
         'usueditou',
         'usuexcluiu'
-    ];    
+    ];
 
     public function getNiveisEstudo($indStatus){
         return DB::table($this->table)
                     ->select('*')
-                    ->where('nieindstatus','=', $indStatus)
-                    ->orderBy('idnivelestudo','asc')
+                    ->where('indstatus','=', $indStatus)
+                    ->orderBy('id','asc')
                     ->get();
     }
 
     public function getNivelEstudoById($id){
         return DB::table($this->table)
-                ->where('idnivelestudo','=', $id)
+                ->where('id','=', $id)
                 ->get();
-    }    
+    }
 }
