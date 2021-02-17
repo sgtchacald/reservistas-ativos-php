@@ -8,12 +8,12 @@ use Illuminate\Support\Facades\DB;
 
 class Cidades extends Authenticatable{
     use Notifiable;
-    
-    protected $primaryKey = 'idcidade';
+
+    protected $primaryKey = 'id';
     protected $table = 'CIDADES';
-    protected $id = 'idcidade';
-    protected $indStatus = 'cidindstatus';
-    
+    protected $id = 'id';
+    protected $indStatus = 'indstatus';
+
     const CREATED_AT = 'dtcadastro';
     const UPDATED_AT = 'dtedicao';
 
@@ -23,19 +23,20 @@ class Cidades extends Authenticatable{
      * @var array
      */
     protected $fillable = [
-        'cidnome',
-        'ciduf',
-        'cididibge',
-        'cidddd',
-        'cidindstatus',
-        //Informações Segurança 
+        'nome',
+        'idestado',
+        'uf',
+        'idibge',
+        'ddd',
+        'indstatus',
+        //Informações Segurança
         'dtcadastro',
         'dtedicao',
         'dtexclusao',
         'usucriou',
         'usueditou',
         'usuexcluiu'
-    ];    
+    ];
 
     public function getCidadesByStatus($indStatus){
         return DB::table($this->table)
@@ -52,15 +53,15 @@ class Cidades extends Authenticatable{
 
     public function getCidadesByUf($cidUf){
         return DB::table($this->table)
-                ->where('ciduf','=', $cidUf)
-                ->where('cidindstatus','=', 'A')
+                ->where('uf','=', $cidUf)
+                ->where('indstatus','=', 'A')
                 ->get();
     }
 
     public function getCidadeByIdIbge($cidIdIbge){
         return DB::table($this->table)
-                ->where('cididibge','=', $cidIdIbge)
+                ->where('idibge','=', $cidIdIbge)
                 ->get();
     }
-    
+
 }

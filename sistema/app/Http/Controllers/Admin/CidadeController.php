@@ -17,11 +17,11 @@ class CidadeController extends Controller{
         $this->Estados = new Estados();
         $this->cidades = new Cidades();
     }
-    
+
     public function index(){
         return view('admin.localizacao.cidade.selecionar');
     }
-    
+
     public function show(){
         return datatables($this->cidades->getCidadesByStatus('A'))
                 ->addColumn('btn', 'admin.localizacao.cidade.actions')
@@ -29,25 +29,25 @@ class CidadeController extends Controller{
                 ->toJson();
     }
 
-    
+
     public function create(){
        $estados =   $this->Estados->getEstadosByStatus('A');
        return view('admin.localizacao.cidade.cadastrar')->with(compact('estados'));
     }
-    
+
     public function store(Request $request){
         $this->validaCampos($request, 'i');
-        
+
         $insert = Cidades::create([
-            'cidnome'       => $request->input('cidNome'),
-            'ciduf'        => $request->input('cidUf'),
-            'cididibge'     => $request->input('cidIdIbge'),
-            'cidddd'        => $request->input('cidDdd'),
-            'cidindstatus'  => $request->input('cidIndStatus'),
+            'nome'       => $request->input('nome'),
+            'uf'        => $request->input('uf'),
+            'idibge'     => $request->input('idIbge'),
+            'ddd'        => $request->input('ddd'),
+            'indstatus'  => $request->input('indStatus'),
             'usucriou'      => Auth::user()->getAuthIdentifier(),
             'dtcadastro'    => date('Y-m-d H:i:s')
         ]);
-        
+
         if($insert){
             $request->session()->flash('alert-success', Config::get('msg.cadastro_sucesso'));
         }else{
@@ -56,26 +56,26 @@ class CidadeController extends Controller{
 
         return redirect()->route('cidades.selecionar');
     }
-    
+
     public function edit($id){
         $cidade = $this->cidades->getCidadeById($id);
         $estados =   $this->Estados->getEstadosByStatus('A');
         return view('admin.localizacao.cidade.editar')->with(compact('cidade','estados'));
     }
-    
+
     public function update(Request $request){
         $this->validaCampos($request, 'u');
-        
-        $update = Cidades::where(['idcidade' => $request->input('idCidade')])->update([
-            'cidnome'       => $request->input('cidNome'),
-            'ciduf'         => $request->input('cidUf'),
-            'cididibge'     => $request->input('cidIdIbge'),
-            'cidddd'        => $request->input('cidDdd'),
-            'cidindstatus'  => $request->input('cidIndStatus'),
+
+        $update = Cidades::where(['id' => $request->input('id')])->update([
+            'nome'       => $request->input('nome'),
+            'uf'         => $request->input('uf'),
+            'idibge'     => $request->input('idIbge'),
+            'ddd'        => $request->input('ddd'),
+            'indstatus'  => $request->input('indStatus'),
             'usueditou'     => Auth::user()->getAuthIdentifier(),
             'dtedicao'      => date('Y-m-d H:i:s')
         ]);
-        
+
         if($update){
             $request->session()->flash('alert-success', Config::get('msg.edicao_sucesso'));
         }else{
@@ -84,18 +84,18 @@ class CidadeController extends Controller{
 
         return redirect()->route('cidades.selecionar');
     }
-    
+
     public function destroy(Request $request, $id){
-       
-        $delete = Cidades::where(['idcidade' => $id])->update([
-            'cidindstatus' => 'I',
+
+        $delete = Cidades::where(['id' => $id])->update([
+            'indstatus' => 'I',
             'usuexcluiu' => Auth::user()->getAuthIdentifier(),
             'dtexclusao'=> date('Y-m-d H:i:s')
         ]);
 
         if($delete){
             $request->session()->flash('alert-success', Config::get('msg.exclusao_sucesso'));
-        }else{            
+        }else{
             $request->session()->flash('alert-danger', Config::get('msg.exclusao_erro'));
         }
 
@@ -104,23 +104,23 @@ class CidadeController extends Controller{
 
     public function validaCampos(Request $request, $tipoPersistencia){
             $rules = [
-                'cidNome'       => 'required|max:120',
-                'cidUf'         => 'required|max:2',
-                'cidIdIbge'     => 'required|integer',
-                'cidDdd'        => 'required|max:2',
-                'cidIndStatus'  => 'sometimes|required|max:1',
+                'nome'       => 'required|max:120',
+                'uf'         => 'required|max:2',
+                'idIbge'     => 'required|integer',
+                'ddd'        => 'required|max:2',
+                'indStatus'  => 'sometimes|required|max:1',
             ];
-    
+
             $messages = ['required' => ':attribute é obrigatório.'];
 
             $customAttributes = [
-                'cidNome'       => Config::get('label.nome'),
-                'cidUf'         => Config::get('label.cidade_uf'),
-                'cidIdIbge'     => Config::get('label.cidade_id_ibge'),
-                'cidDdd'        => Config::get('label.cidade_ddd'),
-                'cidIndStatus'  => Config::get('label.status'),
+                'nome'       => Config::get('label.nome'),
+                'uf'         => Config::get('label.cidade_uf'),
+                'idIbge'     => Config::get('label.cidade_id_ibge'),
+                'ddd'        => Config::get('label.cidade_ddd'),
+                'indStatus'  => Config::get('label.status'),
             ];
-           
+
             $request->validate($rules, $messages, $customAttributes);
     }
 

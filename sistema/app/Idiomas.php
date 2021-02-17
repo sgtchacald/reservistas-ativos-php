@@ -8,10 +8,10 @@ use Illuminate\Support\Facades\DB;
 
 class Idiomas extends Authenticatable{
     use Notifiable;
-    
-    protected $primaryKey = 'ididioma';
+
+    protected $primaryKey = 'id';
     protected $table = 'IDIOMAS';
-    
+
     const CREATED_AT = 'dtcadastro';
     const UPDATED_AT = 'dtedicao';
 
@@ -21,35 +21,35 @@ class Idiomas extends Authenticatable{
      * @var array
      */
     protected $fillable = [
-        'idnome',
-        'idindstatus',
-        //Informações Segurança 
+        'nome',
+        'indstatus',
+        //Informações Segurança
         'dtcadastro',
         'dtedicao',
         'dtexclusao',
         'usucriou',
         'usueditou',
         'usuexcluiu'
-    ];    
+    ];
 
     public function getIdiomas($indStatus){
         return DB::table($this->table)
                     ->select('*')
-                    ->where('idindstatus','=', $indStatus)
-                    ->orderBy('ididioma','asc')
+                    ->where('indstatus','=', $indStatus)
+                    ->orderBy('id','asc')
                     ->get();
     }
 
     public function getIdiomaById($id){
         return DB::table($this->table)
-                ->where('ididioma','=', $id)
+                ->where('id','=', $id)
                 ->get();
-    }    
+    }
 
     public function getIdiomasOrderBy($colunaOrderBy, $tipoOrderBy, $idIndStatus){
         return DB::table($this->table)
         ->select('*')
-        ->where('idindstatus','=', $idIndStatus)
+        ->where('indstatus','=', $idIndStatus)
         ->orderBy($colunaOrderBy, $tipoOrderBy)
         ->get();
     }

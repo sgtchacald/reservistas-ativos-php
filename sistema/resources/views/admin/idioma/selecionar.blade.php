@@ -1,6 +1,6 @@
 @inject('carbon', \Carbon\Carbon)
 
-@extends('adminlte::page') 
+@extends('adminlte::page')
 
 @section('title', Config::get('label.idioma_selecionar'))
 
@@ -17,7 +17,7 @@
           </div>
         </div>
       </div><!-- /.container-fluid -->
-@stop 
+@stop
 
 @section('content')
 
@@ -27,7 +27,7 @@
 	<div class="card-header">
 		<h3 class="card-title">{{Config::get('label.idioma_selecionar')}}</h3>
 	</div>
-	
+
 	<div class="card-footer">
 		<a href="{{route('idioma.cadastrar')}}" class="btn btn-primary"><i class="far fa-file"></i>&nbsp;&nbsp; {{Config::get('label.btn_novo')}}</a>
 	</div>
@@ -48,33 +48,33 @@
     					<td>
 							<table>
 								<tr align="center">
-									<a href="{{route('idioma.editar', $idioma->ididioma)}}" data-toggle="tooltip" data-placement="bottom" title="Editar" style="margin-right: 10%"><i class="fas fa-edit"></i></a>
-									
-									<form class="excluirRegistro" action="{{route('idioma.excluir', $idioma->ididioma)}}" method="POST">
+									<a href="{{route('idioma.editar', $idioma->id)}}" data-toggle="tooltip" data-placement="bottom" title="Editar" style="margin-right: 10%"><i class="fas fa-edit"></i></a>
+
+									<form class="excluirRegistro" action="{{route('idioma.excluir', $idioma->id)}}" method="POST">
 										@csrf
 										@method('PUT')
 										<button type="submit" class="retiraEstilos" data-toggle="tooltip" data-placement="bottom" title="Excluir"><i class="far fa-trash-alt"></i></button>
 									</form>
-									
+
 								</tr>
-							</table>	
+							</table>
     					</td>
-    						
-    					<td>{{$idioma->ididioma}}</td>
-						<td>{{$idioma->idnome}}</td>
-						<td>{{(\App\Dominios\IndStatus::getDominio())[$idioma->idindstatus]}}</td>
+
+    					<td>{{$idioma->id}}</td>
+						<td>{{$idioma->nome}}</td>
+						<td>{{(\App\Dominios\IndStatus::getDominio())[$idioma->indstatus]}}</td>
     				</tr>
 				@endforeach
 			</tbody>
 		</table>
 	</div>
-	
+
 	<div class="card-footer"></div>
 </div>
-@stop 
+@stop
 
 @section('js')
-	<script> 
-		$(function(){}); 
+	<script>
+		$(function(){});
 	</script>
 @stop
