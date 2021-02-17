@@ -26,7 +26,7 @@ class Estados extends Authenticatable{
         'nome',
         'uf',
         'idibge',
-        'pais',
+        'idpais',
         'ddd',
         'indstatus',
         //Informações Segurança
